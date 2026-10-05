@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import os
+import re
 from collections import Counter
 
 import pandas as pd
@@ -36,7 +36,7 @@ RISK_TERMS = {"probe", "regulatory", "downgrade", "weak", "layoffs", "credit ris
 
 
 def sentiment_score(text: str) -> float:
-    tokens = str(text).lower().replace("-", " ").split()
+    tokens = re.findall(r"[a-z]+", str(text).lower())
     counts = Counter(tokens)
     positive = sum(counts[word] for word in POSITIVE_WORDS)
     negative = sum(counts[word] for word in NEGATIVE_WORDS)
@@ -80,11 +80,3 @@ def generate_market_summary(df: pd.DataFrame) -> str:
         f"The most mentioned companies are {top_companies}. Dominant themes include {top_topics}. "
         f"{risk_count} headlines contain explicit risk flags, so analysts should review the detailed news table."
     )
-
-
-def optional_openai_summary(prompt: str) -> str | None:
-    """Optional placeholder for OpenAI usage through environment variables."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        return None
-    return None

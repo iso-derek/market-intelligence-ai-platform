@@ -23,7 +23,7 @@ Analysts and finance teams monitor large volumes of market news across companies
 - Sector sentiment analysis
 - Market theme treemap
 - AI-style local summary generation
-- Optional OpenAI API placeholder through environment variables
+- Source-linked extractive briefs and optional frozen FinBERT inference
 - Streamlit dashboard
 
 ## Technologies Used
@@ -34,7 +34,7 @@ Analysts and finance teams monitor large volumes of market news across companies
 - lightweight NLP
 - Streamlit
 - Plotly
-- Optional OpenAI API integration
+- Optional FinBERT model
 
 ## Project Structure
 
@@ -123,3 +123,28 @@ The dashboard helps answer:
 
 Derek Ohimai Isokpehi  
 GitHub: [iso-derek](https://github.com/iso-derek)
+
+## Evidence and research upgrade
+
+The dashboard now supports official RSS feeds, dated CSV imports, explicit data
+provenance, duplicate removal, evidence retrieval with a historical cutoff,
+source-linked extractive briefs, and independently labelled sentiment evaluation.
+Synthetic headlines are clearly labelled and excluded from sourced briefs.
+A missing feed or optional language model produces an error, not a hidden fallback.
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+python -m unittest discover -s tests -v
+python scripts/run_research.py --live
+# Optional, downloads model weights; no paid API:
+pip install -r requirements-finbert.txt
+python scripts/run_research.py --finbert --labels data/evaluation/diagnostic_cases.csv
+```
+
+For CPU-only PyTorch, use the official CPU wheel index before installing the
+optional file. Inputs, predictions and metadata export as reproducible bundles.
+See [protocol](docs/RESEARCH_PROTOCOL.md) and [recorded checks](docs/RESEARCH_RESULTS.md).
+
+The old keyword scorer remains a transparent comparison baseline. FinBERT is a
+sentiment classifier; the brief is extractive, not a generative-LLM summary.
