@@ -9,3 +9,7 @@ outputs/*.pkl
 screenshots/*.png
 .ipynb_checkpoints/
 .DS_Store
+outputs/*.zip
+outputs/*.json
+
+outputs/*.txt
