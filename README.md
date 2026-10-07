@@ -148,3 +148,6 @@ See [protocol](docs/RESEARCH_PROTOCOL.md) and [recorded checks](docs/RESEARCH_RE
 
 The old keyword scorer remains a transparent comparison baseline. FinBERT is a
 sentiment classifier; the brief is extractive, not a generative-LLM summary.
+# One-command local launch
+
+On Windows with Python 3.13, double-click `Start.cmd`, or run `py -3.13 launch.py` in this folder. Python 3.12 is also supported. See [quick start and research history](docs/QUICKSTART.md).

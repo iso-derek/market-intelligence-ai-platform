@@ -13,3 +13,5 @@ outputs/*.zip
 outputs/*.json
 
 outputs/*.txt
+/.venv/
+/runs/

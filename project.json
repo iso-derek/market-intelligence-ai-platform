@@ -1,0 +1,6 @@
+{
+  "name": "Market Intelligence AI Platform",
+  "app": "app.py",
+  "port": 8503
+}
+
