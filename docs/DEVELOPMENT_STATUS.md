@@ -2,7 +2,7 @@
 
 **Updated:** 5 November 2026  
 **Phase:** D0 reproducible baseline and durable record  
-**Status:** local readiness checks passed; fresh matrix CI pending
+**Status:** local readiness checks and fresh compatibility matrix passed
 
 ## Baseline
 
@@ -26,7 +26,7 @@
 - Focused launcher and durable-document suite: 6/6 passed with `unittest`.
 - PowerShell launcher syntax: parsed successfully.
 - Documentation link, capability-claim, and `git diff --check` checks: passed.
-- Fresh GitHub Actions matrix: pending branch push.
+- Fresh GitHub Actions matrix: 4/4 jobs passed for milestone code commit `0b9a8d237a29bcec968a80238aed45d66002e284` on Windows and Ubuntu with Python 3.12 and 3.13 ([run 41960011053](https://github.com/iso-derek/market-intelligence-ai-platform/actions/runs/41960011053)).
 - Local dependency installation: attempted with bundled Python 3.12, but the environment reset PyPI downloads. This is an environment/network result, not an application test failure.
 - Local Streamlit browser acceptance and screenshots: pending a successful dependency installation.
 - Optional FinBERT execution: not part of the default suite; not rerun in this milestone yet.
@@ -51,9 +51,9 @@
 
 ## Next three priorities
 
-1. Obtain fresh four-job CI evidence for this exact milestone commit and address any failures.
-2. Complete local dashboard acceptance and capture genuine screenshots when dependency installation is available.
-3. Present the D0 pull request for review; begin D1 only after D0 review and scope confirmation.
+1. Complete local dashboard acceptance and capture genuine screenshots when dependency installation is available.
+2. Review D0 pull request #2 and decide whether the baseline is ready to merge.
+3. Begin D1 only after D0 review and scope confirmation.
 
 ## Remaining before a stable release
 
