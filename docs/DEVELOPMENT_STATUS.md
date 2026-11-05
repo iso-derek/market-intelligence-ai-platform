@@ -1,8 +1,8 @@
 # Development status — Market Intelligence AI Platform
 
 **Updated:** 5 November 2026  
-**Phase:** D0 reproducible baseline and durable record  
-**Status:** local readiness checks and fresh compatibility matrix passed
+**Phase:** D1 persistent evidence and ingestion
+**Status:** first D1 implementation slice in progress on `codex/d1-source-registry`
 
 ## Baseline
 
@@ -10,15 +10,17 @@
 - Existing infrastructure draft PR #2 audited at `912aae44339eba881d0fc1b86f3932b5c3cbc2c2`.
 - The 7 October 2026 compatibility run succeeded on Windows and Ubuntu with Python 3.12 and 3.13; the inspected Ubuntu 3.12 job reported 16 passing tests.
 - This milestone is based on that infrastructure head so the launchers, CI, quick start, and run recorder are preserved rather than duplicated.
+- D0 pull request #2 was squash-merged into `main` as `ced258cc2ef8838acab919a07d960928f764678a` after its exact-head four-job matrix passed.
 
-## Completed in the current milestone branch
+## Completed D1 work on the current branch
 
-- Rewrote README claims around the implemented evidence, ingestion, sentiment, and evaluation workflow.
-- Added complete target vision and phased roadmap documents.
-- Added this durable development-status record.
-- Added a detailed source/model provenance and licensing record.
-- Replaced the generic quick start with Market Intelligence user journeys and troubleshooting.
-- Updated Windows launchers to fall back from Python 3.13 to 3.12 and pass command-line arguments through.
+- Added a versioned SQLite source registry and migration path.
+- Added append-only source attempts, immutable raw snapshots, article versions, and snapshot membership.
+- Added idempotent imports, point-in-time evidence reconstruction, snapshot replay, and ZIP export.
+- Added bounded GET-only retries and persistent source health/error reporting.
+- Added native Streamlit registry controls, safe public-HTTPS registration, enabled-source selection, and snapshot downloads.
+- Added migration, duplicate, revision, cutoff-invariance, outage, replay, URL-safety, fetch, and retry-policy tests.
+- Documented the schema, migration, time, replay, failure, backup, and hosting boundaries.
 
 ## Verification status
 
@@ -27,13 +29,18 @@
 - PowerShell launcher syntax: parsed successfully.
 - Documentation link, capability-claim, and `git diff --check` checks: passed.
 - Fresh GitHub Actions matrix: 4/4 jobs passed for milestone code commit `0b9a8d237a29bcec968a80238aed45d66002e284` on Windows and Ubuntu with Python 3.12 and 3.13 ([run 41960011053](https://github.com/iso-derek/market-intelligence-ai-platform/actions/runs/41960011053)).
-- Local dependency installation: attempted with bundled Python 3.12, but the environment reset PyPI downloads. This is an environment/network result, not an application test failure.
-- Local Streamlit browser acceptance and screenshots: pending a successful dependency installation.
+- D1 persistence acceptance tests: 8/8 passed locally with Python 3.12.
+- Deterministic D0/D1 suite: 25/25 passed locally with pinned dependencies.
+- Live Streamlit browser acceptance reached the persistent registry and stored 15 ECB plus 12 Federal Reserve records with visible `ok` status and source-linked evidence.
+- Streamlit's local `AppTest` runner stalled even for a one-line fixture in this sandbox; clean-runner CI remains the authoritative headless UI check.
+- D1 exact-head GitHub Actions matrix: pending a reviewable branch commit and push.
+- Local Streamlit browser acceptance and screenshots: pending after the full local suite.
 - Optional FinBERT execution: not part of the default suite; not rerun in this milestone yet.
 
 ## Current functionality
 
-- Synthetic demonstration and two on-demand official central-bank feeds.
+- Synthetic demonstration and a persistent registry seeded with two official central-bank feeds.
+- Immutable feed snapshots, replay exports, visible fetch history/status, and cutoff reconstruction.
 - Dated CSV ingestion with explicit timestamps and URL/schema checks.
 - Duplicate removal, source provenance, and content hashes.
 - Keyword sentiment baseline and optional pinned FinBERT inference.
@@ -43,7 +50,7 @@
 
 ## Known limitations and blockers
 
-- There is no persistent source registry yet; this is D1.
+- SQLite currently targets one local application process; multi-worker hosting, retention, and automated backup/restore are not implemented.
 - Market prices, macro series, fundamentals, filings RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
 - The 18-item diagnostic set is too small for external model-validity claims.
 - Official-provider availability is external and must remain visible when it fails.
@@ -51,9 +58,9 @@
 
 ## Next three priorities
 
-1. Complete local dashboard acceptance and capture genuine screenshots when dependency installation is available.
-2. Review D0 pull request #2 and decide whether the baseline is ready to merge.
-3. Begin D1 only after D0 review and scope confirmation.
+1. Commit and push the reviewable D1 branch, then obtain a fresh four-job compatibility matrix.
+2. Confirm the post-fetch rerun and replay download on a clean browser session.
+3. Open D1 for review while D2 proceeds on a separate dependent branch.
 
 ## Remaining before a stable release
 

@@ -45,13 +45,19 @@ The default tests are offline. They mock optional model behavior and parse local
 ### 2. Official evidence
 
 1. Select **Official feeds**.
-2. Press **Fetch official feeds**.
-3. Inspect each source's status, parsed count, skipped count, feed URL, and content hash.
-4. Enter a query and UTC cutoff.
-5. Open each linked source and download the research ZIP.
-6. Inspect `articles.csv`, `brief.json`, `citation_audit.csv`, and `settings.json`.
+2. Review the enabled sources and latest status in the persistent registry.
+3. Select one or more enabled sources and press **Fetch selected sources**.
+4. Inspect each source's status, parsed count, skipped count, feed URL, and immutable snapshot hash.
+5. Enter a query and UTC cutoff.
+6. Open each linked source and download the research ZIP.
+7. Inspect `articles.csv`, `brief.json`, `citation_audit.csv`, and `settings.json`.
+8. Reopen the app to verify persisted evidence remains available without another fetch.
+
+Open **Manage registered sources** to enable or disable a source, add a public HTTPS RSS/Atom URL, or export an exact stored snapshot. Each snapshot ZIP contains the original XML bytes, a manifest, and the exact normalised article records.
 
 If every feed fails, the app stops with diagnostics. It does not replace official evidence with synthetic headlines.
+
+The default database is `data/runtime/evidence.db`. Set `MARKET_INTELLIGENCE_DB` to use another location. Runtime databases are excluded from Git; back them up separately if the evidence history matters.
 
 ### 3. Dated CSV evidence
 
@@ -103,6 +109,8 @@ Failed runs are recorded. A zero exit code establishes execution only; inspect t
 
 - **Dependency installation fails:** check network/proxy access to PyPI, then rerun. The launcher does not write its requirements marker until installation succeeds.
 - **Official feeds fail:** inspect the diagnostics. Provider/network failure remains visible.
+- **Registry rejects a URL:** registered sources must use public HTTPS endpoints; local, private, and reserved IP targets are rejected.
+- **Database is locked:** run one local application process against each SQLite file, then retry.
 - **FinBERT cannot run:** install the optional file and verify model-weight access. The app stops rather than using the keyword method silently.
 - **Port 8503 is busy:** run `python launch.py --port 8513`.
 - **Invalid CSV:** verify UTF-8 encoding, required columns, ISO timestamps, and public HTTP(S) URLs without embedded credentials.

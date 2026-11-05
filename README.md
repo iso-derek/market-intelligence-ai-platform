@@ -18,6 +18,9 @@ The current release answers those questions for a bounded set of financial headl
 
 - Deterministic synthetic demonstration data, visibly labelled as synthetic.
 - On-demand ingestion from Federal Reserve and European Central Bank RSS/Atom feeds.
+- Persistent SQLite source registry with enable/disable controls and public-HTTPS validation.
+- Immutable raw-feed snapshots, append-only fetch attempts, visible source health, and replayable snapshot exports.
+- Idempotent imports that preserve revised article versions and historical evidence cutoffs.
 - Upload of dated CSV news with schema and timestamp validation.
 - Publication, retrieval, and first-available timestamps stored separately.
 - URL canonicalisation, tracking-parameter removal, article hashing, and duplicate removal.
@@ -46,10 +49,11 @@ Real screenshots will be added after a verified local browser acceptance session
 
 ```mermaid
 flowchart LR
-    A[Synthetic data, official feeds, or dated CSV] --> B[Validation and normalisation]
-    B --> C[Provenance, timestamps, hashes, deduplication]
+    A[Synthetic data, registered feeds, or dated CSV] --> B[Validation and normalisation]
+    B --> C[SQLite registry, raw snapshots, attempts, article versions]
+    C --> D0[Point-in-time evidence reconstruction]
     C --> D[Keyword or optional FinBERT sentiment]
-    C --> E[TF-IDF evidence retrieval]
+    D0 --> E[TF-IDF evidence retrieval]
     E --> F[Cutoff and source eligibility]
     F --> G[Extractive brief or abstention]
     D --> H[Independent-label evaluation]
@@ -68,6 +72,7 @@ The complete target architecture and its sequencing are documented in [PRODUCT_V
 | Data handling | pandas, NumPy | Explicit tabular transformations and portable exports. |
 | Retrieval | scikit-learn TF-IDF and cosine similarity | Transparent lexical baseline before introducing embeddings. |
 | HTTP and XML | requests and standard-library XML parsing | Small, inspectable ingestion surface with size/entity checks. |
+| Persistence | SQLite | Transactional local storage, versioned schema, immutable payloads, and portable operation without a service dependency. |
 | Optional NLP | ProsusAI FinBERT | Finance-specific sentiment comparator, isolated from the default install. |
 | Charts | Plotly | Available for later analytical views; current interface is evidence-first. |
 
@@ -115,7 +120,7 @@ Accuracy measures the share of correct predictions. Macro F1 calculates F1 indep
 | Synthetic generator | Offline interface demonstration | Clearly labelled and excluded from sourced briefs. |
 | ProsusAI/finbert revision `f210365...` | Optional sentiment comparator | Separate dependencies; model revision exported with evaluation results. |
 
-See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints.
+See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints. The SQLite schema, time semantics, migrations, replay rules, and backup boundary are documented in [PERSISTENCE.md](docs/PERSISTENCE.md).
 
 ## Installation
 
@@ -150,10 +155,11 @@ Model weights may be downloaded on first use. Review the model terms before enab
 ## How to use the application
 
 1. Start with **Synthetic demonstration** to inspect the interface without external data. The Evidence brief correctly abstains because synthetic headlines are ineligible as sources.
-2. Choose **Official feeds**, press **Fetch official feeds**, and inspect the diagnostics before interpreting results.
-3. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
-4. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
-5. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
+2. Choose **Official feeds**, review the persistent registry, select enabled sources, press **Fetch selected sources**, and inspect source health before interpreting results.
+3. Reopen the app to confirm persisted evidence remains available, or download an immutable snapshot from **Manage registered sources**.
+4. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
+5. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
+6. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
 
 Detailed commands and troubleshooting are in [QUICKSTART.md](docs/QUICKSTART.md).
 
@@ -183,13 +189,13 @@ These are historical recorded checks, not results rerun by every clone. Eighteen
 python -m unittest discover -s tests -v
 ```
 
-The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, the Streamlit demo path, and launcher run recording.
+The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, the Streamlit demo/registry paths, and launcher run recording.
 
 GitHub Actions runs the default suite on Windows and Ubuntu with Python 3.12 and 3.13. Optional network access and actual FinBERT weights are outside the default CI path and must be reported separately.
 
 ## Deployment
 
-No hosted deployment is claimed. The verified target for this milestone is a local Streamlit demonstration. A public deployment must add operating limits, privacy guidance for uploads, secrets management, persistent-source design, and a review of third-party data/model terms. Deployment requires separate approval.
+No hosted deployment is claimed. The verified target is a local Streamlit demonstration. SQLite persistence is implemented for a single local process; a public deployment still requires operating limits, concurrency and backup design, privacy guidance for uploads, secrets management, and a review of third-party data/model terms. Deployment requires separate approval.
 
 ## Limitations and responsible use
 
@@ -200,6 +206,7 @@ No hosted deployment is claimed. The verified target for this milestone is a loc
 - TF-IDF retrieves lexical overlap and can miss synonyms or context.
 - The default label fixture is not representative of financial news.
 - Official feeds cover only a narrow part of the complete market-intelligence vision.
+- SQLite is a local single-instance store; multi-worker hosting and automated backup/restore are not implemented.
 - Uploaded data may be confidential; do not expose it through a public instance.
 - This project is independently developed and is not endorsed by Bloomberg, Imperial College London, UCL, the Federal Reserve, the ECB, or ProsusAI.
 

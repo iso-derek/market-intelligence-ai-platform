@@ -4,7 +4,10 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'src'))
 import unittest
 import json
 import io
+import os
+import tempfile
 import zipfile
+from unittest.mock import patch
 import pandas as pd
 from ingestion import normalise_news,parse_feed,canonical_url
 from evidence import evidence_brief,audit_claims,export_bundle
@@ -70,6 +73,17 @@ class AppTests(unittest.TestCase):
         self.assertFalse(app.exception)
         app.text_input[0].set_value('volcanic submarine').run()
         self.assertFalse(app.exception)
+
+    def test_official_mode_exposes_persistent_registry_without_network_fetch(self):
+        from streamlit.testing.v1 import AppTest
+        with tempfile.TemporaryDirectory() as directory:
+            database=str(Path(directory)/'evidence.db')
+            with patch.dict(os.environ,{'MARKET_INTELLIGENCE_DB':database}):
+                app=AppTest.from_file(str(Path(__file__).resolve().parents[1]/'app.py')).run(timeout=30)
+                app.selectbox[0].select('Official feeds').run(timeout=30)
+        self.assertFalse(app.exception)
+        self.assertTrue(any(item.value=='Persistent source registry' for item in app.subheader))
+        self.assertTrue(app.dataframe)
 
 if __name__=='__main__':unittest.main()
 
