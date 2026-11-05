@@ -6,6 +6,8 @@ from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 import xml.etree.ElementTree as ET
 import pandas as pd
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 FEEDS={
     'Federal Reserve monetary policy':'https://www.federalreserve.gov/feeds/press_monetary.xml',
@@ -99,3 +101,43 @@ def fetch_official_feeds(names=None):
             diagnostics.append({'source':name,'status':'failed','error':str(exc),'feed_url':FEEDS[name]})
     frame=normalise_news(pd.concat(rows,ignore_index=True)) if rows else pd.DataFrame()
     return frame,diagnostics
+
+
+def build_retrying_session():
+    """Create a bounded GET-only retry policy for transient provider failures."""
+    retry=Retry(total=2,connect=2,read=2,status=2,backoff_factor=.5,
+                status_forcelist=(429,500,502,503,504),allowed_methods=frozenset({'GET'}),
+                raise_on_status=False)
+    session=requests.Session()
+    adapter=HTTPAdapter(max_retries=retry)
+    session.mount('https://',adapter)
+    return session
+
+
+def fetch_registered_feeds(store,source_ids=None,session=None,retrieved_at=None):
+    """Fetch enabled registry sources, persist exact payloads, and expose failures."""
+    sources=store.list_sources(enabled_only=True)
+    if source_ids is not None:
+        requested=set(source_ids)
+        known=set(sources.source_id)
+        unknown=requested-known
+        if unknown: raise ValueError(f"Unknown or disabled sources: {', '.join(sorted(unknown))}")
+        sources=sources.loc[sources.source_id.isin(requested)]
+    client=build_retrying_session() if session is None else session
+    diagnostics=[]
+    for source in sources.itertuples(index=False):
+        checked_at=pd.Timestamp.now(tz='UTC') if retrieved_at is None else pd.to_datetime(retrieved_at,utc=True)
+        try:
+            response=client.get(source.feed_url,timeout=(5,20),headers={'User-Agent':'MarketIntelligenceResearch/2.0'})
+            response.raise_for_status()
+            frame,meta=parse_feed(response.content,source.name,checked_at)
+            result=store.record_snapshot(source.source_id,response.content,frame,retrieved_at=checked_at)
+            diagnostics.append({**meta,'source_id':source.source_id,'status':'ok',
+                                'feed_url':source.feed_url,'snapshot_hash':result.snapshot_hash,
+                                'new_snapshot':result.inserted})
+        except (requests.RequestException,ValueError,ET.ParseError) as exc:
+            store.record_failure(source.source_id,str(exc),checked_at=checked_at)
+            diagnostics.append({'source':source.name,'source_id':source.source_id,'status':'failed',
+                                'error':str(exc),'feed_url':source.feed_url})
+    cutoff=pd.Timestamp.now(tz='UTC') if retrieved_at is None else pd.to_datetime(retrieved_at,utc=True)
+    return store.eligible_evidence(cutoff),diagnostics

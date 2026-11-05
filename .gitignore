@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 venv/
 data/processed/*.csv
+data/runtime/
 outputs/*.csv
 outputs/*.pkl
 screenshots/*.png

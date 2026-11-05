@@ -1,6 +1,6 @@
 pandas
 numpy
-streamlit
+streamlit>=1.66.1,<2
 plotly
 python-dateutil
 requests>=2.31
