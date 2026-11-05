@@ -32,9 +32,20 @@ python launch.py tests
 
 The default tests are offline. They mock optional model behavior and parse local RSS/Atom fixtures. Live provider availability and downloaded FinBERT weights require separate checks.
 
-## Three core user journeys
+## Four core user journeys
 
-### 1. Synthetic demonstration and abstention
+### 1. Point-in-time market lab
+
+1. In **Workspace**, choose **Market, macro & fundamentals**.
+2. Keep the 1 March historical view and select ALP, BET, or GAM.
+3. Compare raw and adjusted closes. ALP demonstrates why split-aware returns use adjusted close.
+4. Open **Macro vintages**, then switch the historical view to 31 January. Confirm December CPI changes from the later revised value 3.0 to the initial value 2.9.
+5. Open **Company peers**. Confirm ALP's complete report version changes between cutoffs and that units, filing time, availability time, and report version remain visible.
+6. Read **Methodology** before interpreting the ratios or volatility.
+
+All three companies and all values are fictional educational fixtures. This journey is offline and does not claim live market coverage.
+
+### 2. Synthetic demonstration and abstention
 
 1. Keep **Synthetic demonstration** selected.
 2. Confirm the synthetic-data warning is visible.
@@ -42,7 +53,7 @@ The default tests are offline. They mock optional model behavior and parse local
 4. Confirm the app abstains because synthetic items are excluded from sourced evidence.
 5. Inspect sentiment and risk flags in **News explorer** as demonstration outputs only.
 
-### 2. Official evidence
+### 3. Official evidence
 
 1. Select **Official feeds**.
 2. Review the enabled sources and latest status in the persistent registry.
@@ -59,7 +70,7 @@ If every feed fails, the app stops with diagnostics. It does not replace officia
 
 The default database is `data/runtime/evidence.db`. Set `MARKET_INTELLIGENCE_DB` to use another location. Runtime databases are excluded from Git; back them up separately if the evidence history matters.
 
-### 3. Dated CSV evidence
+### 4. Dated CSV evidence
 
 Upload a UTF-8 CSV containing:
 

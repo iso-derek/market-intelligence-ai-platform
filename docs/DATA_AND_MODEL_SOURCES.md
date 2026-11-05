@@ -2,6 +2,17 @@
 
 This document records the sources used by the current application and the constraints that must remain visible in research and deployment.
 
+## D2 educational finance fixtures
+
+- Files: `data/fixtures/prices.csv`, `macro_vintages.csv`, and `fundamentals.csv`.
+- Use: deterministic validation of adjusted/raw prices, returns, volatility, macro vintages, accounting restatements, ratios, and point-in-time joins.
+- Scope: three fictional USD companies, two fictionalized macro series, and one fiscal period.
+- Access: local files only; the fixture provider performs no network requests.
+- Rights: repository-authored educational test data. It must not be described as observed, vendor-sourced, or suitable for investment decisions.
+- Time controls: every table carries availability; macro records also carry release/vintage time, and fundamentals carry filing time and report version.
+
+The provider protocol is an engineering boundary, not evidence that a live provider is integrated. See `MARKET_DATA_METHODOLOGY.md` for schemas, formulas, and limitations.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`

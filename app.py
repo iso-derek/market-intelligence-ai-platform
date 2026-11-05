@@ -13,14 +13,19 @@ from language_models import finbert_predictions
 from evidence import evidence_brief,audit_claims,export_bundle
 from evaluation import evaluate_sentiment
 from persistence import EvidenceStore
+from market_dashboard import render_market_dashboard
 
-st.set_page_config(page_title='Market Intelligence Research',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
-st.title('Market Intelligence AI & Evidence')
-st.caption('Trace dated market headlines to their sources and evaluate sentiment methods against independent labels.')
+st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
+st.title('Market Intelligence AI Platform')
+st.caption('Point-in-time finance analytics and source-grounded market research in one auditable workspace.')
+workspace=st.sidebar.radio('Workspace',['News evidence','Market, macro & fundamentals'])
+if workspace=='Market, macro & fundamentals':
+    render_market_dashboard()
+    st.stop()
 st.sidebar.header('Research controls')
 mode=st.sidebar.selectbox('News source',['Synthetic demonstration','Official feeds','Upload dated CSV'])
 backend=st.sidebar.selectbox('Sentiment model',['Keyword baseline','FinBERT (optional)'])
-st.sidebar.info('Current scope: headline evidence and sentiment research. Market prices, filings RAG and research agents are roadmap items.')
+st.sidebar.info('News scope: headline evidence and sentiment research. Filings RAG and research agents remain roadmap items.')
 
 @st.cache_resource
 def open_evidence_store(path): return EvidenceStore(path)

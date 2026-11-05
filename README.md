@@ -1,6 +1,6 @@
 # Market Intelligence AI Platform
 
-A source-grounded financial-news research application for collecting dated evidence, scoring headline sentiment, producing linked extractive briefs, and evaluating NLP methods against independently supplied labels.
+A point-in-time finance and source-grounded news research application. It demonstrates adjusted-price analytics, macro vintages, company restatements and ratios, dated evidence, linked extractive briefs, and independently labelled NLP evaluation.
 
 This repository is an educational research product. It does not provide investment advice, predict returns, or claim that a cited headline independently verifies a financial conclusion.
 
@@ -12,7 +12,7 @@ Market analysts need to separate three questions that are often blurred together
 2. Which items are relevant to a research question?
 3. How well does a sentiment method perform against labels assigned independently of the model?
 
-The current release answers those questions for a bounded set of financial headlines. It preserves source links and availability times, abstains when it cannot find eligible evidence, and exports the exact inputs and settings behind a brief.
+The current release answers those questions for a bounded set of financial headlines and adds a deterministic three-company finance lab. It preserves source links and availability times, abstains when it cannot find eligible evidence, and makes price adjustments, data revisions, report versions, units, and cutoff times visible.
 
 ## Implemented features
 
@@ -32,12 +32,19 @@ The current release answers those questions for a bounded set of financial headl
 - Sentiment evaluation using independently supplied labels, accuracy, macro F1, and a confusion matrix.
 - Downloadable ZIP bundles containing articles, claims, citation checks, settings, and a dataset hash.
 - Streamlit dashboard, offline unit tests, compatibility CI, and recorded research-run support.
+- Provider-isolated educational price, macro, and fundamental fixtures for ALP, BET, and GAM.
+- Raw and split-adjusted closes, adjusted-price returns, and sample volatility annualized with a 252-session convention.
+- Revision-aware macro history and complete-report restatement handling at historical cutoffs.
+- Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
 
-Market prices, macroeconomic series, company fundamentals, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release.
+Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
 
 ## Current interface
 
-The dashboard has three research areas:
+The dashboard has two workspaces:
+
+- **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
+- **News evidence:** use the three research areas below.
 
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
@@ -49,6 +56,10 @@ Real screenshots will be added after a verified local browser acceptance session
 
 ```mermaid
 flowchart LR
+    M[Fixture provider: prices, macro, fundamentals] --> N[Schema and time validation]
+    N --> O[Point-in-time vintage/report selection]
+    O --> P[Returns, volatility, and peer ratios]
+    P --> J[Streamlit research interface]
     A[Synthetic data, registered feeds, or dated CSV] --> B[Validation and normalisation]
     B --> C[SQLite registry, raw snapshots, attempts, article versions]
     C --> D0[Point-in-time evidence reconstruction]
@@ -74,9 +85,22 @@ The complete target architecture and its sequencing are documented in [PRODUCT_V
 | HTTP and XML | requests and standard-library XML parsing | Small, inspectable ingestion surface with size/entity checks. |
 | Persistence | SQLite | Transactional local storage, versioned schema, immutable payloads, and portable operation without a service dependency. |
 | Optional NLP | ProsusAI FinBERT | Finance-specific sentiment comparator, isolated from the default install. |
-| Charts | Plotly | Available for later analytical views; current interface is evidence-first. |
+| Charts | Native Streamlit/Vega charts | Accessible, dependency-light views for the bounded analytical lab. |
 
 ## Methodology
+
+### Point-in-time finance analytics
+
+Every finance record must have `available_at <= cutoff`. Macro history selects the latest eligible vintage for each observation. Company history selects one complete eligible report version so a restated fact cannot leak into an earlier cutoff or be mixed with an older report.
+
+Returns use adjusted close:
+
+```text
+simple return_t = adjusted_close_t / adjusted_close_(t-1) - 1
+annualized volatility = sample_std(daily simple returns) × sqrt(252)
+```
+
+The peer view calculates net margin, current ratio, and debt to equity from the latest eligible fiscal period. See [MARKET_DATA_METHODOLOGY.md](docs/MARKET_DATA_METHODOLOGY.md) for schemas, formula definitions, hand-checked revision/restatement examples, and limitations.
 
 ### Keyword sentiment baseline
 
@@ -119,6 +143,7 @@ Accuracy measures the share of correct predictions. Macro F1 calculates F1 indep
 | User CSV | User-provided dated headlines | Validated locally; source rights and confidentiality remain the user's responsibility. |
 | Synthetic generator | Offline interface demonstration | Clearly labelled and excluded from sourced briefs. |
 | ProsusAI/finbert revision `f210365...` | Optional sentiment comparator | Separate dependencies; model revision exported with evaluation results. |
+| Repository-authored finance fixtures | Offline prices, macro vintages, and company reports | Fictional values with explicit units and availability; never represented as live observations. |
 
 See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints. The SQLite schema, time semantics, migrations, replay rules, and backup boundary are documented in [PERSISTENCE.md](docs/PERSISTENCE.md).
 
@@ -154,12 +179,13 @@ Model weights may be downloaded on first use. Review the model terms before enab
 
 ## How to use the application
 
-1. Start with **Synthetic demonstration** to inspect the interface without external data. The Evidence brief correctly abstains because synthetic headlines are ineligible as sources.
-2. Choose **Official feeds**, review the persistent registry, select enabled sources, press **Fetch selected sources**, and inspect source health before interpreting results.
-3. Reopen the app to confirm persisted evidence remains available, or download an immutable snapshot from **Manage registered sources**.
-4. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
-5. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
-6. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
+1. Choose **Market, macro & fundamentals** and compare the 31 January and 1 March historical views. Inspect ALP's split, CPI revision, and complete report restatement.
+2. Switch to **News evidence** and start with **Synthetic demonstration**. The Evidence brief correctly abstains because synthetic headlines are ineligible as sources.
+3. Choose **Official feeds**, review the persistent registry, select enabled sources, press **Fetch selected sources**, and inspect source health before interpreting results.
+4. Reopen the app to confirm persisted evidence remains available, or download an immutable snapshot from **Manage registered sources**.
+5. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
+6. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
+7. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
 
 Detailed commands and troubleshooting are in [QUICKSTART.md](docs/QUICKSTART.md).
 
@@ -189,7 +215,7 @@ These are historical recorded checks, not results rerun by every clone. Eighteen
 python -m unittest discover -s tests -v
 ```
 
-The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, the Streamlit demo/registry paths, and launcher run recording.
+The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, split-adjusted return and volatility calculations, macro vintage selection, complete-report restatements, ratios, provider isolation, the Streamlit demo/registry paths, and launcher run recording.
 
 GitHub Actions runs the default suite on Windows and Ubuntu with Python 3.12 and 3.13. Optional network access and actual FinBERT weights are outside the default CI path and must be reported separately.
 
@@ -207,6 +233,7 @@ No hosted deployment is claimed. The verified target is a local Streamlit demons
 - The default label fixture is not representative of financial news.
 - Official feeds cover only a narrow part of the complete market-intelligence vision.
 - SQLite is a local single-instance store; multi-worker hosting and automated backup/restore are not implemented.
+- Finance analytics use a tiny fictional fixture. They do not establish live-provider accuracy, production coverage, or a statistically stable volatility estimate.
 - Uploaded data may be confidential; do not expose it through a public instance.
 - This project is independently developed and is not endorsed by Bloomberg, Imperial College London, UCL, the Federal Reserve, the ECB, or ProsusAI.
 
