@@ -1,0 +1,64 @@
+# Data and model sources
+
+This document records the sources used by the current application and the constraints that must remain visible in research and deployment.
+
+## Federal Reserve monetary-policy feed
+
+- URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`
+- Use: dated titles and links for official monetary-policy announcements.
+- Current behavior: fetched only after a user presses the button; response errors are returned in source diagnostics; feed bytes are hashed for the recorded run.
+- Limitation: a feed entry is evidence of what the Federal Reserve published, not proof of a downstream market interpretation.
+- Rights: review the Federal Reserve website's current terms before redistributing stored content beyond links and short metadata.
+
+## European Central Bank announcements feed
+
+- URL: `https://www.ecb.europa.eu/rss/press.html`
+- Use: dated titles and links for official ECB announcements.
+- Current behavior: same controls as the Federal Reserve feed.
+- Limitation: coverage is limited to that feed and may change upstream.
+- Rights: review the ECB website's current copyright and reuse terms before redistribution.
+
+## Uploaded CSV data
+
+- Required: `headline` plus `published_at` (or legacy `date`).
+- Recommended: `available_at`, `retrieved_at`, `url`, `source`, company/ticker/sector/topic fields, and an explicit `synthetic` flag.
+- The application validates timestamps and public HTTP(S) URLs, removes common tracking parameters, and rejects availability before publication.
+- Users remain responsible for rights, privacy, confidentiality, and the truth of supplied availability timestamps.
+
+## Synthetic demonstration
+
+- Generated deterministically by `src/data_generation.py`.
+- Used for interface mechanics and local sentiment examples.
+- Always marked synthetic and excluded from source-grounded evidence retrieval.
+- Must never be reported as observed market news or model-performance evidence.
+
+## Keyword baseline
+
+- Local fixed word lists in `src/modelling.py`.
+- No downloaded model or external training corpus.
+- Transparent comparator only; it is not presented as state-of-the-art NLP.
+
+## Optional ProsusAI FinBERT
+
+- Model ID: `ProsusAI/finbert`.
+- Pinned revision: `f210365adea9d5d19ff6a99f8658d1d94f58f584`.
+- Current code disables remote-code execution and expects positive, negative, and neutral probability outputs.
+- Weights are not installed by default and may require a substantial first download.
+- The upstream model card currently identifies the model-weights licence as CC BY-NC-SA 4.0. Verify the model card and applicability to the intended use at the time of deployment; do not assume commercial permission.
+- Model outputs are sentiment classifications, not factual verification, event causality, or forecasts of returns.
+
+## Provenance fields
+
+The current ingestion contract distinguishes:
+
+- `published_at`: time asserted by the source.
+- `retrieved_at`: time this ingestion run fetched or received the item.
+- `available_at`: earliest time the application can substantiate that the item was available to it.
+- `article_id`: stable hash of canonical URL, headline, and publication time.
+- `feed_sha256` / dataset hash: content identity for reproducibility.
+
+Historical research must filter on both publication and availability. Backdating `available_at` from an old publication date creates look-ahead bias.
+
+## Review cadence
+
+Recheck URLs, schemas, access rules, model terms, and redistribution constraints before every public deployment or material source expansion. Record changes in `DEVELOPMENT_STATUS.md` and the relevant research bundle.

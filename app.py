@@ -6,17 +6,19 @@ import json
 import pandas as pd
 import streamlit as st
 from data_generation import generate_news
-from ingestion import normalise_news,fetch_official_feeds,FEEDS
+from ingestion import normalise_news,fetch_official_feeds
 from modelling import score_news,generate_market_summary
 from language_models import finbert_predictions
 from evidence import evidence_brief,audit_claims,export_bundle
 from evaluation import evaluate_sentiment
 
-st.set_page_config(page_title='Market Intelligence Research',layout='wide')
+st.set_page_config(page_title='Market Intelligence Research',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI & Evidence')
-st.caption('Trace market headlines to their sources and compare sentiment methods on labelled data.')
+st.caption('Trace dated market headlines to their sources and evaluate sentiment methods against independent labels.')
+st.sidebar.header('Research controls')
 mode=st.sidebar.selectbox('News source',['Synthetic demonstration','Official feeds','Upload dated CSV'])
 backend=st.sidebar.selectbox('Sentiment model',['Keyword baseline','FinBERT (optional)'])
+st.sidebar.info('Current scope: headline evidence and sentiment research. Market prices, filings RAG and research agents are roadmap items.')
 
 @st.cache_data(ttl=900,show_spinner='Reading official feeds…')
 def official(): return fetch_official_feeds()
@@ -55,6 +57,7 @@ cols[1].metric('Publisher/source labels',news.source.nunique())
 cols[2].metric('Negative sentiment',int(news.sentiment_label.eq('Negative').sum()))
 brief_tab,explorer,research=st.tabs(['Evidence brief','News explorer','Research evaluation'])
 with brief_tab:
+    st.subheader('Source-grounded headline evidence')
     query=st.text_input('Research question or search terms','interest rates')
     cutoff=st.text_input('Evidence cutoff (UTC ISO timestamp)',pd.Timestamp.now(tz='UTC').floor('s').isoformat())
     try: brief=evidence_brief(news,query,cutoff)
@@ -64,17 +67,25 @@ with brief_tab:
         st.write(claim['text'])
         st.link_button(f"Source: {claim['source']} · {claim['published_at'][:10]}",claim['url'])
     st.caption('Extractive brief: headlines retain source wording. Availability means first observation by this ingestion run unless an archive supplies its recorded timestamp. Links do not independently verify a claim.')
+    with st.expander('How to interpret this brief'):
+        st.write('A returned item passed the source, timestamp and lexical-relevance filters. It is evidence of what that source reported, not a verified fact, causal explanation or investment forecast.')
     st.download_button('Download evidence and research settings',export_bundle(news,brief,{'sentiment_model':backend,'feed_diagnostics':diagnostics}),
                        'market_research.zip','application/zip')
 with explorer:
+    st.subheader('Normalised news records')
     st.dataframe(news[['published_at','available_at','source','headline','url','sentiment_label','sentiment_score','risk_flags']],hide_index=True)
     st.caption('Sentiment describes language, not a prediction of returns. Historical publication dates alone do not establish historical availability to this system.')
-    st.write('Template baseline for comparison:')
+    st.write('Rule-based summary baseline:')
     st.info(generate_market_summary(news))
 with research:
+    st.subheader('Sentiment evaluation')
     st.write('Compare keyword and FinBERT predictions against independently assigned sentiment labels.')
     evaluation_upload=st.file_uploader('Evaluation CSV: headline,label (Positive, Neutral, Negative)',type=['csv'],key='eval')
-    evaluation_data=pd.read_csv(evaluation_upload) if evaluation_upload else pd.read_csv(Path(__file__).parent/'data/evaluation/diagnostic_cases.csv')
+    try:
+        evaluation_data=pd.read_csv(evaluation_upload) if evaluation_upload else pd.read_csv(Path(__file__).parent/'data/evaluation/diagnostic_cases.csv')
+    except (pd.errors.ParserError,UnicodeDecodeError) as exc:
+        st.error(f'Could not read the evaluation CSV: {exc}')
+        st.stop()
     if evaluation_upload is None: st.caption('Default: small author-labelled synthetic diagnostics. These are functional checks, not an external benchmark.')
     if st.button('Evaluate selected sentiment model'):
         try:

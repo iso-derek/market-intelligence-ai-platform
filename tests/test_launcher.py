@@ -17,6 +17,17 @@ class LauncherTests(unittest.TestCase):
         self.assertTrue((ROOT / "scripts/run_research.py").is_file())
         self.assertGreaterEqual(launcher.CONFIG["port"], 1024)
 
+    def test_durable_project_documents_exist(self):
+        for name in ["PRODUCT_VISION.md", "ROADMAP.md", "DEVELOPMENT_STATUS.md",
+                     "DATA_AND_MODEL_SOURCES.md", "QUICKSTART.md"]:
+            self.assertTrue((ROOT / "docs" / name).is_file(), name)
+
+    def test_windows_launchers_support_both_compatibility_targets(self):
+        for name in ["Start.cmd", "Start.ps1"]:
+            content = (ROOT / name).read_text(encoding="utf-8")
+            self.assertIn("3.12", content)
+            self.assertIn("3.13", content)
+
     def test_hash_is_stable(self):
         path = ROOT / "project.json"
         self.assertEqual(launcher.digest(path), launcher.digest(path))
