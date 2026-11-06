@@ -1,8 +1,9 @@
 # Development status — Market Intelligence AI Platform
 
-**Updated:** 5 November 2026  
-**Phase:** D2 market, macro, and fundamental data
-**Status:** D1 is committed for review; D2 is implemented on `codex/d2-market-macro-fundamentals`
+**Updated:** 6 November 2026
+
+**Phase:** D3.1 entity resolution
+**Status:** D1 and D2 are green draft pull requests; D3.1 is implemented on `codex/d3-1-entity-resolution`
 
 ## Baseline
 
@@ -33,6 +34,19 @@ The reviewable D1 commit is `a57649e5d2aa7cc7d9c02f856f7c8efba096641a` on draft 
 - Added peer net margin, current ratio, and debt-to-equity calculations with denominator and required-fact safeguards.
 - Added a native Streamlit market lab with price, macro, company, and methodology views.
 - Added hand-checked fixtures, calculation tests, and a dedicated methodology document.
+
+The reviewable D2 commit is `2e8b058c0bdd0fd6da7491c25512b224ad9fee41` on draft pull request #4; compatibility run 42103568677 passed.
+
+## Completed D3.1 work on the current branch
+
+- Added a versioned deterministic company/ticker/sector registry.
+- Added exact boundary-aware alias matching with longest-span precedence.
+- Added multi-company resolution and explicit resolved, ambiguous, and unknown states.
+- Added resolver-version and candidate identifiers to every audit row.
+- Added News explorer metrics and a full resolution audit table without return-impact inference.
+- Added nine focused tests covering aliases, tickers, ambiguity, unknowns, boundaries, multiple companies, case variants, versioning, and registry integrity.
+- Deterministic non-UI D0–D3.1 suite: 43/43 passed locally.
+- Live Streamlit browser acceptance: passed for the News explorer resolution metrics, auditable table, resolver version, and no-return-impact disclosure.
 
 ## Verification status
 
@@ -71,16 +85,16 @@ The reviewable D1 commit is `a57649e5d2aa7cc7d9c02f856f7c8efba096641a` on draft 
 
 - SQLite currently targets one local application process; multi-worker hosting, retention, and automated backup/restore are not implemented.
 - D2 uses fictional offline fixtures; no live price, macro, or filing provider is integrated.
-- Filings RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
+- Event taxonomy/evaluation, filings RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
 - The 18-item diagnostic set is too small for external model-validity claims.
 - Official-provider availability is external and must remain visible when it fails.
 - Real screenshots must wait for an actual browser acceptance session.
 
 ## Next three priorities
 
-1. Obtain clean-runner compatibility results and owner review for D1 and D2 without merging the stacked milestones prematurely.
-2. Complete a browser acceptance pass of the D2 historical cutoff, CPI revision, ALP restatement, and units/timestamps.
-3. Scope D3 entity resolution and independent NLP evaluation only after D2 review findings are resolved.
+1. Verify D3.1 locally and in the four-job compatibility matrix, then open its stacked draft pull request.
+2. Build D3.2 event taxonomy and independent labelled evaluation on the entity audit rows.
+3. Build D3.3 held-out sentiment evaluation with uncertainty and overlap review.
 
 ## Remaining before a stable release
 

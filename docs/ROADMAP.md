@@ -63,6 +63,21 @@ Recommended order: D0 → D1 → D2; D3 can follow D1; D4 depends on the evidenc
 
 The full remaining vision is estimated at 250–420 focused engineering hours. Re-estimate after D1 and provider/model selection. The January slice should prioritise D0–D1 evidence quality while the wider portfolio's finance and FYP flagships receive validation time.
 
+## Ten reviewable milestones after D2
+
+The remaining phases are split into ten smaller review units. Each unit receives its own branch, commit, tests, documentation, and stacked draft pull request before any merge decision.
+
+1. **D3.1 — Entity resolution:** versioned company/ticker registry, boundary-aware aliases, multi-entity mentions, and explicit resolved/ambiguous/unknown outcomes.
+2. **D3.2 — Event taxonomy and linkage:** labelled event classes, company/sector links, uncertainty, and an independently evaluated deterministic baseline.
+3. **D3.3 — NLP evaluation:** held-out sentiment corpus, per-class metrics, confidence intervals, overlap review, and exported model/input revisions.
+4. **D4.1 — Filings corpus:** bounded local reports with document hashes, page/section/period metadata, safe parsing, and immutable manifests.
+5. **D4.2 — Retrieval baselines:** lexical and embedding retrieval behind one interface with frozen relevance evaluation.
+6. **D4.3 — Grounded filings QA:** cited answers, abstention, conflicting-source tests, injection resistance, and numerical consistency checks.
+7. **D5.1 — Typed research workflows:** bounded Company, Macro, News, Risk, and Synthesis roles with allowlists, budgets, traces, and tested finance tools.
+8. **D6.1 — Release-aware event studies:** session/timezone alignment, frozen windows, leakage controls, uncertainty, multiple-testing disclosure, and simple baselines.
+9. **D6.2 — Fixed income and FX:** yield-curve, spread, and quote-direction analytics with explicit conventions and hand-checked fixtures.
+10. **D7.1 — Evidence graph and operations finish:** provenance-backed time-aware relationships, graph-vs-table evaluation, accessibility, monitoring, backup/recovery, walkthroughs, and reviewed deployment boundaries.
+
 ## Definition of done
 
 A milestone is complete only when the bounded feature works end to end, calculations/evidence are validated, meaningful tests pass, the README describes only implemented behavior, user journeys are demonstrated, limitations are visible, status is updated with exact evidence, and the owner has reviewed the pull request.

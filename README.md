@@ -36,6 +36,7 @@ The current release answers those questions for a bounded set of financial headl
 - Raw and split-adjusted closes, adjusted-price returns, and sample volatility annualized with a 252-session convention.
 - Revision-aware macro history and complete-report restatement handling at historical cutoffs.
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
+- Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 
 Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
 
@@ -48,6 +49,7 @@ The dashboard has two workspaces:
 
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
+- **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -215,7 +217,7 @@ These are historical recorded checks, not results rerun by every clone. Eighteen
 python -m unittest discover -s tests -v
 ```
 
-The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, split-adjusted return and volatility calculations, macro vintage selection, complete-report restatements, ratios, provider isolation, the Streamlit demo/registry paths, and launcher run recording.
+The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, split-adjusted return and volatility calculations, macro vintage selection, complete-report restatements, ratios, provider isolation, conservative entity/ticker resolution, the Streamlit demo/registry paths, and launcher run recording.
 
 GitHub Actions runs the default suite on Windows and Ubuntu with Python 3.12 and 3.13. Optional network access and actual FinBERT weights are outside the default CI path and must be reported separately.
 

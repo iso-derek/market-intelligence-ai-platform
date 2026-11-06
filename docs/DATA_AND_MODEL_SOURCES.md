@@ -13,6 +13,15 @@ This document records the sources used by the current application and the constr
 
 The provider protocol is an engineering boundary, not evidence that a live provider is integrated. See `MARKET_DATA_METHODOLOGY.md` for schemas, formulas, and limitations.
 
+## D3.1 entity registry
+
+- File: `data/fixtures/entity_registry.csv`.
+- Use: deterministic company, ticker, sector, and alias resolution for the bounded research interface.
+- Origin: repository-authored educational metadata; it is not an exchange security master or licensed identifier feed.
+- Resolution: exact, case-insensitive, word-boundary aliases with longest-span precedence.
+- Uncertainty: shared aliases remain `ambiguous`; unmatched text remains `unknown`; neither state is silently coerced.
+- Limitation: the registry does not handle corporate actions, historical ticker changes, subsidiaries, people, places, fuzzy spelling, or multilingual names.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`
