@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from event_study import market_adjusted_event_study
 
 from market_data import (
     FixtureProvider,
@@ -65,8 +66,8 @@ def render_market_dashboard() -> None:
     metric_columns[2].metric("Annualized volatility", f"{selected.annualized_volatility:.2%}", border=True)
     metric_columns[3].metric("Trading calendar", selected.calendar, border=True)
 
-    market_tab, macro_tab, company_tab, method_tab = st.tabs(
-        ["Market prices", "Macro vintages", "Company peers", "Methodology"]
+    market_tab, macro_tab, company_tab, event_tab, method_tab = st.tabs(
+        ["Market prices", "Macro vintages", "Company peers", "Event study", "Methodology"]
     )
 
     with market_tab:
@@ -177,6 +178,21 @@ def render_market_dashboard() -> None:
         )
         st.caption("A report version is selected as a whole. Facts from an earlier filing are never mixed with a later restatement.")
 
+    with event_tab:
+        st.subheader("Release-aware event study")
+        release = st.selectbox(
+            "Fixture release time",
+            ["2026-01-06T14:00:00Z", "2026-01-05T22:00:00Z"],
+            format_func=lambda value: "6 Jan before close" if "06T14" in value else "5 Jan after close",
+        )
+        summary, event_window = market_adjusted_event_study(prices, instrument, release, cutoff, 1, 1)
+        event_cards = st.columns(3)
+        event_cards[0].metric("Event session", pd.Timestamp(summary["event_session"]).strftime("%Y-%m-%d"), border=True)
+        event_cards[1].metric("[-1,+1] CAR", f"{summary['car']:.2%}", border=True)
+        event_cards[2].metric("Peer benchmark", f"{summary['peer_count']} instruments", border=True)
+        st.dataframe(event_window, hide_index=True, alt="Release-aligned instrument peer benchmark abnormal returns and cumulative abnormal return")
+        st.warning("This tiny educational window demonstrates timing and arithmetic only; it does not support statistical or causal inference.")
+
     with method_tab:
         st.markdown(
             """
@@ -195,6 +211,10 @@ def render_market_dashboard() -> None:
             `current ratio = current assets / current liabilities`
 
             `debt to equity = total debt / shareholders' equity`
+
+            **Market-adjusted event return**
+
+            `abnormal return_t = instrument return_t - equal-weight peer return_t`
             """
         )
         st.info(
