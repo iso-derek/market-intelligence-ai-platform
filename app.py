@@ -14,6 +14,7 @@ from evidence import evidence_brief,audit_claims,export_bundle
 from evaluation import evaluate_sentiment
 from persistence import EvidenceStore
 from market_dashboard import render_market_dashboard
+from entities import load_entity_registry,resolve_news_entities,resolution_summary
 
 st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI Platform')
@@ -29,6 +30,9 @@ st.sidebar.info('News scope: headline evidence and sentiment research. Filings R
 
 @st.cache_resource
 def open_evidence_store(path): return EvidenceStore(path)
+
+@st.cache_data
+def open_entity_registry(path): return load_entity_registry(path)
 
 database_path=Path(os.environ.get('MARKET_INTELLIGENCE_DB',Path(__file__).parent/'data/runtime/evidence.db'))
 store=open_evidence_store(str(database_path))
@@ -104,6 +108,8 @@ else:
     except (ValueError,pd.errors.ParserError) as exc: st.error(str(exc));st.stop()
 
 news=score_news(news)
+entity_registry=open_entity_registry(str(Path(__file__).parent/'data/fixtures/entity_registry.csv'))
+entity_resolutions=resolve_news_entities(news,entity_registry)
 if backend.startswith('FinBERT'):
     try:
         predictions=finbert_predictions(news.headline.tolist())
@@ -136,6 +142,16 @@ with explorer:
     st.dataframe(news[['published_at','available_at','source','headline','url','sentiment_label','sentiment_score','risk_flags']],hide_index=True,
                  alt='Normalised market-news evidence with provenance and sentiment')
     st.caption('Sentiment describes language, not a prediction of returns. Historical publication dates alone do not establish historical availability to this system.')
+    st.subheader('Entity and ticker resolution')
+    entity_counts=resolution_summary(entity_resolutions)
+    entity_columns=st.columns(3)
+    entity_columns[0].metric('Resolved records',entity_counts['resolved'],border=True)
+    entity_columns[1].metric('Ambiguous records',entity_counts['ambiguous'],border=True)
+    entity_columns[2].metric('Unknown records',entity_counts['unknown'],border=True)
+    st.dataframe(
+        entity_resolutions[['headline','mention','canonical_name','ticker','sector','resolution_status','candidate_ids','resolution_version']],
+        hide_index=True,alt='Conservative entity and ticker resolution outcomes for the current news records')
+    st.caption('Exact registry aliases only. Ambiguous and unknown mentions remain unresolved; a company mention does not imply an effect on returns.')
     st.write('Rule-based summary baseline:')
     st.info(generate_market_summary(news))
 with research:

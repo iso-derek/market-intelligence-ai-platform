@@ -1,0 +1,13 @@
+entity_id,canonical_name,ticker,sector,aliases,active_from,active_to
+ent_aapl,Apple Inc.,AAPL,Technology,Apple|Apple Computer,1980-12-12T00:00:00Z,
+ent_alp,Alpha Industries,ALP,Industrials,Alpha Industries|Alpha,2020-01-01T00:00:00Z,
+ent_amzn,Amazon.com Inc.,AMZN,Consumer Discretionary,Amazon|Amazon.com,1997-05-15T00:00:00Z,
+ent_axc,Alpha Capital,AXC,Financials,Alpha Capital|Alpha,2021-01-01T00:00:00Z,
+ent_bet,Beta Retail,BET,Consumer,Beta Retail|Beta,2020-01-01T00:00:00Z,
+ent_blk,BlackRock Inc.,BLK,Asset Management,BlackRock,1999-10-01T00:00:00Z,
+ent_gam,Gamma Software,GAM,Technology,Gamma Software|Gamma,2020-01-01T00:00:00Z,
+ent_gs,Goldman Sachs Group Inc.,GS,Financials,Goldman Sachs|Goldman,1999-05-04T00:00:00Z,
+ent_jpm,JPMorgan Chase & Co.,JPM,Financials,JPMorgan|JPMorgan Chase|JP Morgan,1969-01-01T00:00:00Z,
+ent_msft,Microsoft Corp.,MSFT,Technology,Microsoft,1986-03-13T00:00:00Z,
+ent_nvda,NVIDIA Corp.,NVDA,Semiconductors,Nvidia|NVIDIA,1999-01-22T00:00:00Z,
+ent_tsla,Tesla Inc.,TSLA,Consumer Discretionary,Tesla|Tesla Motors,2010-06-29T00:00:00Z,
