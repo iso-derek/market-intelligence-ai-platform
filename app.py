@@ -15,6 +15,7 @@ from evaluation import evaluate_sentiment
 from persistence import EvidenceStore
 from market_dashboard import render_market_dashboard
 from entities import load_entity_registry,resolve_news_entities,resolution_summary
+from events import classify_news_events,link_events_to_entities,evaluate_event_classifier
 
 st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI Platform')
@@ -110,6 +111,8 @@ else:
 news=score_news(news)
 entity_registry=open_entity_registry(str(Path(__file__).parent/'data/fixtures/entity_registry.csv'))
 entity_resolutions=resolve_news_entities(news,entity_registry)
+event_rows=classify_news_events(news)
+event_links=link_events_to_entities(event_rows,entity_resolutions)
 if backend.startswith('FinBERT'):
     try:
         predictions=finbert_predictions(news.headline.tolist())
@@ -152,6 +155,16 @@ with explorer:
         entity_resolutions[['headline','mention','canonical_name','ticker','sector','resolution_status','candidate_ids','resolution_version']],
         hide_index=True,alt='Conservative entity and ticker resolution outcomes for the current news records')
     st.caption('Exact registry aliases only. Ambiguous and unknown mentions remain unresolved; a company mention does not imply an effect on returns.')
+    st.subheader('Event taxonomy and company linkage')
+    event_counts=event_rows.event_status.value_counts()
+    event_columns=st.columns(3)
+    event_columns[0].metric('Classified events',int(event_counts.get('classified',0)),border=True)
+    event_columns[1].metric('Ambiguous events',int(event_counts.get('ambiguous',0)),border=True)
+    event_columns[2].metric('Unknown events',int(event_counts.get('unknown',0)),border=True)
+    st.dataframe(
+        event_links[['headline','event_type','event_status','event_candidates','matched_terms','canonical_name','ticker','sector','entity_link_status','event_rule_version']],
+        hide_index=True,alt='Event taxonomy outcomes linked conservatively to resolved companies and sectors')
+    st.caption('Taxonomy describes headline language only. Co-mention does not prove the event, materiality, causality, or an effect on returns.')
     st.write('Rule-based summary baseline:')
     st.info(generate_market_summary(news))
 with research:
@@ -173,3 +186,9 @@ with research:
     st.write('Source audit for this brief')
     st.dataframe(audit_claims(brief['claims'],news),hide_index=True,alt='Mechanical citation audit for the evidence brief')
     st.caption('Citation validity and exact extraction are mechanical checks. Comparing factual support across generated briefs requires separate supported/unsupported/unclear human judgments, available through the research API.')
+    st.subheader('Event taxonomy diagnostic')
+    st.write('Evaluate the fixed event rules against a separate repository-authored labelled fixture.')
+    if st.button('Evaluate event taxonomy',key='evaluate_event_taxonomy'):
+        event_cases=pd.read_csv(Path(__file__).parent/'data/evaluation/event_taxonomy_cases.csv')
+        st.json(evaluate_event_classifier(event_cases))
+    st.caption('The 24-item event fixture checks mechanics and uncertainty states; it is not an external benchmark.')

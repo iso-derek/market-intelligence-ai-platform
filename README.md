@@ -37,6 +37,7 @@ The current release answers those questions for a bounded set of financial headl
 - Revision-aware macro history and complete-report restatement handling at historical cutoffs.
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
+- Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
 
 Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
 
@@ -50,6 +51,7 @@ The dashboard has two workspaces:
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
+- **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -148,6 +150,8 @@ Accuracy measures the share of correct predictions. Macro F1 calculates F1 indep
 | Repository-authored finance fixtures | Offline prices, macro vintages, and company reports | Fictional values with explicit units and availability; never represented as live observations. |
 
 See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints. The SQLite schema, time semantics, migrations, replay rules, and backup boundary are documented in [PERSISTENCE.md](docs/PERSISTENCE.md).
+
+The event categories, uncertainty rules, linkage semantics, labelled diagnostic, and limitations are documented in [EVENT_TAXONOMY.md](docs/EVENT_TAXONOMY.md).
 
 ## Installation
 
