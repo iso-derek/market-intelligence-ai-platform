@@ -1,0 +1,3 @@
+# Corpus manifests hash exact bytes; keep those bytes identical on every OS.
+data/filings/*.txt text eol=lf
+data/filings/manifest.csv text eol=lf
