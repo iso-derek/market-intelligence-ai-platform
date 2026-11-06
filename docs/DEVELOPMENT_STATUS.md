@@ -154,6 +154,17 @@ The reviewable D6.1 commit is `98348e183236ce4450d3c15dab108167c32f9180` on its 
 - Deterministic non-UI D0–D6.2 suite: 97/97 passed locally.
 - Clean-process Streamlit browser acceptance passed for the tenor-labelled yield curve, 140 bps Alpha 10Y spread, FX table, and BASE/QUOTE direction disclosure.
 
+The reviewable D6.2 commit is `6ed7f5860d437ef54e5df2aae6527c4d2fa08ab5` on its stacked draft pull request.
+
+## D7.1 work in progress on the current branch
+
+- Added a point-in-time provenance graph with unique IDs, evidence URIs, availability timestamps, and a canonical hash.
+- Added dangling-reference, relationship allowlist, non-causal language, bounded-path, and cycle safeguards.
+- Added an operations report that verifies durable files and honestly labels the current target as a verified local demo rather than hosted deployment.
+- Focused D7.1 suite: 6/6 passed locally.
+- Deterministic non-UI D0–D7.1 suite: 103/103 passed locally.
+- Clean-process Streamlit browser acceptance passed for 6 nodes, 5 edges, zero dangling links, graph hash, bounded provenance paths, required-file health, and the `verified_local_demo_not_hosted` boundary.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.

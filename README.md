@@ -45,7 +45,7 @@ Live market/macro/filings providers, filings RAG, generative research agents, ev
 
 ## Current interface
 
-The dashboard has four workspaces:
+The dashboard has five workspaces:
 
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
@@ -58,6 +58,7 @@ The dashboard has four workspaces:
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
 - **Filings corpus:** inspect verified reports, search eligible passages, compare frozen retrieval metrics, and receive extractive passage-cited answers or explicit abstentions.
 - **Research workflow:** inspect Company, Macro, News, Risk, and Synthesis roles with tool allowlists, budgets, missing-source states, and a hash-identified trace.
+- **Evidence graph & operations:** inspect point-in-time provenance links, bounded paths, graph identity, required-file health, and the verified-local-demo boundary.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -174,6 +175,8 @@ The role/tool contract, budgets, trace schema, conflict handling, and workflow l
 Release-to-session alignment, abnormal-return formulas, cutoff safeguards, and inference limits are documented in [EVENT_STUDIES.md](docs/EVENT_STUDIES.md).
 
 Yield, spread, currency-pair, quote-direction, and point-in-time conventions are documented in [RATES_AND_FX.md](docs/RATES_AND_FX.md).
+
+Graph validation, relationship semantics, bounded traversal, artifact identity, and local-operations boundaries are documented in [EVIDENCE_GRAPH_AND_OPERATIONS.md](docs/EVIDENCE_GRAPH_AND_OPERATIONS.md).
 
 ## Installation
 

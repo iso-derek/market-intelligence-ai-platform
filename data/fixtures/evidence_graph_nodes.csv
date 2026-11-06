@@ -1,0 +1,7 @@
+node_id,node_type,label,evidence_uri,available_at
+company:ALP,company,Alpha Industries,repo://data/fixtures/entity_registry.csv#entity-alp,2026-01-01T00:00:00Z
+filing:alp-2025,filing,Alpha 2025 annual report,repo://data/filings/alpha_2025_annual.txt,2026-02-20T20:05:00Z
+passage:alp-warranty,passage,Alpha warranty provision note,repo://data/filings/alpha_2025_annual.txt#page=3&section=1,2026-02-20T20:05:00Z
+fact:alp-net-income,fact,Alpha restated net income USD 90 million,repo://data/filings/alpha_2025_annual.txt#page=3&section=1,2026-02-20T20:05:00Z
+event:alp-warranty,event,Warranty provision correction,repo://data/filings/alpha_2025_annual.txt#page=3&section=1,2026-02-20T20:05:00Z
+instrument:ALP,instrument,ALP equity fixture,repo://data/fixtures/prices.csv#ALP,2026-01-02T21:10:00Z
