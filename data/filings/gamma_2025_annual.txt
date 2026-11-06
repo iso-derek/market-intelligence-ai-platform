@@ -1,0 +1,20 @@
+=== PAGE 1 ===
+## Business overview
+Gamma Software is a fictional technology company used for educational testing. Revenue for the fiscal year ended 31 December 2025 was USD 600 million. Subscription renewals remained the largest revenue source.
+
+## Results
+Net income was USD 120 million. Research and development spending increased as the company expanded its security product line.
+
+=== PAGE 2 ===
+## Liquidity and capital
+Current assets were USD 500 million and current liabilities were USD 200 million. Total debt was USD 100 million and shareholders' equity was USD 600 million.
+
+## Risk factors
+The company depends on service availability, skilled employees, secure software development, and customer retention. Cyber incidents and platform outages could damage operations.
+
+=== PAGE 3 ===
+## Revenue recognition note
+Subscription revenue is recognised over the service period. Implementation services are recognised as obligations are satisfied. The fixture contains no forward revenue forecast.
+
+## Scope statement
+All names, amounts, and disclosures in this document are fictional and exist solely to test point-in-time retrieval, citations, and numerical consistency.

@@ -1,0 +1,20 @@
+=== PAGE 1 ===
+## Business overview
+Alpha Industries is a fictional industrial equipment manufacturer used for educational testing. Revenue for the fiscal year ended 31 December 2025 was USD 1,000 million. Demand was strongest in maintenance equipment, while new-project orders were mixed.
+
+## Results
+Restated net income was USD 90 million. The earlier fixture version reported USD 100 million before a warranty provision was corrected. The complete restated report became available on 20 February 2026.
+
+=== PAGE 2 ===
+## Liquidity and capital
+Current assets were USD 590 million and current liabilities were USD 310 million. Total debt was USD 410 million and shareholders' equity was USD 480 million.
+
+## Risk factors
+The company depends on a concentrated group of component suppliers. Delivery disruption, input-cost inflation, or covenant pressure could reduce operating flexibility. These statements describe scenarios and are not forecasts.
+
+=== PAGE 3 ===
+## Accounting note — warranty provision
+Management increased the warranty provision by USD 10 million after reviewing claims data. The correction reduced net income from the initially reported USD 100 million to USD 90 million. Revenue was unchanged.
+
+## Scope statement
+All names, amounts, and disclosures in this document are fictional and exist solely to test point-in-time retrieval, citations, and numerical consistency.

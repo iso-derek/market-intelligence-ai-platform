@@ -2,8 +2,8 @@
 
 **Updated:** 6 November 2026
 
-**Phase:** D3.3 held-out sentiment evaluation
-**Status:** D1–D3.2 are stacked review branches; D3.3 is implemented on `codex/d3-3-sentiment-evaluation`
+**Phase:** D4.1 bounded filings corpus
+**Status:** D1–D3.3 are stacked review branches; D4.1 is implemented on `codex/d4-1-filings-corpus`
 
 ## Baseline
 
@@ -77,6 +77,20 @@ The reviewable D3.2 commit is `db5c7eb7a47fdf74bc76c948a18d0e4f5c1b7699` on draf
 - Deterministic non-UI D0–D3.3 suite: 57/57 passed locally.
 - Clean-process Streamlit browser acceptance passed for the frozen-holdout caption, per-class report, seeded intervals, overlap evidence, corpus identity, and report download.
 
+The reviewable D3.3 commit is `9629647359f34fa43a547cf16c0ae0148a563e21` on draft pull request #7.
+
+## Completed D4.1 work on the current branch
+
+- Added three fictional annual reports with explicit pages, sections, fiscal periods, filing times, and availability times.
+- Added an immutable corpus manifest with exact document SHA-256 values.
+- Added bounded UTF-8 parsing, root-contained path checks, size/null-byte checks, hash verification, consecutive-page validation, and section-level hashes.
+- Added complete-document historical cutoff filtering.
+- Added a dedicated Filings corpus workspace with document and passage evidence tables.
+- Added integrity, metadata, cutoff, tamper, traversal, and malformed-page tests plus a dedicated corpus methodology document.
+- Focused D4.1 suite: 7/7 passed locally.
+- Deterministic non-UI D0–D4.1 suite: 64/64 passed locally.
+- Clean-process Streamlit browser acceptance passed for 3 verified reports / 9 pages / 18 sections and the historical cutoff that exposes only Beta and Gamma.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -94,7 +108,7 @@ The reviewable D3.2 commit is `db5c7eb7a47fdf74bc76c948a18d0e4f5c1b7699` on draf
 - D2 static compilation: passed for `app.py`, `src`, and `tests`.
 - Full local suite: Streamlit `AppTest` again stalled in this sandbox; deterministic non-UI tests and browser acceptance remain separate evidence, and the clean-runner matrix is authoritative.
 - Live Streamlit browser acceptance at `127.0.0.1:8503`: passed for workspace navigation, adjusted-price KPIs, the 2.9-to-3.0 CPI cutoff revision, and ALP report-version 2 with visible dimensions.
-- Local Streamlit browser acceptance and screenshots: pending after the full local suite.
+- Local Streamlit browser acceptance: passed for D1, D2, D3.1, D3.2, D3.3, and D4.1 review paths.
 - Optional FinBERT execution: not part of the default suite; not rerun in this milestone yet.
 
 ## Current functionality
@@ -114,16 +128,16 @@ The reviewable D3.2 commit is `db5c7eb7a47fdf74bc76c948a18d0e4f5c1b7699` on draf
 
 - SQLite currently targets one local application process; multi-worker hosting, retention, and automated backup/restore are not implemented.
 - D2 uses fictional offline fixtures; no live price, macro, or filing provider is integrated.
-- Event taxonomy/evaluation, filings RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
+- Filings retrieval/RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
 - The 18-item diagnostic set is too small for external model-validity claims.
 - Official-provider availability is external and must remain visible when it fails.
 - Real screenshots must wait for an actual browser acceptance session.
 
 ## Next three priorities
 
-1. Verify D3.1 locally and in the four-job compatibility matrix, then open its stacked draft pull request.
-2. Build D3.2 event taxonomy and independent labelled evaluation on the entity audit rows.
-3. Build D3.3 held-out sentiment evaluation with uncertainty and overlap review.
+1. Commit D4.1 and verify its stacked pull request in the four-job compatibility matrix.
+2. Build D4.2 lexical and vector retrieval baselines with frozen relevance judgements.
+3. Build D4.3 grounded filings question answering with passage-level citations and abstention.
 
 ## Remaining before a stable release
 
