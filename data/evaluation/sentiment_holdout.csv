@@ -1,0 +1,31 @@
+case_id,headline,label,source_group,review_status,split
+pos-01,Manufacturer says quarterly profit jumped despite higher costs,Positive,earnings,author-reviewed,holdout
+pos-02,Cloud provider reports strong enterprise orders,Positive,earnings,author-reviewed,holdout
+pos-03,Retailer raises its full-year dividend,Positive,capital-returns,author-reviewed,holdout
+pos-04,Software group says customer retention improved,Positive,operations,author-reviewed,holdout
+pos-05,Broker issues an upgrade after balance-sheet progress,Positive,analyst-actions,author-reviewed,holdout
+pos-06,Chip designer posts record bookings for the quarter,Positive,earnings,author-reviewed,holdout
+pos-07,Industrial company expands margins through efficiency measures,Positive,operations,author-reviewed,holdout
+pos-08,Lender describes demand as resilient,Positive,earnings,author-reviewed,holdout
+pos-09,Energy producer sees a surge in contracted volumes,Positive,operations,author-reviewed,holdout
+pos-10,Payments firm wins a strategic partnership,Positive,operations,author-reviewed,holdout
+neg-01,Manufacturer says quarterly loss widened,Negative,earnings,author-reviewed,holdout
+neg-02,Directors express concern about liquidity,Negative,risk,author-reviewed,holdout
+neg-03,Retailer cuts its workforce after slower sales,Negative,operations,author-reviewed,holdout
+neg-04,Software group faces a customer lawsuit,Negative,legal,author-reviewed,holdout
+neg-05,Broker issues a downgrade on leverage concerns,Negative,analyst-actions,author-reviewed,holdout
+neg-06,Chip designer gives weak near-term guidance,Negative,guidance,author-reviewed,holdout
+neg-07,Industrial company misses its delivery target,Negative,operations,author-reviewed,holdout
+neg-08,Lender reports margin pressure in consumer credit,Negative,earnings,author-reviewed,holdout
+neg-09,Energy producer flags elevated credit risk,Negative,risk,author-reviewed,holdout
+neg-10,Payments firm warns that volatility remains high,Negative,risk,author-reviewed,holdout
+neu-01,Manufacturer publishes its annual report,Neutral,filings,author-reviewed,holdout
+neu-02,Cloud provider appoints a new non-executive director,Neutral,governance,author-reviewed,holdout
+neu-03,Retailer schedules its annual shareholder meeting,Neutral,governance,author-reviewed,holdout
+neu-04,Software group reports an unchanged registered address,Neutral,filings,author-reviewed,holdout
+neu-05,Broker files a routine ownership form,Neutral,filings,author-reviewed,holdout
+neu-06,Chip designer opens a previously announced office,Neutral,operations,author-reviewed,holdout
+neu-07,Industrial company announces its reporting timetable,Neutral,filings,author-reviewed,holdout
+neu-08,Lender completes its scheduled auditor rotation,Neutral,governance,author-reviewed,holdout
+neu-09,Energy producer launches an investor-relations website,Neutral,communications,author-reviewed,holdout
+neu-10,Payments firm updates its privacy policy,Neutral,governance,author-reviewed,holdout

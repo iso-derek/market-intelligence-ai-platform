@@ -11,7 +11,7 @@ from ingestion import FEEDS,normalise_news,fetch_registered_feeds
 from modelling import score_news,generate_market_summary
 from language_models import finbert_predictions
 from evidence import evidence_brief,audit_claims,export_bundle
-from evaluation import evaluate_sentiment
+from evaluation import evaluate_sentiment,evaluate_sentiment_with_uncertainty
 from persistence import EvidenceStore
 from market_dashboard import render_market_dashboard
 from entities import load_entity_registry,resolve_news_entities,resolution_summary
@@ -172,14 +172,14 @@ with research:
     st.write('Compare keyword and FinBERT predictions against independently assigned sentiment labels.')
     evaluation_upload=st.file_uploader('Evaluation CSV: headline,label (Positive, Neutral, Negative)',type=['csv'],key='eval')
     try:
-        evaluation_data=pd.read_csv(evaluation_upload) if evaluation_upload else pd.read_csv(Path(__file__).parent/'data/evaluation/diagnostic_cases.csv')
+        evaluation_data=pd.read_csv(evaluation_upload) if evaluation_upload else pd.read_csv(Path(__file__).parent/'data/evaluation/sentiment_holdout.csv')
     except (pd.errors.ParserError,UnicodeDecodeError) as exc:
         st.error(f'Could not read the evaluation CSV: {exc}')
         st.stop()
-    if evaluation_upload is None: st.caption('Default: small author-labelled synthetic diagnostics. These are functional checks, not an external benchmark.')
+    if evaluation_upload is None: st.caption('Default: frozen balanced 30-item author-reviewed holdout. It is reproducible but not an external benchmark.')
     if st.button('Evaluate selected sentiment model'):
         try:
-            report=evaluate_sentiment(evaluation_data,'finbert' if backend.startswith('FinBERT') else 'lexicon')
+            report=evaluate_sentiment_with_uncertainty(evaluation_data,'finbert' if backend.startswith('FinBERT') else 'lexicon')
             st.json(report)
             st.download_button('Download evaluation report',json.dumps(report,indent=2),'sentiment_evaluation.json','application/json')
         except (ValueError,RuntimeError,OSError) as exc: st.error(str(exc))

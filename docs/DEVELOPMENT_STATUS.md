@@ -2,8 +2,8 @@
 
 **Updated:** 6 November 2026
 
-**Phase:** D3.2 event taxonomy and linkage
-**Status:** D1–D3.1 are stacked review branches; D3.2 is implemented on `codex/d3-2-event-taxonomy`
+**Phase:** D3.3 held-out sentiment evaluation
+**Status:** D1–D3.2 are stacked review branches; D3.3 is implemented on `codex/d3-3-sentiment-evaluation`
 
 ## Baseline
 
@@ -61,6 +61,21 @@ The reviewable D3.1 commit is `bf3ad8a4da1afdb28de84f63f4257a607728d024` on draf
 - Focused D3.2 suite: 8/8 passed; deterministic non-UI D0–D3.2 suite: 51/51 passed locally.
 - The 24-item authored diagnostic reports accuracy 1.0 and macro F1 1.0; this is a mechanics check, not external validity evidence.
 - Live Streamlit browser acceptance passed for event status metrics, conservative entity links, no-impact disclosure, and the hashed diagnostic report.
+
+The reviewable D3.2 commit is `db5c7eb7a47fdf74bc76c948a18d0e4f5c1b7699` on draft pull request #6.
+
+## Completed D3.3 work on the current branch
+
+- Added a frozen balanced 30-item sentiment holdout with case IDs, source groups, review status, and split markers.
+- Added per-class precision, recall, F1, support, plus the existing accuracy, macro F1, predictions, and confusion matrix.
+- Added seeded nonparametric bootstrap intervals for accuracy and macro F1.
+- Added case-level keyword-vocabulary overlap review and coverage reporting.
+- Preserved backend and model revision identity, exact dataframe hash, and optional FinBERT isolation.
+- Updated the default Research evaluation path and documented corpus, uncertainty, leakage, and interpretation boundaries.
+- Focused D3.3 suite: 6/6 passed. The lexicon scored accuracy 0.8333 and macro F1 0.8375; 95% bootstrap intervals were [0.6667, 0.9667] and [0.6710, 0.9597].
+- Exactly 50% of holdout headlines contain a fixed lexicon term; the report exposes every case-level overlap.
+- Deterministic non-UI D0–D3.3 suite: 57/57 passed locally.
+- Clean-process Streamlit browser acceptance passed for the frozen-holdout caption, per-class report, seeded intervals, overlap evidence, corpus identity, and report download.
 
 ## Verification status
 
