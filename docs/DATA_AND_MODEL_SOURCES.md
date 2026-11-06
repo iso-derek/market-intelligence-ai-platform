@@ -22,6 +22,14 @@ The provider protocol is an engineering boundary, not evidence that a live provi
 - Uncertainty: shared aliases remain `ambiguous`; unmatched text remains `unknown`; neither state is silently coerced.
 - Limitation: the registry does not handle corporate actions, historical ticker changes, subsidiaries, people, places, fuzzy spelling, or multilingual names.
 
+## D3.2 event taxonomy diagnostic
+
+- File: `data/evaluation/event_taxonomy_cases.csv`.
+- Use: separately labelled functional evaluation of the fixed event taxonomy, including ambiguous and unknown outcomes.
+- Origin: repository-authored educational diagnostics, not an external or representative market-news corpus.
+- Exported identity: evaluation reports include the dataset SHA-256 and `keyword-event-v1` rule version.
+- Limitation: 24 examples are insufficient for model-validity claims and share some vocabulary with the transparent rule list.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`

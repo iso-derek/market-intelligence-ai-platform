@@ -2,8 +2,8 @@
 
 **Updated:** 6 November 2026
 
-**Phase:** D3.1 entity resolution
-**Status:** D1 and D2 are green draft pull requests; D3.1 is implemented on `codex/d3-1-entity-resolution`
+**Phase:** D3.2 event taxonomy and linkage
+**Status:** D1–D3.1 are stacked review branches; D3.2 is implemented on `codex/d3-2-event-taxonomy`
 
 ## Baseline
 
@@ -47,6 +47,20 @@ The reviewable D2 commit is `2e8b058c0bdd0fd6da7491c25512b224ad9fee41` on draft 
 - Added nine focused tests covering aliases, tickers, ambiguity, unknowns, boundaries, multiple companies, case variants, versioning, and registry integrity.
 - Deterministic non-UI D0–D3.1 suite: 43/43 passed locally.
 - Live Streamlit browser acceptance: passed for the News explorer resolution metrics, auditable table, resolver version, and no-return-impact disclosure.
+
+The reviewable D3.1 commit is `bf3ad8a4da1afdb28de84f63f4257a607728d024` on draft pull request #5.
+
+## Completed D3.2 work on the current branch
+
+- Added a transparent seven-class event taxonomy with explicit classified, ambiguous, and unknown states.
+- Added matched-term, candidate, and rule-version audit fields.
+- Linked event rows to every resolved company/sector without forcing ambiguous or unknown entity links.
+- Added a 24-item separately labelled diagnostic with dataset hash, accuracy, macro F1, per-class metrics, confusion matrix, and prediction counts.
+- Added News explorer event metrics/table and a Research evaluation diagnostic action.
+- Documented taxonomy semantics, linkage boundaries, evaluation evidence, and limitations.
+- Focused D3.2 suite: 8/8 passed; deterministic non-UI D0–D3.2 suite: 51/51 passed locally.
+- The 24-item authored diagnostic reports accuracy 1.0 and macro F1 1.0; this is a mechanics check, not external validity evidence.
+- Live Streamlit browser acceptance passed for event status metrics, conservative entity links, no-impact disclosure, and the hashed diagnostic report.
 
 ## Verification status
 
