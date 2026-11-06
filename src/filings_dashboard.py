@@ -5,11 +5,13 @@ import pandas as pd
 import streamlit as st
 
 from filings import filings_as_of, load_filings_corpus
+from filings_qa import answer_filing_question, evaluate_filing_qa, load_qa_cases
 from retrieval import evaluate_retriever, file_sha256, load_relevance_cases, rank_passages
 
 
 CORPUS_ROOT = Path(__file__).resolve().parents[1] / "data" / "filings"
 RELEVANCE_CASES = Path(__file__).resolve().parents[1] / "data" / "evaluation" / "filings_relevance_cases.csv"
+QA_CASES = Path(__file__).resolve().parents[1] / "data" / "evaluation" / "filings_qa_cases.csv"
 CUTOFFS = {
     "23 January 2026 — Beta only": "2026-01-23T23:59:59Z",
     "1 February 2026 — Beta and Gamma": "2026-02-01T23:59:59Z",
@@ -25,6 +27,11 @@ def load_verified_filings(root: str) -> tuple[pd.DataFrame, pd.DataFrame]:
 @st.cache_data
 def load_frozen_relevance_cases(path: str) -> pd.DataFrame:
     return load_relevance_cases(path)
+
+
+@st.cache_data
+def load_frozen_qa_cases(path: str) -> pd.DataFrame:
+    return load_qa_cases(path)
 
 
 def render_filings_dashboard() -> None:
@@ -125,4 +132,43 @@ def render_filings_dashboard() -> None:
     st.caption(
         f"Frozen authored cases: {len(cases)} · SHA-256 {file_sha256(RELEVANCE_CASES)} · "
         "fixture-author reviewed, not an external benchmark."
+    )
+
+    st.divider()
+    st.subheader("Grounded filings answer")
+    st.caption("Returns exact eligible source sentences with passage citations, or abstains. No generative model is used.")
+    question = st.text_input(
+        "Question for the eligible filings",
+        "What amounts did Alpha's warranty correction change net income from and to?",
+        key="filing_qa_question",
+    )
+    qa_result = answer_filing_question(passages, question, CUTOFFS[cutoff_label])
+    if qa_result["status"] == "answered":
+        st.success(qa_result["answer"])
+        st.dataframe(
+            pd.DataFrame(qa_result["citations"]).rename(columns={
+                "passage_id": "Passage ID", "document_id": "Document ID", "company": "Company",
+                "page": "Page", "section": "Section", "available_at": "Available at",
+                "text_sha256": "Passage SHA-256", "quote": "Exact supporting quote",
+            }),
+            hide_index=True,
+            alt="Exact filing answer citation with page section and passage hash",
+        )
+    else:
+        st.info(qa_result["answer"])
+    with st.expander("Answer audit"):
+        st.json(qa_result["audit"])
+
+    qa_cases = load_frozen_qa_cases(str(QA_CASES))
+    qa_summary, qa_details = evaluate_filing_qa(passages, qa_cases)
+    qa_cards = st.columns(4)
+    qa_cards[0].metric("Status accuracy", f"{qa_summary['status_accuracy']:.1%}", border=True)
+    qa_cards[1].metric("Citation accuracy", f"{qa_summary['citation_accuracy']:.1%}", border=True)
+    qa_cards[2].metric("Token support", f"{qa_summary['numerical_token_support']:.1%}", border=True)
+    qa_cards[3].metric("Abstention recall", f"{qa_summary['abstention_recall']:.1%}", border=True)
+    with st.expander("Frozen QA case evidence"):
+        st.dataframe(qa_details, hide_index=True)
+    st.caption(
+        f"Frozen QA cases: {len(qa_cases)} · SHA-256 {file_sha256(QA_CASES)} · "
+        "fixture-author reviewed mechanics, not real-world semantic validation."
     )
