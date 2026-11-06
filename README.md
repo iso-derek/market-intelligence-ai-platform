@@ -39,6 +39,7 @@ The current release answers those questions for a bounded set of financial headl
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 - Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
 - Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
+- Hash-verified bounded filings corpus with safe local paths, exact document and passage hashes, explicit page/section/period metadata, and point-in-time availability.
 
 Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
 
@@ -53,6 +54,7 @@ The dashboard has two workspaces:
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
+- **Filings corpus:** inspect the three fictional verified reports and their page/section evidence at historical availability cutoffs.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -155,6 +157,8 @@ See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, proven
 The event categories, uncertainty rules, linkage semantics, labelled diagnostic, and limitations are documented in [EVENT_TAXONOMY.md](docs/EVENT_TAXONOMY.md).
 
 The frozen sentiment split, per-class metrics, bootstrap method, vocabulary-overlap review, and responsible interpretation are documented in [SENTIMENT_EVALUATION.md](docs/SENTIMENT_EVALUATION.md).
+
+The bounded report manifest, parser grammar, integrity checks, time semantics, and corpus limitations are documented in [FILINGS_CORPUS.md](docs/FILINGS_CORPUS.md).
 
 ## Installation
 

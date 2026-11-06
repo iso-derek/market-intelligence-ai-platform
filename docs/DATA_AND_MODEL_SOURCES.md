@@ -39,6 +39,14 @@ The provider protocol is an engineering boundary, not evidence that a live provi
 - Review: the lexicon report exports case-level overlap with its fixed positive/negative vocabulary.
 - Limitation: balanced author labels, small sample size, and unknown upstream pretrained-corpus overlap constrain interpretation.
 
+## D4.1 fictional filings corpus
+
+- Files: `data/filings/*.txt` with `manifest.csv`.
+- Use: page/section provenance, point-in-time availability, retrieval, citation, and numerical-consistency testing.
+- Origin: repository-authored fictional annual reports; not issuer or regulator filings.
+- Integrity: exact UTF-8 bytes are verified against manifest SHA-256 values; every normalized section receives a separate content hash.
+- Limitation: no remote acquisition, arbitrary PDF parsing, OCR, tables, exhibits, or redistribution claim.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`
