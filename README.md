@@ -49,6 +49,7 @@ The dashboard has four workspaces:
 
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
+- **Rates & FX tab:** inspect tenor-labelled yields, benchmark-matched credit spreads in basis points, and BASE/QUOTE performance with explicit direction.
 - **News evidence:** use the three research areas below.
 
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
@@ -171,6 +172,8 @@ The extractive answer contract, citation schema, defensive text boundary, frozen
 The role/tool contract, budgets, trace schema, conflict handling, and workflow limitations are documented in [TYPED_WORKFLOWS.md](docs/TYPED_WORKFLOWS.md).
 
 Release-to-session alignment, abnormal-return formulas, cutoff safeguards, and inference limits are documented in [EVENT_STUDIES.md](docs/EVENT_STUDIES.md).
+
+Yield, spread, currency-pair, quote-direction, and point-in-time conventions are documented in [RATES_AND_FX.md](docs/RATES_AND_FX.md).
 
 ## Installation
 
