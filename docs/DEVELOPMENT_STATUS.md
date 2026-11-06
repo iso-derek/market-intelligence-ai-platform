@@ -143,6 +143,17 @@ The reviewable D5.1 commit is `b1f97648307acdd1e3af9d08664f4f8b6d23bb97` on its 
 - Deterministic non-UI D0–D6.1 suite: 91/91 passed locally.
 - Clean-process Streamlit browser acceptance passed for the before-close 6 January session, 2.54% `[-1,+1]` CAR, two-peer benchmark, window table, and causal-inference warning.
 
+The reviewable D6.1 commit is `98348e183236ce4450d3c15dab108167c32f9180` on its stacked draft pull request.
+
+## D6.2 work in progress on the current branch
+
+- Added point-in-time Treasury, fictional corporate-yield, EUR/USD, and USD/NGN fixtures with explicit units and quote direction.
+- Added tenor-preserving yield curves, benchmark-matched credit spreads in basis points, and base-currency FX returns with strengthening/weakening language.
+- Added hand-checked cutoff, spread, return, unit, and direction tests plus a dedicated Rates & FX tab.
+- Focused D6.2 suite: 6/6 passed locally.
+- Deterministic non-UI D0–D6.2 suite: 97/97 passed locally.
+- Clean-process Streamlit browser acceptance passed for the tenor-labelled yield curve, 140 bps Alpha 10Y spread, FX table, and BASE/QUOTE direction disclosure.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.

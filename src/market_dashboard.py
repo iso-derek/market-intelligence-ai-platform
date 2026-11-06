@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 from event_study import market_adjusted_event_study
+from rates_fx import credit_spreads, fx_performance, load_rates_fx, yield_curve
 
 from market_data import (
     FixtureProvider,
@@ -29,9 +30,15 @@ def load_market_bundle(root: str) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFr
     return provider.prices(), provider.macro(), provider.fundamentals()
 
 
+@st.cache_data
+def load_rates_bundle(path: str) -> pd.DataFrame:
+    return load_rates_fx(path)
+
+
 def render_market_dashboard() -> None:
     """Render a point-in-time market, macro, and company research workspace."""
     prices, macro, fundamentals = load_market_bundle(str(FIXTURE_ROOT))
+    rates_fx = load_rates_bundle(str(FIXTURE_ROOT / "rates_fx.csv"))
     with st.sidebar:
         st.header("Point-in-time controls")
         cutoff_label = st.selectbox("Historical view", list(CUTOFFS), index=1, key="market_cutoff")
@@ -66,8 +73,8 @@ def render_market_dashboard() -> None:
     metric_columns[2].metric("Annualized volatility", f"{selected.annualized_volatility:.2%}", border=True)
     metric_columns[3].metric("Trading calendar", selected.calendar, border=True)
 
-    market_tab, macro_tab, company_tab, event_tab, method_tab = st.tabs(
-        ["Market prices", "Macro vintages", "Company peers", "Event study", "Methodology"]
+    market_tab, macro_tab, company_tab, event_tab, rates_tab, method_tab = st.tabs(
+        ["Market prices", "Macro vintages", "Company peers", "Event study", "Rates & FX", "Methodology"]
     )
 
     with market_tab:
@@ -192,6 +199,21 @@ def render_market_dashboard() -> None:
         event_cards[2].metric("Peer benchmark", f"{summary['peer_count']} instruments", border=True)
         st.dataframe(event_window, hide_index=True, alt="Release-aligned instrument peer benchmark abnormal returns and cumulative abnormal return")
         st.warning("This tiny educational window demonstrates timing and arithmetic only; it does not support statistical or causal inference.")
+
+    with rates_tab:
+        st.subheader("Fixed income and FX monitor")
+        curve = yield_curve(rates_fx, cutoff)
+        spreads = credit_spreads(rates_fx, cutoff)
+        fx = fx_performance(rates_fx, cutoff)
+        st.dataframe(curve, hide_index=True, alt="Government yield curve with tenor percent units dates and availability")
+        if not spreads.empty:
+            st.metric("Alpha 10Y credit spread", f"{spreads.iloc[0].spread_bps:.0f} bps", border=True)
+            st.dataframe(spreads, hide_index=True, alt="Corporate yield benchmark yield and credit spread in basis points")
+        if fx.empty:
+            st.info("Two FX observations are not yet available at this cutoff.")
+        else:
+            st.dataframe(fx, hide_index=True, alt="FX performance with base quote currencies units and explicit strengthening interpretation")
+        st.caption("BASE/QUOTE values are QUOTE currency per one BASE currency. A positive return means the BASE strengthened versus the QUOTE.")
 
     with method_tab:
         st.markdown(
