@@ -47,6 +47,14 @@ The provider protocol is an engineering boundary, not evidence that a live provi
 - Integrity: exact UTF-8 bytes are verified against manifest SHA-256 values; every normalized section receives a separate content hash.
 - Limitation: no remote acquisition, arbitrary PDF parsing, OCR, tables, exhibits, or redistribution claim.
 
+## D4.2 filing relevance diagnostic
+
+- File: `data/evaluation/filings_relevance_cases.csv`.
+- Use: frozen recall@3, mean reciprocal rank, and nDCG@3 comparison for lexical TF-IDF and dense LSA vectors.
+- Origin: eight repository-authored query-to-passage judgements written from the fictional corpus.
+- Identity: the dashboard displays the exact CSV SHA-256 and case-level retrieved passage IDs.
+- Limitation: fixture-author review is not independent assessment; the small, source-close diagnostic cannot establish external retrieval quality.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`

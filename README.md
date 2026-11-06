@@ -45,7 +45,7 @@ Live market/macro/filings providers, filings RAG, generative research agents, ev
 
 ## Current interface
 
-The dashboard has two workspaces:
+The dashboard has three workspaces:
 
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **News evidence:** use the three research areas below.
@@ -54,7 +54,7 @@ The dashboard has two workspaces:
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
-- **Filings corpus:** inspect the three fictional verified reports and their page/section evidence at historical availability cutoffs.
+- **Filings corpus:** inspect the three fictional verified reports, search eligible passages with lexical or dense-vector baselines, and compare frozen retrieval metrics.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -88,7 +88,7 @@ The complete target architecture and its sequencing are documented in [PRODUCT_V
 |---|---|---|
 | Interface | Streamlit | Fast, testable Python interface for a bounded research workflow. |
 | Data handling | pandas, NumPy | Explicit tabular transformations and portable exports. |
-| Retrieval | scikit-learn TF-IDF and cosine similarity | Transparent lexical baseline before introducing embeddings. |
+| Retrieval | scikit-learn TF-IDF and seeded truncated SVD | Comparable lexical and transparent dense-vector baselines without a remote model dependency. |
 | HTTP and XML | requests and standard-library XML parsing | Small, inspectable ingestion surface with size/entity checks. |
 | Persistence | SQLite | Transactional local storage, versioned schema, immutable payloads, and portable operation without a service dependency. |
 | Optional NLP | ProsusAI FinBERT | Finance-specific sentiment comparator, isolated from the default install. |
@@ -137,6 +137,8 @@ cosine(q, d) = (q · d) / (||q|| ||d||)
 
 Only positive-similarity results are returned. When none qualify, the system abstains instead of fabricating a summary.
 
+Filing retrieval uses a shared point-in-time interface for unigram/bigram TF-IDF and a deterministic dense LSA vector baseline. The latter projects the TF-IDF matrix with seeded truncated SVD; it is not a pretrained language-model embedding. The eight frozen authored relevance cases report recall@3, mean reciprocal rank, and nDCG@3. These diagnostic metrics are regression evidence, not external model validation.
+
 ### Evaluation
 
 Accuracy measures the share of correct predictions. Macro F1 calculates F1 independently for Negative, Neutral, and Positive labels and averages the three values, so a frequent class cannot dominate the result. The included 18-item diagnostic fixture is small, synthetic, and author-labelled; it verifies mechanics rather than external validity.
@@ -159,6 +161,8 @@ The event categories, uncertainty rules, linkage semantics, labelled diagnostic,
 The frozen sentiment split, per-class metrics, bootstrap method, vocabulary-overlap review, and responsible interpretation are documented in [SENTIMENT_EVALUATION.md](docs/SENTIMENT_EVALUATION.md).
 
 The bounded report manifest, parser grammar, integrity checks, time semantics, and corpus limitations are documented in [FILINGS_CORPUS.md](docs/FILINGS_CORPUS.md).
+
+The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and interpretation limits are documented in [RETRIEVAL_EVALUATION.md](docs/RETRIEVAL_EVALUATION.md).
 
 ## Installation
 

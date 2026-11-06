@@ -91,6 +91,20 @@ The reviewable D3.3 commit is `9629647359f34fa43a547cf16c0ae0148a563e21` on draf
 - Deterministic non-UI D0–D4.1 suite: 64/64 passed locally.
 - Clean-process Streamlit browser acceptance passed for 3 verified reports / 9 pages / 18 sections and the historical cutoff that exposes only Beta and Gamma.
 
+The reviewable D4.1 commit is `f40a037ddde5b0da18a387cb2b42b195836fd865` on its stacked draft pull request.
+
+## D4.2 work in progress on the current branch
+
+- Added a shared ranking contract for lexical TF-IDF and deterministic dense LSA vectors.
+- Applied historical availability before fitting either retrieval baseline.
+- Added eight frozen, fixture-author-reviewed query-to-passage judgements with exact corpus identity.
+- Added recall@3, mean reciprocal rank, nDCG@3, and case-level result exports.
+- Added the retrieval lab and explicit external-validity limitations to the Filings corpus workspace.
+- Focused D4.2 suite: 7/7 passed locally.
+- Frozen diagnostic results: lexical recall@3/MRR/nDCG@3 = 1.0000/1.0000/1.0000; dense LSA = 1.0000/0.9375/0.9539.
+- Deterministic non-UI D0–D4.2 suite: 71/71 passed locally.
+- Clean-process Streamlit browser acceptance passed for lexical and dense method selection, ranked source provenance, diagnostic metrics, and exact case-file hash.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
