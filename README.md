@@ -38,6 +38,7 @@ The current release answers those questions for a bounded set of financial headl
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 - Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
+- Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
 
 Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
 
@@ -152,6 +153,8 @@ Accuracy measures the share of correct predictions. Macro F1 calculates F1 indep
 See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints. The SQLite schema, time semantics, migrations, replay rules, and backup boundary are documented in [PERSISTENCE.md](docs/PERSISTENCE.md).
 
 The event categories, uncertainty rules, linkage semantics, labelled diagnostic, and limitations are documented in [EVENT_TAXONOMY.md](docs/EVENT_TAXONOMY.md).
+
+The frozen sentiment split, per-class metrics, bootstrap method, vocabulary-overlap review, and responsible interpretation are documented in [SENTIMENT_EVALUATION.md](docs/SENTIMENT_EVALUATION.md).
 
 ## Installation
 

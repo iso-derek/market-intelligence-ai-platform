@@ -30,6 +30,15 @@ The provider protocol is an engineering boundary, not evidence that a live provi
 - Exported identity: evaluation reports include the dataset SHA-256 and `keyword-event-v1` rule version.
 - Limitation: 24 examples are insufficient for model-validity claims and share some vocabulary with the transparent rule list.
 
+## D3.3 frozen sentiment holdout
+
+- File: `data/evaluation/sentiment_holdout.csv`.
+- Use: balanced frozen-split comparison for the keyword baseline and optional pinned FinBERT backend.
+- Origin: 30 repository-authored, author-reviewed educational headlines; not an external benchmark.
+- Identity: every report exports the exact dataframe SHA-256, backend, and model revision.
+- Review: the lexicon report exports case-level overlap with its fixed positive/negative vocabulary.
+- Limitation: balanced author labels, small sample size, and unknown upstream pretrained-corpus overlap constrain interpretation.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`
