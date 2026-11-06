@@ -119,6 +119,18 @@ The reviewable D4.2 commit is `ba1668a1ca1e1ff4e67c298f5d023adf1cedbf09` on its 
 - Deterministic non-UI D0–D4.3 suite: 78/78 passed locally.
 - Clean-process Streamlit browser acceptance passed for the exact warranty extract and hash-identified citation, all four diagnostics, and a dividend question that visibly abstains without a citation.
 
+The reviewable D4.3 commit is `00b5bcb849220007d680c1e7c24bac14c1eee6aa` on its stacked draft pull request.
+
+## D5.1 work in progress on the current branch
+
+- Added Company, Macro, News, Risk, and Synthesis roles with fixed tool allowlists.
+- Added typed facts/citations/interpretations/scenarios, step and time budgets, visible missing/error/conflict states, and canonical artifact hashes.
+- Added an offline workflow inspector that deliberately preserves its missing non-synthetic News role.
+- Added allowlist, budget, exception, uncited-fact, and conflicting-fact tests.
+- Focused D5.1 suite: 7/7 passed locally.
+- Deterministic non-UI D0–D5.1 suite: 85/85 passed locally.
+- Clean-process Streamlit browser acceptance passed for five traced roles, one visible missing News role, zero silent conflicts, budgets, and the artifact SHA-256.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.

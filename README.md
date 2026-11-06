@@ -45,7 +45,7 @@ Live market/macro/filings providers, filings RAG, generative research agents, ev
 
 ## Current interface
 
-The dashboard has three workspaces:
+The dashboard has four workspaces:
 
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **News evidence:** use the three research areas below.
@@ -55,6 +55,7 @@ The dashboard has three workspaces:
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
 - **Filings corpus:** inspect verified reports, search eligible passages, compare frozen retrieval metrics, and receive extractive passage-cited answers or explicit abstentions.
+- **Research workflow:** inspect Company, Macro, News, Risk, and Synthesis roles with tool allowlists, budgets, missing-source states, and a hash-identified trace.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -165,6 +166,8 @@ The bounded report manifest, parser grammar, integrity checks, time semantics, a
 The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and interpretation limits are documented in [RETRIEVAL_EVALUATION.md](docs/RETRIEVAL_EVALUATION.md).
 
 The extractive answer contract, citation schema, defensive text boundary, frozen QA diagnostic, and abstention limits are documented in [GROUNDED_FILINGS_QA.md](docs/GROUNDED_FILINGS_QA.md).
+
+The role/tool contract, budgets, trace schema, conflict handling, and workflow limitations are documented in [TYPED_WORKFLOWS.md](docs/TYPED_WORKFLOWS.md).
 
 ## Installation
 
