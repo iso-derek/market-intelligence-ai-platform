@@ -55,6 +55,14 @@ The provider protocol is an engineering boundary, not evidence that a live provi
 - Identity: the dashboard displays the exact CSV SHA-256 and case-level retrieved passage IDs.
 - Limitation: fixture-author review is not independent assessment; the small, source-close diagnostic cannot establish external retrieval quality.
 
+## D4.3 grounded filings QA diagnostic
+
+- File: `data/evaluation/filings_qa_cases.csv`.
+- Use: answer/abstention status, expected citation, numerical token preservation, and unanswerable-case regression checks.
+- Origin: ten repository-authored cases over the fictional filing passages.
+- Integrity: answer text is copied verbatim from a cited hash-identified passage; abstentions contain no citation.
+- Limitation: exact authored cases do not measure semantic entailment, generative faithfulness, or performance on real filings.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`

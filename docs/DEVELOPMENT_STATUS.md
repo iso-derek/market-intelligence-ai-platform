@@ -105,6 +105,20 @@ The reviewable D4.1 commit is `f40a037ddde5b0da18a387cb2b42b195836fd865` on its 
 - Deterministic non-UI D0–D4.2 suite: 71/71 passed locally.
 - Clean-process Streamlit browser acceptance passed for lexical and dense method selection, ranked source provenance, diagnostic metrics, and exact case-file hash.
 
+The reviewable D4.2 commit is `ba1668a1ca1e1ff4e67c298f5d023adf1cedbf09` on its stacked draft pull request.
+
+## D4.3 work in progress on the current branch
+
+- Added extractive filings answers with one exact passage citation or a fixed no-citation abstention.
+- Enforced entity-scoped and point-in-time evidence selection before answering.
+- Preserved document, page, section, availability, and passage hash in the citation contract.
+- Added a narrow instruction-like passage exclusion and tests for missing, future, and hostile evidence.
+- Added ten frozen QA cases covering six supported disclosures and four abstentions.
+- Focused D4.3 suite: 7/7 passed locally.
+- Frozen diagnostic: 100% status accuracy, citation accuracy, expected token support, and abstention recall on the ten authored cases.
+- Deterministic non-UI D0–D4.3 suite: 78/78 passed locally.
+- Clean-process Streamlit browser acceptance passed for the exact warranty extract and hash-identified citation, all four diagnostics, and a dividend question that visibly abstains without a citation.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.

@@ -1,0 +1,11 @@
+case_id,question,cutoff,expected_status,expected_passage_id,expected_tokens,review_status,split
+qa-001,What amounts did Alpha's warranty correction change net income from and to?,2026-03-01T23:59:59Z,answered,filing-alp-2025:p3:s1,USD 100 million|USD 90 million,fixture_author_reviewed,frozen_diagnostic
+qa-002,What were Alpha Industries current assets and current liabilities?,2026-03-01T23:59:59Z,answered,filing-alp-2025:p2:s1,USD 590 million|USD 310 million,fixture_author_reviewed,frozen_diagnostic
+qa-003,How many small-format stores did Beta Retail open and close?,2026-03-01T23:59:59Z,answered,filing-bet-2025:p3:s1,four|two,fixture_author_reviewed,frozen_diagnostic
+qa-004,What were Gamma Software total debt and shareholders' equity?,2026-03-01T23:59:59Z,answered,filing-gam-2025:p2:s1,USD 100 million|USD 600 million,fixture_author_reviewed,frozen_diagnostic
+qa-005,How does Gamma Software recognise subscription revenue and implementation services?,2026-03-01T23:59:59Z,answered,filing-gam-2025:p3:s1,service period|obligations are satisfied,fixture_author_reviewed,frozen_diagnostic
+qa-006,What was Beta Retail net income?,2026-03-01T23:59:59Z,answered,filing-bet-2025:p1:s2,USD 48 million,fixture_author_reviewed,frozen_diagnostic
+qa-007,What dividend did Alpha Industries declare?,2026-03-01T23:59:59Z,abstained,,,fixture_author_reviewed,frozen_diagnostic
+qa-008,Who is the chief executive officer of Beta Retail?,2026-03-01T23:59:59Z,abstained,,,fixture_author_reviewed,frozen_diagnostic
+qa-009,What customer churn rate did Gamma Software report?,2026-03-01T23:59:59Z,abstained,,,fixture_author_reviewed,frozen_diagnostic
+qa-010,What was Alpha Industries net income at the 1 February cutoff?,2026-02-01T23:59:59Z,abstained,,,fixture_author_reviewed,frozen_diagnostic

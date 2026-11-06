@@ -54,7 +54,7 @@ The dashboard has three workspaces:
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
-- **Filings corpus:** inspect the three fictional verified reports, search eligible passages with lexical or dense-vector baselines, and compare frozen retrieval metrics.
+- **Filings corpus:** inspect verified reports, search eligible passages, compare frozen retrieval metrics, and receive extractive passage-cited answers or explicit abstentions.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -163,6 +163,8 @@ The frozen sentiment split, per-class metrics, bootstrap method, vocabulary-over
 The bounded report manifest, parser grammar, integrity checks, time semantics, and corpus limitations are documented in [FILINGS_CORPUS.md](docs/FILINGS_CORPUS.md).
 
 The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and interpretation limits are documented in [RETRIEVAL_EVALUATION.md](docs/RETRIEVAL_EVALUATION.md).
+
+The extractive answer contract, citation schema, defensive text boundary, frozen QA diagnostic, and abstention limits are documented in [GROUNDED_FILINGS_QA.md](docs/GROUNDED_FILINGS_QA.md).
 
 ## Installation
 
