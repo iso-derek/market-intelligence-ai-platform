@@ -48,6 +48,7 @@ Live market/macro/filings providers, filings RAG, generative research agents, ev
 The dashboard has four workspaces:
 
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
+- **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
 - **News evidence:** use the three research areas below.
 
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
@@ -168,6 +169,8 @@ The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and
 The extractive answer contract, citation schema, defensive text boundary, frozen QA diagnostic, and abstention limits are documented in [GROUNDED_FILINGS_QA.md](docs/GROUNDED_FILINGS_QA.md).
 
 The role/tool contract, budgets, trace schema, conflict handling, and workflow limitations are documented in [TYPED_WORKFLOWS.md](docs/TYPED_WORKFLOWS.md).
+
+Release-to-session alignment, abnormal-return formulas, cutoff safeguards, and inference limits are documented in [EVENT_STUDIES.md](docs/EVENT_STUDIES.md).
 
 ## Installation
 

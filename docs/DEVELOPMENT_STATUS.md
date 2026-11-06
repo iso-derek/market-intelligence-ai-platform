@@ -131,6 +131,18 @@ The reviewable D4.3 commit is `00b5bcb849220007d680c1e7c24bac14c1eee6aa` on its 
 - Deterministic non-UI D0–D5.1 suite: 85/85 passed locally.
 - Clean-process Streamlit browser acceptance passed for five traced roles, one visible missing News role, zero silent conflicts, budgets, and the artifact SHA-256.
 
+The reviewable D5.1 commit is `b1f97648307acdd1e3af9d08664f4f8b6d23bb97` on its stacked draft pull request.
+
+## D6.1 work in progress on the current branch
+
+- Added before/after-close release alignment to explicit fixture trading sessions.
+- Added equal-weight peer market-adjusted abnormal returns and cumulative abnormal returns for bounded event windows.
+- Applied point-in-time price availability before event-window construction.
+- Added hand-checked timing, cutoff, window, benchmark, and cumulative-path tests plus visible causal-inference limitations.
+- Focused D6.1 suite: 6/6 passed locally.
+- Deterministic non-UI D0–D6.1 suite: 91/91 passed locally.
+- Clean-process Streamlit browser acceptance passed for the before-close 6 January session, 2.54% `[-1,+1]` CAR, two-peer benchmark, window table, and causal-inference warning.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
