@@ -5,6 +5,7 @@ import streamlit as st
 
 from evidence_graph import evidence_paths, graph_as_of, load_evidence_graph, operations_report
 from graph_evaluation import evaluate_graph_value, load_graph_value_cases
+from accessibility_audit import audit_streamlit_project
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,5 +46,17 @@ def render_graph_dashboard() -> None:
     report = operations_report(ROOT, graph_hash)
     st.subheader("Local operations report")
     st.json(report)
+    accessibility = audit_streamlit_project(ROOT)
+    st.subheader("Accessibility audit")
+    accessibility_cards = st.columns(3)
+    accessibility_cards[0].metric("Surfaces scanned", accessibility["files_scanned"], border=True)
+    accessibility_cards[1].metric("Static findings", accessibility["finding_count"], border=True)
+    accessibility_cards[2].metric("Static audit", "Pass" if accessibility["passed"] else "Review", border=True)
+    if accessibility["findings"]:
+        st.dataframe(
+            accessibility["findings"], hide_index=True,
+            alt="Static Streamlit accessibility and deprecated API findings",
+        )
+    st.caption(accessibility["scope"])
     st.success("Required project files are present and the current acceptance path is a verified local demonstration.")
     st.warning("No hosted deployment, automated backup, multi-worker service, or causal knowledge-graph inference is claimed.")

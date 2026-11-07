@@ -3,7 +3,7 @@
 **Updated:** 7 November 2026
 
 **Phase:** D7 product finish
-**Status:** D1–D7.2 are implemented as stacked review branches; D7.3 reconciled research reporting is implemented on `codex/d7-3-reconciled-research-report`
+**Status:** D1–D7.3 are implemented as stacked review branches; D7.4 accessibility and walkthrough evidence is implemented on `codex/d7-4-accessibility-walkthroughs`
 
 ## Baseline
 
@@ -188,6 +188,18 @@ The reviewable D7.2 commit is `bd09658` on branch `codex/d7-2-graph-value-evalua
 - Added the reconciled report table, artifact hash, and download to the Research workflow workspace.
 - Focused D7.3 suite: 5/5 passed locally.
 
+The reviewable D7.3 commit is `4be9b4c` on branch `codex/d7-3-reconciled-research-report`.
+
+## Completed D7.4 work on the current branch
+
+- Added an AST-based audit for missing accessible names, empty widget labels, deprecated width APIs, and unsafe HTML.
+- Fixed the two unlabelled expandable evidence tables found by the audit.
+- Added keyboard guidance and complete acceptance journeys for all five workspaces.
+- Exposed the repeatable audit result in the Evidence graph & operations workspace.
+- Focused D7.4 suite: 4/4 passed locally; the current app entry point and dashboard modules report zero findings.
+- Live rendered browser acceptance passed across all five workspaces on 7 November 2026.
+- The final operations view showed 6 nodes, 5 edges, graph/table exactness parity, 76% inspection reduction, 5 surfaces scanned, 0 static findings, and `verified_local_demo_not_hosted`.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -237,9 +249,9 @@ The reviewable D7.2 commit is `bd09658` on branch `codex/d7-2-graph-value-evalua
 
 ## Next priorities
 
-1. Complete D7.4 accessibility and browser walkthrough evidence.
-2. Complete D7.5 backup/restore verification.
-3. Complete D7.6 release-candidate validation without deploying.
+1. Complete D7.5 backup/restore verification.
+2. Complete D7.6 release-candidate validation without deploying.
+3. Obtain owner review of the stacked pull requests before any merge or deployment decision.
 
 ## Remaining before a stable release
 
