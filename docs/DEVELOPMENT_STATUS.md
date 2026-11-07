@@ -224,6 +224,16 @@ The reviewable D7.5 commit is `c71f69b` on branch `codex/d7-5-monitoring-recover
 - Static compilation passed for `app.py`, `src`, `scripts`, and `tests`; `git diff --check` passed.
 - Local release check reported `ready_for_owner_review`, 4/4 checks passed, no missing artifacts, and no secret findings.
 
+## D7 finish compatibility evidence
+
+The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 GitHub Actions matrix:
+
+- D7.2 `bd096583c2211fb770025b8847a4d01ad5b59c4a`: run `42386407967` passed.
+- D7.3 `4be9b4c3aec55b9b336ce196ea67a136889954e3`: run `42386413581` passed.
+- D7.4 `fff9f93a8b6b7008b5ba392c88e77d9449adafcb`: run `42386811509` passed after making the new tests create their ignored runtime parent on a fresh checkout.
+- D7.5 `bb77de965bf262fad6ac7f348ad8afca2f3a64d6`: run `42386811879` passed.
+- D7.6 feature/test head `da26c2dcdb77a0898aa91e328921aba70f759e69`: run `42386810957` passed.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -273,8 +283,8 @@ The reviewable D7.5 commit is `c71f69b` on branch `codex/d7-5-monitoring-recover
 
 ## Next priorities
 
-1. Verify the full compatibility matrix on the exact D7.2–D7.6 stacked heads.
-2. Obtain owner review of the stacked pull requests before any merge decision.
+1. Obtain owner review of draft pull requests #15–#19 before any merge decision.
+2. Merge only in stack order if each diff remains approved and green.
 3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release
