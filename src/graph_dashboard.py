@@ -4,6 +4,7 @@ from pathlib import Path
 import streamlit as st
 
 from evidence_graph import evidence_paths, graph_as_of, load_evidence_graph, operations_report
+from graph_evaluation import evaluate_graph_value, load_graph_value_cases
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +28,20 @@ def render_graph_dashboard() -> None:
     paths = evidence_paths(eligible_edges, "company:ALP", 4) if not eligible_edges.empty else eligible_edges
     st.subheader("Bounded provenance paths")
     st.dataframe(paths, hide_index=True, alt="Bounded provenance paths and relationship sequences from Alpha Industries")
+    cases, case_hash = load_graph_value_cases(ROOT / "data/evaluation/graph_value_cases.csv")
+    evaluation = evaluate_graph_value(nodes, edges, cases, case_hash)
+    st.subheader("Graph versus table evaluation")
+    evaluation_cards = st.columns(4)
+    evaluation_cards[0].metric("Graph exactness", f"{evaluation['graph_exact_rate']:.0%}", border=True)
+    evaluation_cards[1].metric("Table exactness", f"{evaluation['table_exact_rate']:.0%}", border=True)
+    evaluation_cards[2].metric("Method parity", f"{evaluation['method_parity_rate']:.0%}", border=True)
+    evaluation_cards[3].metric("Inspection reduction", f"{evaluation['inspection_reduction']:.0%}", border=True)
+    st.dataframe(
+        evaluation["results"], hide_index=True,
+        alt="Frozen graph and edge-table lookup comparison with point-in-time exactness and inspection counts",
+    )
+    st.caption(f"Frozen case SHA-256: {evaluation['case_sha256']}")
+    st.info(evaluation["conclusion"])
     report = operations_report(ROOT, graph_hash)
     st.subheader("Local operations report")
     st.json(report)

@@ -63,7 +63,7 @@ Recommended order: D0 → D1 → D2; D3 can follow D1; D4 depends on the evidenc
 
 The full remaining vision is estimated at 250–420 focused engineering hours. Re-estimate after D1 and provider/model selection. The January slice should prioritise D0–D1 evidence quality while the wider portfolio's finance and FYP flagships receive validation time.
 
-## Ten reviewable milestones after D2
+## Completed reviewable milestones after D2
 
 The remaining phases are split into ten smaller review units. Each unit receives its own branch, commit, tests, documentation, and stacked draft pull request before any merge decision.
 
@@ -76,7 +76,17 @@ The remaining phases are split into ten smaller review units. Each unit receives
 7. **D5.1 — Typed research workflows:** bounded Company, Macro, News, Risk, and Synthesis roles with allowlists, budgets, traces, and tested finance tools.
 8. **D6.1 — Release-aware event studies:** session/timezone alignment, frozen windows, leakage controls, uncertainty, multiple-testing disclosure, and simple baselines.
 9. **D6.2 — Fixed income and FX:** yield-curve, spread, and quote-direction analytics with explicit conventions and hand-checked fixtures.
-10. **D7.1 — Evidence graph and operations finish:** provenance-backed time-aware relationships, graph-vs-table evaluation, accessibility, monitoring, backup/recovery, walkthroughs, and reviewed deployment boundaries.
+10. **D7.1 — Evidence graph foundation:** provenance-backed time-aware relationships, bounded non-causal traversal, graph integrity checks, and honest local-operations boundaries.
+
+## Product-finish milestones after D7.1
+
+The remaining D7 acceptance criteria are split into five independently reviewable units rather than being claimed by the graph foundation.
+
+1. **D7.2 — Graph value evaluation:** frozen graph-versus-table tasks, historical cutoffs, exactness parity, inspection-cost evidence, and an explicit negative-result interpretation.
+2. **D7.3 — Reconciled research report:** deterministic report generation, claim-level citations, numeric source reconciliation, and a downloadable immutable artifact.
+3. **D7.4 — Accessibility and walkthrough evidence:** labelled controls and data views, keyboard-oriented navigation review, complete user journeys, and genuine browser screenshots.
+4. **D7.5 — Monitoring and recovery:** bounded operational health history, SQLite backup, verified restore, retention boundaries, and recovery instructions.
+5. **D7.6 — Release-candidate validation:** fresh-install smoke evidence, secrets and capability-claim audits, deployment plan review, and an owner-controlled release checklist. No hosting is authorised by this milestone.
 
 ## Definition of done
 
