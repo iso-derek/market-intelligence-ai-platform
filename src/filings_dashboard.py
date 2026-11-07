@@ -128,7 +128,10 @@ def render_filings_dashboard() -> None:
         alt="Lexical and dense vector filing retrieval metrics on the frozen diagnostic",
     )
     with st.expander("Case-level retrieval evidence"):
-        st.dataframe(pd.concat(detail_frames, ignore_index=True), hide_index=True)
+        st.dataframe(
+            pd.concat(detail_frames, ignore_index=True), hide_index=True,
+            alt="Case-level lexical and dense filing retrieval ranks for the frozen diagnostic",
+        )
     st.caption(
         f"Frozen authored cases: {len(cases)} · SHA-256 {file_sha256(RELEVANCE_CASES)} · "
         "fixture-author reviewed, not an external benchmark."
@@ -167,7 +170,10 @@ def render_filings_dashboard() -> None:
     qa_cards[2].metric("Token support", f"{qa_summary['numerical_token_support']:.1%}", border=True)
     qa_cards[3].metric("Abstention recall", f"{qa_summary['abstention_recall']:.1%}", border=True)
     with st.expander("Frozen QA case evidence"):
-        st.dataframe(qa_details, hide_index=True)
+        st.dataframe(
+            qa_details, hide_index=True,
+            alt="Frozen filing question-answer cases with expected and observed citation and abstention outcomes",
+        )
     st.caption(
         f"Frozen QA cases: {len(qa_cases)} · SHA-256 {file_sha256(QA_CASES)} · "
         "fixture-author reviewed mechanics, not real-world semantic validation."
