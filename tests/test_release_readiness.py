@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReleaseReadinessTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        (ROOT / "data/runtime").mkdir(parents=True, exist_ok=True)
+
     def test_current_tracked_tree_is_ready_for_owner_review(self):
         import subprocess
         tracked = subprocess.run(
