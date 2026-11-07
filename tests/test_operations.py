@@ -14,6 +14,10 @@ from persistence import EvidenceStore
 
 
 class OperationsRecoveryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        (ROOT / "data/runtime").mkdir(parents=True, exist_ok=True)
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(dir=ROOT / "data/runtime")
         self.addCleanup(self.temp.cleanup)
