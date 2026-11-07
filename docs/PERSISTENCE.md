@@ -42,6 +42,10 @@ The snapshot identifier is SHA-256 over the source ID and exact response bytes. 
 
 Network, HTTP, XML, and validation failures create visible failed attempts and update the source's last status/error. They never create snapshot rows, never create synthetic replacements, and never erase previously stored evidence. HTTP GET retries are bounded to two retries for connection, read, HTTP 429, and selected 5xx failures.
 
+## Verified backup and recovery
+
+The operations helper uses SQLite's online backup API, verifies integrity, schema version, and row counts, and refuses to overwrite a destination. Recovery always targets a new database file. See [BACKUP_AND_RECOVERY.md](BACKUP_AND_RECOVERY.md) for the operator procedure and retention boundaries.
+
 ## Current operating boundary
 
-SQLite is appropriate for the verified local single-process workflow. Multi-worker concurrency, scheduled ingestion, retention rules, encrypted storage, automated backup/restore, and server deployment are not implemented. Those require a separate operating design and review.
+SQLite is appropriate for the verified local single-process workflow. Verified on-demand local backup and restore helpers are implemented. Multi-worker concurrency, scheduled ingestion or backups, retention rules, encrypted/off-device storage, alert delivery, and server deployment are not implemented. Those require a separate operating design and review.

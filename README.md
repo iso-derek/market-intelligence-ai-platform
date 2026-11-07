@@ -186,6 +186,8 @@ The keyboard guidance and end-to-end acceptance journeys for all five workspaces
 
 The latest genuine local browser observations and their boundaries are recorded in [BROWSER_ACCEPTANCE.md](docs/BROWSER_ACCEPTANCE.md).
 
+SQLite health checks, non-overwriting verified backups, restore drills, and retention boundaries are documented in [BACKUP_AND_RECOVERY.md](docs/BACKUP_AND_RECOVERY.md).
+
 ## Installation
 
 Python 3.12 and 3.13 are the compatibility targets.
