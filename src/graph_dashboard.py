@@ -1,11 +1,14 @@
 """Evidence graph and local operations presentation."""
+from datetime import datetime, timezone
 from pathlib import Path
+import os
 
 import streamlit as st
 
 from evidence_graph import evidence_paths, graph_as_of, load_evidence_graph, operations_report
 from graph_evaluation import evaluate_graph_value, load_graph_value_cases
 from accessibility_audit import audit_streamlit_project
+from operations import create_verified_backup, operational_health
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,5 +61,23 @@ def render_graph_dashboard() -> None:
             alt="Static Streamlit accessibility and deprecated API findings",
         )
     st.caption(accessibility["scope"])
+    database_path = Path(os.environ.get("MARKET_INTELLIGENCE_DB", ROOT / "data/runtime/evidence.db"))
+    health = operational_health(database_path)
+    st.subheader("Persistence monitoring & recovery")
+    health_cards = st.columns(4)
+    health_cards[0].metric("Database", str(health["status"]).replace("_", " ").title(), border=True)
+    health_cards[1].metric("Registered sources", health.get("sources", 0), border=True)
+    health_cards[2].metric("Fetch attempts", health.get("attempts", 0), border=True)
+    health_cards[3].metric("Failed attempts", health.get("failed_attempts", 0), border=True)
+    if health["status"] == "healthy":
+        st.caption(f"Schema v{health['schema_version']} · latest attempt {health.get('latest_attempt_at') or 'none'} · SHA-256 {health['database_sha256']}")
+        if st.button("Create verified local backup", icon=":material/backup:"):
+            stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            destination = ROOT / "data/runtime/backups" / f"evidence-{stamp}.db"
+            backup = create_verified_backup(database_path, destination)
+            st.success(f"Verified backup created: {destination.name} ({backup['backup']['bytes']} bytes)")
+    else:
+        st.info("The persistent evidence database is not initialized. Open News evidence once to create the local registry.")
+    st.caption("Backups never overwrite existing files. Automated retention, encryption, off-device copies, and multi-worker recovery remain owner-controlled boundaries.")
     st.success("Required project files are present and the current acceptance path is a verified local demonstration.")
     st.warning("No hosted deployment, automated backup, multi-worker service, or causal knowledge-graph inference is claimed.")

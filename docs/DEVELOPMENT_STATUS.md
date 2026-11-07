@@ -3,7 +3,7 @@
 **Updated:** 7 November 2026
 
 **Phase:** D7 product finish
-**Status:** D1–D7.3 are implemented as stacked review branches; D7.4 accessibility and walkthrough evidence is implemented on `codex/d7-4-accessibility-walkthroughs`
+**Status:** D1–D7.4 are implemented as stacked review branches; D7.5 monitoring and recovery is implemented on `codex/d7-5-monitoring-recovery`
 
 ## Baseline
 
@@ -200,6 +200,17 @@ The reviewable D7.3 commit is `4be9b4c` on branch `codex/d7-3-reconciled-researc
 - Live rendered browser acceptance passed across all five workspaces on 7 November 2026.
 - The final operations view showed 6 nodes, 5 edges, graph/table exactness parity, 76% inspection reduction, 5 surfaces scanned, 0 static findings, and `verified_local_demo_not_hosted`.
 
+The reviewable D7.4 commit is `acb084b` on branch `codex/d7-4-accessibility-walkthroughs`.
+
+## Completed D7.5 work on the current branch
+
+- Added read-only SQLite health manifests with integrity, schema, table counts, bytes, and SHA-256.
+- Added source/attempt/failure/latest-attempt monitoring to the operations workspace.
+- Added SQLite online backup through a unique partial file, integrity verification, schema/count comparison, and atomic completion.
+- Added verified restore to a new path and a strict no-overwrite policy for both backup and recovery.
+- Documented stop-the-app recovery drills and explicit owner-controlled retention, encryption, off-device, and multi-worker boundaries.
+- Focused D7.5 suite: 5/5 passed locally, including a complete backup-and-restore drill and corrupt-database failure.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -249,8 +260,8 @@ The reviewable D7.3 commit is `4be9b4c` on branch `codex/d7-3-reconciled-researc
 
 ## Next priorities
 
-1. Complete D7.5 backup/restore verification.
-2. Complete D7.6 release-candidate validation without deploying.
+1. Complete D7.6 release-candidate validation without deploying.
+2. Verify the full compatibility matrix on the exact stacked heads.
 3. Obtain owner review of the stacked pull requests before any merge or deployment decision.
 
 ## Remaining before a stable release
