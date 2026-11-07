@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class AccessibilityAuditTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        (ROOT / "data/runtime").mkdir(parents=True, exist_ok=True)
+
     def test_current_streamlit_surfaces_pass_static_audit(self):
         report = audit_streamlit_project(ROOT)
         self.assertTrue(report["passed"], report["findings"])
