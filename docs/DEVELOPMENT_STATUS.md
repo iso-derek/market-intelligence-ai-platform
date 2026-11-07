@@ -3,7 +3,7 @@
 **Updated:** 7 November 2026
 
 **Phase:** D7 product finish
-**Status:** D1–D7.1 are implemented as stacked review branches; D7.2 graph-value evaluation is implemented on `codex/d7-2-graph-value-evaluation`
+**Status:** D1–D7.2 are implemented as stacked review branches; D7.3 reconciled research reporting is implemented on `codex/d7-3-reconciled-research-report`
 
 ## Baseline
 
@@ -176,6 +176,18 @@ The reviewable D7.1 commit is `43938a9d` on stacked draft pull request #14. A la
 - Both methods are exact on the authored fixture; the graph's measured advantage is reduced repeated row inspection and explicit multi-hop provenance, not better answer accuracy.
 - Focused D7.2 suite: 5/5 passed locally.
 
+The reviewable D7.2 commit is `bd09658` on branch `codex/d7-2-graph-value-evaluation`.
+
+## Completed D7.3 work on the current branch
+
+- Added deterministic report generation from typed workflow facts.
+- Required every numeric claim to cite known evidence available by the workflow cutoff.
+- Reconciled report values and units exactly against the evidence catalogue and failed closed on mismatches.
+- Collapsed duplicate source/synthesis facts into unique claim IDs.
+- Added a byte-reproducible ZIP with JSON, Markdown, reconciliation CSV, and a hash manifest.
+- Added the reconciled report table, artifact hash, and download to the Research workflow workspace.
+- Focused D7.3 suite: 5/5 passed locally.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -225,9 +237,9 @@ The reviewable D7.1 commit is `43938a9d` on stacked draft pull request #14. A la
 
 ## Next priorities
 
-1. Build D7.3 reconciled research-report export with claim-level citations.
-2. Complete D7.4 accessibility and browser walkthrough evidence.
-3. Complete D7.5 backup/restore verification and D7.6 release-candidate validation without deploying.
+1. Complete D7.4 accessibility and browser walkthrough evidence.
+2. Complete D7.5 backup/restore verification.
+3. Complete D7.6 release-candidate validation without deploying.
 
 ## Remaining before a stable release
 

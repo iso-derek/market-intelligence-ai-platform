@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from workflows import WorkflowRequest, make_demo_tools, run_workflow
+from research_report import build_reconciled_report, export_report_bundle
 
 
 COMPANY_FACTS = {
@@ -16,6 +17,24 @@ COMPANY_FACTS = {
     "GAM": [{"fact_key": "revenue", "value": 600, "unit": "USD million", "evidence_ids": ["filing-gam-2025:p1:s1"]}],
 }
 RISK_IDS = {"ALP": "filing-alp-2025:p2:s2", "BET": "filing-bet-2025:p2:s2", "GAM": "filing-gam-2025:p2:s2"}
+
+
+def _evidence_catalog(company: str) -> dict[str, dict[str, object]]:
+    filing_names = {"ALP": "alpha_2025_annual.txt", "BET": "beta_2025_annual.txt", "GAM": "gamma_2025_annual.txt"}
+    catalog = {
+        "macro:CPI:2026-01:2026-02-20": {
+            "value": 3.0, "unit": "% year over year", "uri": "repo://data/fixtures/macro_vintages.csv#CPI",
+            "available_at": "2026-02-20T13:30:00Z",
+        }
+    }
+    for fact in COMPANY_FACTS[company]:
+        for evidence_id in fact["evidence_ids"]:
+            catalog[evidence_id] = {
+                "value": fact["value"], "unit": fact["unit"],
+                "uri": f"repo://data/filings/{filing_names[company]}#{evidence_id.split(':')[-2]}-{evidence_id.split(':')[-1]}",
+                "available_at": "2026-02-20T20:05:00Z",
+            }
+    return catalog
 
 
 def render_workflow_dashboard() -> None:
@@ -46,4 +65,18 @@ def render_workflow_dashboard() -> None:
     with st.expander("Facts, interpretations, scenarios, and citations"):
         st.json(artifact["trace"])
     st.download_button("Download workflow artifact", json.dumps(artifact, indent=2, default=str), "typed_workflow.json", "application/json")
+    report = build_reconciled_report(artifact, _evidence_catalog(company))
+    st.subheader("Reconciled research report")
+    report_cards = st.columns(3)
+    report_cards[0].metric("Reconciled claims", len(report["claims"]), border=True)
+    report_cards[1].metric("Numeric mismatches", 0, border=True)
+    report_cards[2].metric("Report hash", report["report_sha256"][:12], border=True)
+    st.dataframe(
+        pd.DataFrame(report["reconciliation"]), hide_index=True,
+        alt="Report claims reconciled against cited point-in-time source values and units",
+    )
+    st.download_button(
+        "Download reconciled report", export_report_bundle(report),
+        f"{company.lower()}-reconciled-report.zip", "application/zip", icon=":material/download:",
+    )
     st.warning("A complete trace is not evidence of research quality. The offline News role is missing and no investment recommendation is produced.")

@@ -180,6 +180,8 @@ Graph validation, relationship semantics, bounded traversal, artifact identity, 
 
 The frozen graph-versus-table comparison, exactness definition, operation counts, and negative-result interpretation are documented in [GRAPH_VALUE_EVALUATION.md](docs/GRAPH_VALUE_EVALUATION.md).
 
+The claim-level citation contract, numeric reconciliation checks, and immutable report bundle are documented in [RECONCILED_RESEARCH_REPORTS.md](docs/RECONCILED_RESEARCH_REPORTS.md).
+
 ## Installation
 
 Python 3.12 and 3.13 are the compatibility targets.
