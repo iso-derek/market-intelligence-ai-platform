@@ -88,6 +88,8 @@ The remaining D7 acceptance criteria are split into five independently reviewabl
 4. **D7.5 — Monitoring and recovery:** bounded operational health history, SQLite backup, verified restore, retention boundaries, and recovery instructions.
 5. **D7.6 — Release-candidate validation:** fresh-install smoke evidence, secrets and capability-claim audits, deployment plan review, and an owner-controlled release checklist. No hosting is authorised by this milestone.
 
+All five product-finish units are implemented on stacked review branches as of 7 November 2026. Their implementation does not satisfy the remaining owner-review, exact-head CI, merge, or deployment gates.
+
 ## Definition of done
 
 A milestone is complete only when the bounded feature works end to end, calculations/evidence are validated, meaningful tests pass, the README describes only implemented behavior, user journeys are demonstrated, limitations are visible, status is updated with exact evidence, and the owner has reviewed the pull request.

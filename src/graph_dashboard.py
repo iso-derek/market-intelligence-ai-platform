@@ -2,6 +2,7 @@
 from datetime import datetime, timezone
 from pathlib import Path
 import os
+import sys
 
 import streamlit as st
 
@@ -9,6 +10,7 @@ from evidence_graph import evidence_paths, graph_as_of, load_evidence_graph, ope
 from graph_evaluation import evaluate_graph_value, load_graph_value_cases
 from accessibility_audit import audit_streamlit_project
 from operations import create_verified_backup, operational_health
+from release_readiness import validate_release_candidate
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -79,5 +81,18 @@ def render_graph_dashboard() -> None:
     else:
         st.info("The persistent evidence database is not initialized. Open News evidence once to create the local registry.")
     st.caption("Backups never overwrite existing files. Automated retention, encryption, off-device copies, and multi-worker recovery remain owner-controlled boundaries.")
+    runtime_root = ROOT / "data/runtime"
+    candidate_files = [
+        str(path.relative_to(ROOT)).replace("\\", "/") for path in ROOT.rglob("*")
+        if path.is_file() and ".git" not in path.parts and ".venv" not in path.parts
+        and runtime_root not in path.parents
+    ]
+    readiness = validate_release_candidate(ROOT, candidate_files, sys.version_info[:2])
+    st.subheader("Release-candidate gate")
+    gate_cards = st.columns(3)
+    gate_cards[0].metric("Candidate status", str(readiness["status"]).replace("_", " ").title(), border=True)
+    gate_cards[1].metric("Checks passed", sum(readiness["checks"].values()), border=True)
+    gate_cards[2].metric("Secret findings", len(readiness["secret_findings"]), border=True)
+    st.caption(f"Audit SHA-256: {readiness['audit_sha256']} · {readiness['limitations']}")
     st.success("Required project files are present and the current acceptance path is a verified local demonstration.")
     st.warning("No hosted deployment, automated backup, multi-worker service, or causal knowledge-graph inference is claimed.")
