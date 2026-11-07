@@ -1,9 +1,9 @@
 # Development status — Market Intelligence AI Platform
 
-**Updated:** 6 November 2026
+**Updated:** 7 November 2026
 
-**Phase:** D4.1 bounded filings corpus
-**Status:** D1–D3.3 are stacked review branches; D4.1 is implemented on `codex/d4-1-filings-corpus`
+**Phase:** D7 product finish
+**Status:** D1–D7.1 are implemented as stacked review branches; D7.2 graph-value evaluation is implemented on `codex/d7-2-graph-value-evaluation`
 
 ## Baseline
 
@@ -156,7 +156,7 @@ The reviewable D6.1 commit is `98348e183236ce4450d3c15dab108167c32f9180` on its 
 
 The reviewable D6.2 commit is `6ed7f5860d437ef54e5df2aae6527c4d2fa08ab5` on its stacked draft pull request.
 
-## D7.1 work in progress on the current branch
+## Completed D7.1 work
 
 - Added a point-in-time provenance graph with unique IDs, evidence URIs, availability timestamps, and a canonical hash.
 - Added dangling-reference, relationship allowlist, non-causal language, bounded-path, and cycle safeguards.
@@ -164,6 +164,17 @@ The reviewable D6.2 commit is `6ed7f5860d437ef54e5df2aae6527c4d2fa08ab5` on its 
 - Focused D7.1 suite: 6/6 passed locally.
 - Deterministic non-UI D0–D7.1 suite: 103/103 passed locally.
 - Clean-process Streamlit browser acceptance passed for 6 nodes, 5 edges, zero dangling links, graph hash, bounded provenance paths, required-file health, and the `verified_local_demo_not_hosted` boundary.
+
+The reviewable D7.1 commit is `43938a9d` on stacked draft pull request #14. A later cross-platform fixture fix was propagated through the stack; the D7.1 branch head before D7.2 was `53a53a42e2e884af61ed238c0a82739d8f14262d`.
+
+## Completed D7.2 work on the current branch
+
+- Added five frozen graph-versus-table lookup cases with an exact case-file SHA-256.
+- Applied identical historical availability cutoffs and hop bounds to both methods.
+- Compared exact found state and relationship sequences rather than assuming the graph is superior.
+- Added deterministic operation counts for adjacency traversal and repeated table scans.
+- Both methods are exact on the authored fixture; the graph's measured advantage is reduced repeated row inspection and explicit multi-hop provenance, not better answer accuracy.
+- Focused D7.2 suite: 5/5 passed locally.
 
 ## Verification status
 
@@ -197,21 +208,26 @@ The reviewable D6.2 commit is `6ed7f5860d437ef54e5df2aae6527c4d2fa08ab5` on its 
 - Independent-label sentiment evaluation.
 - Offline point-in-time market, macro, and company lab backed by educational fixtures.
 - Split-aware adjusted returns, annualized volatility, revision-aware macro history, restatement-aware peer ratios, and visible data dimensions.
+- Conservative entity and event linkage with frozen diagnostics and uncertainty states.
+- A hash-verified filings corpus, lexical/dense retrieval comparison, and grounded extractive QA with abstention.
+- Typed, budgeted research workflows with visible missing/conflict states.
+- Release-aware event studies, yield curves, credit spreads, and quote-direction-aware FX analytics.
+- A point-in-time non-causal evidence graph with a frozen graph-versus-table value comparison.
 
 ## Known limitations and blockers
 
-- SQLite currently targets one local application process; multi-worker hosting, retention, and automated backup/restore are not implemented.
+- SQLite currently targets one local application process; multi-worker hosting and automated retention are not implemented.
 - D2 uses fictional offline fixtures; no live price, macro, or filing provider is integrated.
-- Filings retrieval/RAG, research agents, event studies, fixed-income/FX views, and knowledge graph are not implemented.
-- The 18-item diagnostic set is too small for external model-validity claims.
+- The implemented filings QA and research workflows are bounded deterministic baselines, not general-purpose generative RAG or autonomous agents.
+- Repository-authored diagnostic sets are too small for external model-validity claims.
 - Official-provider availability is external and must remain visible when it fails.
-- Real screenshots must wait for an actual browser acceptance session.
+- D7.3–D7.6 report reconciliation, accessibility evidence, verified recovery, and release-candidate review remain open.
 
-## Next three priorities
+## Next priorities
 
-1. Commit D4.1 and verify its stacked pull request in the four-job compatibility matrix.
-2. Build D4.2 lexical and vector retrieval baselines with frozen relevance judgements.
-3. Build D4.3 grounded filings question answering with passage-level citations and abstention.
+1. Build D7.3 reconciled research-report export with claim-level citations.
+2. Complete D7.4 accessibility and browser walkthrough evidence.
+3. Complete D7.5 backup/restore verification and D7.6 release-candidate validation without deploying.
 
 ## Remaining before a stable release
 

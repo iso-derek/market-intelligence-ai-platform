@@ -39,7 +39,7 @@ if workspace=='Evidence graph & operations':
 st.sidebar.header('Research controls')
 mode=st.sidebar.selectbox('News source',['Synthetic demonstration','Official feeds','Upload dated CSV'])
 backend=st.sidebar.selectbox('Sentiment model',['Keyword baseline','FinBERT (optional)'])
-st.sidebar.info('News scope: headline evidence and sentiment research. Filings RAG and research agents remain roadmap items.')
+st.sidebar.info('News scope: headline evidence and sentiment research. Filings QA and typed workflows are available in their dedicated workspaces.')
 
 @st.cache_resource
 def open_evidence_store(path): return EvidenceStore(path)

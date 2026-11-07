@@ -178,6 +178,8 @@ Yield, spread, currency-pair, quote-direction, and point-in-time conventions are
 
 Graph validation, relationship semantics, bounded traversal, artifact identity, and local-operations boundaries are documented in [EVIDENCE_GRAPH_AND_OPERATIONS.md](docs/EVIDENCE_GRAPH_AND_OPERATIONS.md).
 
+The frozen graph-versus-table comparison, exactness definition, operation counts, and negative-result interpretation are documented in [GRAPH_VALUE_EVALUATION.md](docs/GRAPH_VALUE_EVALUATION.md).
+
 ## Installation
 
 Python 3.12 and 3.13 are the compatibility targets.
