@@ -188,6 +188,8 @@ The latest genuine local browser observations and their boundaries are recorded 
 
 SQLite health checks, non-overwriting verified backups, restore drills, and retention boundaries are documented in [BACKUP_AND_RECOVERY.md](docs/BACKUP_AND_RECOVERY.md).
 
+The owner-gated hosting design and current no-deployment decision are in [DEPLOYMENT_PLAN.md](docs/DEPLOYMENT_PLAN.md); reproducible release gates are in [RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
+
 ## Installation
 
 Python 3.12 and 3.13 are the compatibility targets.
@@ -254,6 +256,7 @@ These are historical recorded checks, not results rerun by every clone. Eighteen
 
 ```bash
 python -m unittest discover -s tests -v
+python scripts/release_check.py
 ```
 
 The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, split-adjusted return and volatility calculations, macro vintage selection, complete-report restatements, ratios, provider isolation, conservative entity/ticker resolution, the Streamlit demo/registry paths, and launcher run recording.
@@ -273,7 +276,7 @@ No hosted deployment is claimed. The verified target is a local Streamlit demons
 - TF-IDF retrieves lexical overlap and can miss synonyms or context.
 - The default label fixture is not representative of financial news.
 - Official feeds cover only a narrow part of the complete market-intelligence vision.
-- SQLite is a local single-instance store; multi-worker hosting and automated backup/restore are not implemented.
+- SQLite is a local single-instance store. Verified on-demand backup/restore is implemented, but multi-worker hosting, scheduled backups, retention, encryption, and off-device recovery are not.
 - Finance analytics use a tiny fictional fixture. They do not establish live-provider accuracy, production coverage, or a statistically stable volatility estimate.
 - Uploaded data may be confidential; do not expose it through a public instance.
 - This project is independently developed and is not endorsed by Bloomberg, Imperial College London, UCL, the Federal Reserve, the ECB, or ProsusAI.

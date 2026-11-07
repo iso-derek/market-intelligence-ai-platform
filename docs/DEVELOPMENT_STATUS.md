@@ -3,7 +3,7 @@
 **Updated:** 7 November 2026
 
 **Phase:** D7 product finish
-**Status:** D1–D7.4 are implemented as stacked review branches; D7.5 monitoring and recovery is implemented on `codex/d7-5-monitoring-recovery`
+**Status:** D1–D7.5 are implemented as stacked review branches; D7.6 release-candidate validation is implemented on `codex/d7-6-release-candidate-validation`
 
 ## Baseline
 
@@ -211,6 +211,19 @@ The reviewable D7.4 commit is `acb084b` on branch `codex/d7-4-accessibility-walk
 - Documented stop-the-app recovery drills and explicit owner-controlled retention, encryption, off-device, and multi-worker boundaries.
 - Focused D7.5 suite: 5/5 passed locally, including a complete backup-and-restore drill and corrupt-database failure.
 
+The reviewable D7.5 commit is `c71f69b` on branch `codex/d7-5-monitoring-recovery`.
+
+## Completed D7.6 work on the current branch
+
+- Added a reproducible release audit for Python support, required artifacts, high-signal tracked-secret patterns, and deployment-boundary language.
+- Added a CLI that reports `ready_for_owner_review` or fails nonzero; it never merges, deploys, or approves a release.
+- Added a reviewed deployment plan covering authentication, secrets, egress, backup, observability, concurrency, rollback, and owner gates.
+- Added an owner-controlled release checklist whose CI, pull-request review, merge, and deployment gates remain deliberately unchecked.
+- Focused D7.6 suite: 5/5 passed locally.
+- Full deterministic non-UI D0–D7.6 suite: 127/127 passed locally.
+- Static compilation passed for `app.py`, `src`, `scripts`, and `tests`; `git diff --check` passed.
+- Local release check reported `ready_for_owner_review`, 4/4 checks passed, no missing artifacts, and no secret findings.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -260,17 +273,17 @@ The reviewable D7.4 commit is `acb084b` on branch `codex/d7-4-accessibility-walk
 
 ## Next priorities
 
-1. Complete D7.6 release-candidate validation without deploying.
-2. Verify the full compatibility matrix on the exact stacked heads.
-3. Obtain owner review of the stacked pull requests before any merge or deployment decision.
+1. Verify the full compatibility matrix on the exact D7.2–D7.6 stacked heads.
+2. Obtain owner review of the stacked pull requests before any merge decision.
+3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release
 
 - Fresh-user installation and browser demonstration.
-- Genuine screenshots and accessibility review.
-- Default tests passing at the reviewed commit.
+- Archive browser screenshots in the reviewed release artifact.
+- Default CI matrix passing at each exact reviewed commit.
 - Optional backend evidence clearly separated from default evidence.
-- Reviewed deployment or verified-local-demonstration decision.
+- Owner review of the local-demo decision and deployment plan.
 - Owner review and approval; no merge or deployment is authorised by this file.
 
 Future sessions must verify current branch/HEAD and open PR state before relying on this snapshot. Record only work actually performed, including pass/fail/skip counts and exact commits.
