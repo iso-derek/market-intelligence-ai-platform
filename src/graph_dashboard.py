@@ -5,6 +5,7 @@ import os
 import sys
 
 import streamlit as st
+from table_labels import table_config
 
 from evidence_graph import evidence_paths, graph_as_of, load_evidence_graph, operations_report
 from graph_evaluation import evaluate_graph_value, load_graph_value_cases
@@ -29,11 +30,11 @@ def render_graph_dashboard() -> None:
     cards[1].metric("Eligible edges", len(eligible_edges), border=True)
     cards[2].metric("Dangling links", 0, border=True)
     cards[3].metric("Graph hash", graph_hash[:12], border=True)
-    st.dataframe(eligible_nodes, hide_index=True, alt="Point-in-time evidence graph nodes with type URI and availability")
-    st.dataframe(eligible_edges, hide_index=True, alt="Non-causal evidence graph edges with supporting evidence and availability")
+    st.dataframe(eligible_nodes, hide_index=True, alt="Point-in-time evidence graph nodes with type URI and availability", column_config=table_config(eligible_nodes))
+    st.dataframe(eligible_edges, hide_index=True, alt="Non-causal evidence graph edges with supporting evidence and availability", column_config=table_config(eligible_edges))
     paths = evidence_paths(eligible_edges, "company:ALP", 4) if not eligible_edges.empty else eligible_edges
     st.subheader("Bounded provenance paths")
-    st.dataframe(paths, hide_index=True, alt="Bounded provenance paths and relationship sequences from Alpha Industries")
+    st.dataframe(paths, hide_index=True, alt="Bounded provenance paths and relationship sequences from Alpha Industries", column_config=table_config(paths))
     cases, case_hash = load_graph_value_cases(ROOT / "data/evaluation/graph_value_cases.csv")
     evaluation = evaluate_graph_value(nodes, edges, cases, case_hash)
     st.subheader("Graph versus table evaluation")
@@ -44,7 +45,7 @@ def render_graph_dashboard() -> None:
     evaluation_cards[3].metric("Inspection reduction", f"{evaluation['inspection_reduction']:.0%}", border=True)
     st.dataframe(
         evaluation["results"], hide_index=True,
-        alt="Frozen graph and edge-table lookup comparison with point-in-time exactness and inspection counts",
+        alt="Frozen graph and edge-table lookup comparison with point-in-time exactness and inspection counts", column_config=table_config(evaluation["results"])
     )
     st.caption(f"Frozen case SHA-256: {evaluation['case_sha256']}")
     st.info(evaluation["conclusion"])
@@ -60,7 +61,7 @@ def render_graph_dashboard() -> None:
     if accessibility["findings"]:
         st.dataframe(
             accessibility["findings"], hide_index=True,
-            alt="Static Streamlit accessibility and deprecated API findings",
+            alt="Static Streamlit accessibility and deprecated API findings", column_config=table_config(accessibility["findings"])
         )
     st.caption(accessibility["scope"])
     database_path = Path(os.environ.get("MARKET_INTELLIGENCE_DB", ROOT / "data/runtime/evidence.db"))

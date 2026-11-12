@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from table_labels import table_config
 
 from filings import filings_as_of, load_filings_corpus
 from filings_qa import answer_filing_question, evaluate_filing_qa, load_qa_cases
@@ -59,7 +60,7 @@ def render_filings_dashboard() -> None:
             "pages": "Pages", "sections": "Sections", "sha256": "Document SHA-256", "source_uri": "Source URI",
         }
     )
-    st.dataframe(display_documents, hide_index=True, alt="Hash-verified filing documents eligible at the selected cutoff")
+    st.dataframe(display_documents, hide_index=True, alt="Hash-verified filing documents eligible at the selected cutoff", column_config=table_config(display_documents))
     if eligible_documents.empty:
         st.info("No filing was available at this cutoff.")
         return
@@ -72,15 +73,16 @@ def render_filings_dashboard() -> None:
     )
     selected = eligible_passages.loc[eligible_passages.document_id.eq(selected_id)]
     st.subheader("Page and section evidence")
-    st.dataframe(
-        selected[["page", "section", "period_end", "available_at", "text", "text_sha256"]].rename(
+    display_table = (selected[["page", "section", "period_end", "available_at", "text", "text_sha256"]].rename(
             columns={
                 "page": "Page", "section": "Section", "period_end": "Period end",
                 "available_at": "Available at", "text": "Text", "text_sha256": "Passage SHA-256",
             }
-        ),
+        ))
+    st.dataframe(
+        display_table,
         hide_index=True,
-        alt="Page and section passages with period, availability, and content hashes",
+        alt="Page and section passages with period, availability, and content hashes", column_config=table_config(display_table)
     )
     st.divider()
     st.subheader("Retrieval baseline lab")
@@ -100,15 +102,16 @@ def render_filings_dashboard() -> None:
     top_k = st.slider("Passages to return", 1, 8, 3, key="filing_top_k")
     if query.strip():
         ranked = rank_passages(eligible_passages, query, method=method, top_k=top_k)
-        st.dataframe(
-            ranked[["rank", "score", "passage_id", "company", "page", "section", "available_at", "text", "text_sha256"]]
+        display_table = (ranked[["rank", "score", "passage_id", "company", "page", "section", "available_at", "text", "text_sha256"]]
             .rename(columns={
                 "rank": "Rank", "score": "Score", "passage_id": "Passage ID", "company": "Company",
                 "page": "Page", "section": "Section", "available_at": "Available at", "text": "Text",
                 "text_sha256": "Passage SHA-256",
-            }),
+            }))
+        st.dataframe(
+            display_table,
             hide_index=True,
-            alt="Ranked filing passages with scores and source provenance",
+            alt="Ranked filing passages with scores and source provenance", column_config=table_config(display_table)
         )
 
     st.subheader("Frozen retrieval diagnostic")
@@ -119,18 +122,20 @@ def render_filings_dashboard() -> None:
         summary, details = evaluate_retriever(passages, cases, baseline, top_k=3)
         summaries.append(summary)
         detail_frames.append(details)
-    st.dataframe(
-        pd.DataFrame(summaries).rename(columns={
+    display_table = (pd.DataFrame(summaries).rename(columns={
             "method": "Method", "top_k": "K", "case_count": "Cases", "mean_recall_at_3": "Mean recall@3",
             "mean_reciprocal_rank": "MRR", "mean_ndcg_at_3": "Mean nDCG@3",
-        }),
+        }))
+    st.dataframe(
+        display_table,
         hide_index=True,
-        alt="Lexical and dense vector filing retrieval metrics on the frozen diagnostic",
+        alt="Lexical and dense vector filing retrieval metrics on the frozen diagnostic", column_config=table_config(display_table)
     )
     with st.expander("Case-level retrieval evidence"):
+        display_table = pd.concat(detail_frames, ignore_index=True)
         st.dataframe(
-            pd.concat(detail_frames, ignore_index=True), hide_index=True,
-            alt="Case-level lexical and dense filing retrieval ranks for the frozen diagnostic",
+            display_table, hide_index=True,
+            alt="Case-level lexical and dense filing retrieval ranks for the frozen diagnostic", column_config=table_config(display_table)
         )
     st.caption(
         f"Frozen authored cases: {len(cases)} · SHA-256 {file_sha256(RELEVANCE_CASES)} · "
@@ -148,14 +153,15 @@ def render_filings_dashboard() -> None:
     qa_result = answer_filing_question(passages, question, CUTOFFS[cutoff_label])
     if qa_result["status"] == "answered":
         st.success(qa_result["answer"])
-        st.dataframe(
-            pd.DataFrame(qa_result["citations"]).rename(columns={
+        display_table = (pd.DataFrame(qa_result["citations"]).rename(columns={
                 "passage_id": "Passage ID", "document_id": "Document ID", "company": "Company",
                 "page": "Page", "section": "Section", "available_at": "Available at",
                 "text_sha256": "Passage SHA-256", "quote": "Exact supporting quote",
-            }),
+            }))
+        st.dataframe(
+            display_table,
             hide_index=True,
-            alt="Exact filing answer citation with page section and passage hash",
+            alt="Exact filing answer citation with page section and passage hash", column_config=table_config(display_table)
         )
     else:
         st.info(qa_result["answer"])
@@ -172,7 +178,7 @@ def render_filings_dashboard() -> None:
     with st.expander("Frozen QA case evidence"):
         st.dataframe(
             qa_details, hide_index=True,
-            alt="Frozen filing question-answer cases with expected and observed citation and abstention outcomes",
+            alt="Frozen filing question-answer cases with expected and observed citation and abstention outcomes", column_config=table_config(qa_details)
         )
     st.caption(
         f"Frozen QA cases: {len(qa_cases)} · SHA-256 {file_sha256(QA_CASES)} · "

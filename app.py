@@ -20,6 +20,7 @@ from filings_dashboard import render_filings_dashboard
 from workflow_dashboard import render_workflow_dashboard
 from graph_dashboard import render_graph_dashboard
 from watchlist_dashboard import render_watchlist_dashboard
+from table_labels import table_config
 
 st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI Platform')
@@ -75,7 +76,8 @@ elif mode=='Official feeds':
             registry[['source_id','name','feed_url','enabled','last_status','last_checked_at','last_error']],
             key='source_registry_editor',hide_index=True,
             disabled=['source_id','name','feed_url','last_status','last_checked_at','last_error'],
-            column_config={'feed_url':st.column_config.LinkColumn('Feed URL')},
+            column_config=table_config(registry[['source_id','name','feed_url','enabled','last_status','last_checked_at','last_error']],
+                                       {'feed_url':st.column_config.LinkColumn('Feed URL'),'enabled':st.column_config.CheckboxColumn('Enabled')}),
             alt='Editable official source registry',
         )
         if st.button('Save source settings',icon=':material/save:',key='save_source_settings'):
@@ -117,9 +119,10 @@ elif mode=='Official feeds':
         news=store.eligible_evidence()
         diagnostics=st.session_state.get('official_diagnostics',[])
     status=store.list_sources()[['name','enabled','last_status','last_checked_at','last_error']]
-    st.dataframe(status,hide_index=True,alt='Registered source health and latest fetch status')
+    st.dataframe(status,hide_index=True,alt='Registered source health and latest fetch status',column_config=table_config(status))
     if diagnostics:
-        st.dataframe(pd.DataFrame(diagnostics),hide_index=True,alt='Latest official source fetch diagnostics')
+        diagnostics_table=pd.DataFrame(diagnostics)
+        st.dataframe(diagnostics_table,hide_index=True,alt='Latest official source fetch diagnostics',column_config=table_config(diagnostics_table))
     if news.empty:
         st.info('No persisted official evidence is available yet. Fetch an enabled source to begin.')
         st.stop()
@@ -163,8 +166,11 @@ with brief_tab:
                        'market_research.zip','application/zip')
 with explorer:
     st.subheader('Normalised news records')
-    st.dataframe(news[['published_at','available_at','source','headline','url','sentiment_label','sentiment_score','risk_flags']],hide_index=True,
-                 alt='Normalised market-news evidence with provenance and sentiment')
+    news_table=news[['published_at','available_at','source','headline','url','sentiment_label','sentiment_score','risk_flags']]
+    st.dataframe(news_table,hide_index=True,alt='Normalised market-news evidence with provenance and sentiment',
+                 column_config=table_config(news_table,{'url':st.column_config.LinkColumn('Link',display_text='Open'),
+                                                        'sentiment_label':st.column_config.Column('Sentiment'),
+                                                        'sentiment_score':st.column_config.NumberColumn('Sentiment score',format='%.2f')}))
     st.caption('Sentiment describes language, not a prediction of returns. Historical publication dates alone do not establish historical availability to this system.')
     st.subheader('Entity and ticker resolution')
     entity_counts=resolution_summary(entity_resolutions)
@@ -172,9 +178,10 @@ with explorer:
     entity_columns[0].metric('Resolved records',entity_counts['resolved'],border=True)
     entity_columns[1].metric('Ambiguous records',entity_counts['ambiguous'],border=True)
     entity_columns[2].metric('Unknown records',entity_counts['unknown'],border=True)
-    st.dataframe(
-        entity_resolutions[['headline','mention','canonical_name','ticker','sector','resolution_status','candidate_ids','resolution_version']],
-        hide_index=True,alt='Conservative entity and ticker resolution outcomes for the current news records')
+    entity_table=entity_resolutions[['headline','mention','canonical_name','ticker','sector','resolution_status','candidate_ids','resolution_version']]
+    st.dataframe(entity_table,hide_index=True,alt='Conservative entity and ticker resolution outcomes for the current news records',
+                 column_config=table_config(entity_table,{'canonical_name':st.column_config.Column('Company'),'resolution_status':st.column_config.Column('Status'),
+                                                          'candidate_ids':st.column_config.Column('Candidate IDs')}))
     st.caption('Exact registry aliases only. Ambiguous and unknown mentions remain unresolved; a company mention does not imply an effect on returns.')
     st.subheader('Event taxonomy and company linkage')
     event_counts=event_rows.event_status.value_counts()
@@ -182,9 +189,9 @@ with explorer:
     event_columns[0].metric('Classified events',int(event_counts.get('classified',0)),border=True)
     event_columns[1].metric('Ambiguous events',int(event_counts.get('ambiguous',0)),border=True)
     event_columns[2].metric('Unknown events',int(event_counts.get('unknown',0)),border=True)
-    st.dataframe(
-        event_links[['headline','event_type','event_status','event_candidates','matched_terms','canonical_name','ticker','sector','entity_link_status','event_rule_version']],
-        hide_index=True,alt='Event taxonomy outcomes linked conservatively to resolved companies and sectors')
+    event_table=event_links[['headline','event_type','event_status','event_candidates','matched_terms','canonical_name','ticker','sector','entity_link_status','event_rule_version']]
+    st.dataframe(event_table,hide_index=True,alt='Event taxonomy outcomes linked conservatively to resolved companies and sectors',
+                 column_config=table_config(event_table,{'canonical_name':st.column_config.Column('Company')}))
     st.caption('Taxonomy describes headline language only. Co-mention does not prove the event, materiality, causality, or an effect on returns.')
     st.write('Rule-based summary baseline:')
     st.info(generate_market_summary(news))
@@ -205,7 +212,8 @@ with research:
             st.download_button('Download evaluation report',json.dumps(report,indent=2),'sentiment_evaluation.json','application/json')
         except (ValueError,RuntimeError,OSError) as exc: st.error(str(exc))
     st.write('Source audit for this brief')
-    st.dataframe(audit_claims(brief['claims'],news),hide_index=True,alt='Mechanical citation audit for the evidence brief')
+    claim_audit=audit_claims(brief['claims'],news)
+    st.dataframe(claim_audit,hide_index=True,alt='Mechanical citation audit for the evidence brief',column_config=table_config(claim_audit))
     st.caption('Citation validity and exact extraction are mechanical checks. Comparing factual support across generated briefs requires separate supported/unsupported/unclear human judgments, available through the research API.')
     st.subheader('Event taxonomy diagnostic')
     st.write('Evaluate the fixed event rules against a separate repository-authored labelled fixture.')

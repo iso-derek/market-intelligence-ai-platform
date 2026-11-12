@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from table_labels import table_config
 
 from workflows import WorkflowRequest, make_demo_tools, run_workflow
 from research_report import build_reconciled_report, export_report_bundle
@@ -115,11 +116,12 @@ def render_workflow_dashboard() -> None:
         "Step": row["step"], "Role": row["role"], "Tool": row["tool"], "Status": row["status"],
         "Facts": len(row.get("facts", [])), "Citations": len(row.get("citations", [])), "Message": row.get("message", ""),
     } for row in artifact["trace"]]
+    display_table = pd.DataFrame(trace_rows)
     st.dataframe(
-        pd.DataFrame(trace_rows),
+        display_table,
         hide_index=True,
         key=f"workflow_trace_{company}_{cutoff_label}",
-        alt="Typed research workflow trace with role tool status facts and citations",
+        alt="Typed research workflow trace with role tool status facts and citations", column_config=table_config(display_table)
     )
     st.caption(f"Artifact SHA-256: {artifact['artifact_sha256']}")
     with st.expander("Facts, interpretations, scenarios, and citations"):
@@ -131,10 +133,11 @@ def render_workflow_dashboard() -> None:
     report_cards[0].metric("Reconciled claims", len(report["claims"]), border=True)
     report_cards[1].metric("Numeric mismatches", 0, border=True)
     report_cards[2].metric("Report hash", report["report_sha256"][:12], border=True)
+    display_table = pd.DataFrame(report["reconciliation"])
     st.dataframe(
-        pd.DataFrame(report["reconciliation"]), hide_index=True,
+        display_table, hide_index=True,
         key=f"workflow_reconciliation_{company}_{cutoff_label}",
-        alt="Report claims reconciled against cited point-in-time source values and units",
+        alt="Report claims reconciled against cited point-in-time source values and units", column_config=table_config(display_table)
     )
     st.download_button(
         "Download reconciled report", export_report_bundle(report),
@@ -165,8 +168,7 @@ def render_workflow_dashboard() -> None:
     if history.empty:
         st.info("No typed workflow runs are stored yet. Save the current run to begin a local comparison history.")
     else:
-        st.dataframe(
-            history[
+        display_table = (history[
                 [
                     "run_id",
                     "recorded_at",
@@ -176,10 +178,12 @@ def render_workflow_dashboard() -> None:
                     "workflow_artifact_sha256",
                     "report_sha256",
                 ]
-            ],
+            ])
+        st.dataframe(
+            display_table,
             hide_index=True,
             key="workflow_history_table",
-            alt="Verified append-only typed workflow research-run history",
+            alt="Verified append-only typed workflow research-run history", column_config=table_config(display_table)
         )
         if len(history) < 2:
             st.info("Save a different company, cutoff, question, or budget to enable comparison.")
@@ -189,11 +193,12 @@ def render_workflow_dashboard() -> None:
                 base_id = st.selectbox("Base run", list(folders), index=1, key="history_base")
                 target_id = st.selectbox("Target run", list(folders), index=0, key="history_target")
             comparison = compare_workflow_runs(folders[base_id], folders[target_id])
+            display_table = comparison_display_frame(comparison["metrics"])
             st.dataframe(
-                comparison_display_frame(comparison["metrics"]),
+                display_table,
                 hide_index=True,
                 key=f"workflow_comparison_{base_id}_{target_id}",
-                alt="Base and target research-run metrics with explicit changes",
+                alt="Base and target research-run metrics with explicit changes", column_config=table_config(display_table)
             )
             st.caption(
                 f"Cutoff relation: {comparison['cutoff_relation']} · same company: {comparison['same_company']}. "

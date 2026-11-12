@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from table_labels import table_config
 from event_study import market_adjusted_event_study
 from rates_fx import credit_spreads, fx_performance, load_rates_fx, yield_curve
 
@@ -94,20 +95,20 @@ def render_market_dashboard() -> None:
         st.dataframe(
             display_prices,
             hide_index=True,
-            column_config={
+            column_config=table_config(display_prices, {
                 "raw_close": st.column_config.NumberColumn("Raw close", format="%.2f"),
                 "adjusted_close": st.column_config.NumberColumn("Adjusted close", format="%.2f"),
-            },
+            }),
             alt=f"Point-in-time raw and adjusted price records for {instrument}",
         )
         st.subheader("Bounded universe comparison")
         st.dataframe(
             performance,
             hide_index=True,
-            column_config={
+            column_config=table_config(performance, {
                 "cumulative_return": st.column_config.NumberColumn("Cumulative return", format="percent"),
                 "annualized_volatility": st.column_config.NumberColumn("Annualized volatility", format="percent"),
-            },
+            }),
             alt="Return and volatility comparison for the three-company educational universe",
         )
 
@@ -120,12 +121,13 @@ def render_market_dashboard() -> None:
         cards = st.columns(min(4, len(latest_macro)))
         for card, row in zip(cards, latest_macro.itertuples(index=False)):
             card.metric(row.series_name, f"{row.value:g} {row.unit}", border=True)
-        st.dataframe(
-            available_macro[
+        display_table = available_macro[
                 ["series_id", "series_name", "observation_date", "value", "unit", "release_at", "vintage_at", "available_at", "source"]
-            ],
+            ]
+        st.dataframe(
+            display_table,
             hide_index=True,
-            alt="Macro observations and the latest vintage eligible at the selected historical cutoff",
+            alt="Macro observations and the latest vintage eligible at the selected historical cutoff", column_config=table_config(display_table)
         )
         st.caption("Changing the cutoff demonstrates the CPI revision: 2.9 before 15 February and 3.0 afterward.")
 
@@ -151,13 +153,13 @@ def render_market_dashboard() -> None:
         st.dataframe(
             peer_display,
             hide_index=True,
-            column_config={
+            column_config=table_config(peer_display, {
                 "Revenue": st.column_config.NumberColumn(format="%,.0f"),
                 "Net income": st.column_config.NumberColumn(format="%,.0f"),
                 "Net margin": st.column_config.NumberColumn(format="percent"),
                 "Current ratio": st.column_config.NumberColumn(format="%.2f"),
                 "Debt / equity": st.column_config.NumberColumn(format="%.2f"),
-            },
+            }),
             alt="Point-in-time profitability, liquidity, and leverage ratios for the company peer set",
         )
         st.caption("Revenue and net income use the displayed currency and unit; ratios are dimensionless.")
@@ -181,7 +183,7 @@ def render_market_dashboard() -> None:
         st.dataframe(
             focus_display,
             hide_index=True,
-            alt=f"Selected report version and underlying accounting facts for {instrument}",
+            alt=f"Selected report version and underlying accounting facts for {instrument}", column_config=table_config(focus_display)
         )
         st.caption("A report version is selected as a whole. Facts from an earlier filing are never mixed with a later restatement.")
 
@@ -197,7 +199,7 @@ def render_market_dashboard() -> None:
         event_cards[0].metric("Event session", pd.Timestamp(summary["event_session"]).strftime("%Y-%m-%d"), border=True)
         event_cards[1].metric("[-1,+1] CAR", f"{summary['car']:.2%}", border=True)
         event_cards[2].metric("Peer benchmark", f"{summary['peer_count']} instruments", border=True)
-        st.dataframe(event_window, hide_index=True, alt="Release-aligned instrument peer benchmark abnormal returns and cumulative abnormal return")
+        st.dataframe(event_window, hide_index=True, alt="Release-aligned instrument peer benchmark abnormal returns and cumulative abnormal return", column_config=table_config(event_window))
         st.warning("This tiny educational window demonstrates timing and arithmetic only; it does not support statistical or causal inference.")
 
     with rates_tab:
@@ -205,14 +207,14 @@ def render_market_dashboard() -> None:
         curve = yield_curve(rates_fx, cutoff)
         spreads = credit_spreads(rates_fx, cutoff)
         fx = fx_performance(rates_fx, cutoff)
-        st.dataframe(curve, hide_index=True, alt="Government yield curve with tenor percent units dates and availability")
+        st.dataframe(curve, hide_index=True, alt="Government yield curve with tenor percent units dates and availability", column_config=table_config(curve))
         if not spreads.empty:
             st.metric("Alpha 10Y credit spread", f"{spreads.iloc[0].spread_bps:.0f} bps", border=True)
-            st.dataframe(spreads, hide_index=True, alt="Corporate yield benchmark yield and credit spread in basis points")
+            st.dataframe(spreads, hide_index=True, alt="Corporate yield benchmark yield and credit spread in basis points", column_config=table_config(spreads))
         if fx.empty:
             st.info("Two FX observations are not yet available at this cutoff.")
         else:
-            st.dataframe(fx, hide_index=True, alt="FX performance with base quote currencies units and explicit strengthening interpretation")
+            st.dataframe(fx, hide_index=True, alt="FX performance with base quote currencies units and explicit strengthening interpretation", column_config=table_config(fx))
         st.caption("BASE/QUOTE values are QUOTE currency per one BASE currency. A positive return means the BASE strengthened versus the QUOTE.")
 
     with method_tab:

@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+from table_labels import table_config
 
 from entities import load_entity_registry
 from market_dashboard import CUTOFFS, FIXTURE_ROOT, load_market_bundle
@@ -77,7 +78,7 @@ def render_watchlist_dashboard() -> None:
                 "aliases": "Registered aliases",
             }
         )
-        st.dataframe(discovery, hide_index=True, alt="Companies matching the watchlist search and sector filters")
+        st.dataframe(discovery, hide_index=True, alt="Companies matching the watchlist search and sector filters", column_config=table_config(discovery))
 
     if not selected:
         st.warning("Select at least one company in the sidebar to build the comparison.")
@@ -126,11 +127,11 @@ def render_watchlist_dashboard() -> None:
         st.dataframe(
             market_table,
             hide_index=True,
-            column_config={
+            column_config=table_config(market_table, {
                 "latest_adjusted_close": st.column_config.NumberColumn("Adjusted close", format="%.2f"),
                 "cumulative_return": st.column_config.NumberColumn("Cumulative return", format="percent"),
                 "annualized_volatility": st.column_config.NumberColumn("Annualized volatility", format="percent"),
-            },
+            }),
             alt="Point-in-time market comparison for the selected watchlist companies",
         )
     with fundamentals_tab:
@@ -150,13 +151,13 @@ def render_watchlist_dashboard() -> None:
         st.dataframe(
             fundamental_table,
             hide_index=True,
-            column_config={
+            column_config=table_config(fundamental_table, {
                 "revenue": st.column_config.NumberColumn("Revenue", format="%,.0f"),
                 "net_income": st.column_config.NumberColumn("Net income", format="%,.0f"),
                 "net_margin": st.column_config.NumberColumn("Net margin", format="percent"),
                 "current_ratio": st.column_config.NumberColumn("Current ratio", format="%.2f"),
                 "debt_to_equity": st.column_config.NumberColumn("Debt / equity", format="%.2f"),
-            },
+            }),
             alt="Point-in-time fundamental comparison for the selected watchlist companies",
         )
         st.caption("Revenue and net income use the displayed filing currency and unit; ratios are dimensionless.")
@@ -255,8 +256,7 @@ def render_watchlist_dashboard() -> None:
             stack=False,
             alt="Base and stressed net income for the selected watchlist companies",
         )
-        st.dataframe(
-            stressed[
+        display_table = stressed[
                 [
                     "ticker",
                     "revenue",
@@ -270,16 +270,18 @@ def render_watchlist_dashboard() -> None:
                     "debt_to_equity",
                     "stressed_debt_to_equity",
                 ]
-            ],
+            ]
+        st.dataframe(
+            display_table,
             hide_index=True,
-            column_config={
+            column_config=table_config(display_table, {
                 "net_margin": st.column_config.NumberColumn("Base net margin", format="percent"),
                 "stressed_net_margin": st.column_config.NumberColumn("Stressed net margin", format="percent"),
                 "current_ratio": st.column_config.NumberColumn("Base current ratio", format="%.2f"),
                 "stressed_current_ratio": st.column_config.NumberColumn("Stressed current ratio", format="%.2f"),
                 "debt_to_equity": st.column_config.NumberColumn("Base debt / equity", format="%.2f"),
                 "stressed_debt_to_equity": st.column_config.NumberColumn("Stressed debt / equity", format="%.2f"),
-            },
+            }),
             alt="Base and stressed profitability liquidity and leverage for each selected company",
         )
         st.code(scenario_identity, language=None)
@@ -298,6 +300,6 @@ def render_watchlist_dashboard() -> None:
                 "cutoff",
             ]
         ]
-        st.dataframe(evidence, hide_index=True, alt="Availability cutoff and source evidence for the watchlist snapshot")
+        st.dataframe(evidence, hide_index=True, alt="Availability cutoff and source evidence for the watchlist snapshot", column_config=table_config(evidence))
         st.code(identity, language=None)
         st.caption("SHA-256 over the sorted displayed snapshot. The identity changes when its values, sources, or cutoff change.")
