@@ -3,7 +3,7 @@
 **Updated:** 12 November 2026
 
 **Phase:** D9 portfolio release evidence
-**Status:** D1–D9.2 are integrated into `main`; the D9.2.1 comparison-display hardening fix is in progress
+**Status:** D1–D9.2.1 are integrated into `main`; D9.3 is the next planned milestone
 
 ## Baseline
 
@@ -307,11 +307,13 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - D9.2 pull request #25 was squash-merged as `a89913ec13895f0a8be453b3ff6c98a083db557a`.
 - Post-merge compatibility run `43246056999` passed on Windows and Ubuntu with Python 3.12 and 3.13.
 
-## D9.2.1 work in progress
+## Completed D9.2.1 work
 
 - Normalized research-run comparison values to an Arrow-safe string display frame while preserving the typed comparison result used for calculations and tests.
 - Preserved timestamps as ISO 8601 strings in the rendered table instead of relying on Streamlit's automatic mixed-type repair.
 - Added a direct PyArrow conversion regression test; focused research-history suite: 9/9 passed locally.
+- D9.2.1 pull request #26 was squash-merged as `ca86798fe91083d4f11860f2e5993e7e5ecaf1de`.
+- Post-merge compatibility run `43251584790` passed on Windows and Ubuntu with Python 3.12 and 3.13.
 
 ## Verification status
 
@@ -367,14 +369,13 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 
 ## Next priorities
 
-1. Validate and merge the D9.2.1 display hardening fix only when the compatibility matrix is green.
-2. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
-3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
+1. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
+2. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
+3. Preserve the deterministic default path while evaluating optional provider and hosting choices.
 
 ## Remaining before a stable release
 
-- Fresh-user installation and browser demonstration.
-- Archive browser screenshots in the reviewed release artifact.
+- Complete the D9.3 provider and deployment decision record.
 - Default CI matrix passing at each exact reviewed commit.
 - Optional backend evidence clearly separated from default evidence.
 - Owner review of the local-demo decision and deployment plan.
