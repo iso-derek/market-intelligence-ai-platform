@@ -116,6 +116,8 @@ Each run gets a unique `runs/<timestamp>-<id>/` folder with `execution.log`, `ma
 
 Failed runs are recorded. A zero exit code establishes execution only; inspect the data source, methodology, and limitations before using results.
 
+The Streamlit **Research workflow** also stores typed workflow/report pairs under `runs/workflow-<content hash>/`. These folders use a separate schema, are content-addressed, and are verified before comparison. Re-saving identical content does not overwrite or duplicate it. Both run types are local single-writer evidence and require an external backup/retention policy for durable operations.
+
 ## Troubleshooting
 
 - **Dependency installation fails:** check network/proxy access to PyPI, then rerun. The launcher does not write its requirements marker until installation succeeds.

@@ -43,10 +43,13 @@ The selection persists only in the current browser session. The three-company un
 
 ## 5. Research workflow
 
-1. Select **Research workflow**, choose ALP, and keep a five-second budget.
+1. Select **Research workflow**, choose ALP, the 31 January cutoff, and a five-second budget.
 2. Confirm five role traces, the deliberately missing offline News role, explicit budgets, and no silent conflict.
 3. Inspect the reconciled report table. Every numeric claim must match its cited value and unit.
 4. Download the report bundle and inspect `report.json`, `report.md`, `reconciliation.csv`, and `manifest.json`.
+5. Save the current research run, change to the 1 March cutoff, and save again. Confirm the later run reflects the CPI revision and ALP restatement.
+6. Compare the two verified runs. Confirm the cutoff direction and both immutable artifact identities remain visible.
+7. Save the same run again and confirm the app reports that identical content already exists without overwriting it.
 
 ## 6. Evidence graph & operations
 
@@ -58,4 +61,4 @@ The selection persists only in the current browser session. The three-company un
 
 ## Acceptance boundaries
 
-The walkthrough is complete only when the rendered app has no uncaught error, tables and charts have accessible names, visible controls have labels, evidence cutoffs change the eligible records, downloads are generated, and every limitation above remains visible. A successful walkthrough is not production deployment, investment validation, or approval to merge.
+The walkthrough is complete only when the rendered app has no uncaught error, tables and charts have accessible names, visible controls have labels, evidence cutoffs change the eligible records, downloads are generated, stored run integrity is verified, and every limitation above remains visible. A successful walkthrough is not production deployment, investment validation, or approval to merge.

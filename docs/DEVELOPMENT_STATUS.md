@@ -3,7 +3,7 @@
 **Updated:** 12 November 2026
 
 **Phase:** D8 analyst productivity and scenario depth
-**Status:** D1–D8.1 are implemented as stacked review branches; D8.2 deterministic stress scenarios are implemented on `codex/d8-2-deterministic-stress-scenarios`
+**Status:** D1–D8.2 are implemented as stacked review branches; D8.3 research-run history is implemented on `codex/d8-3-research-run-history`
 
 ## Baseline
 
@@ -258,6 +258,21 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Static compilation, accessibility audit, and `git diff --check` passed locally.
 - D8.2 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
 
+## Completed D8.3 work on the current branch
+
+- Added atomic, append-only local persistence for one typed workflow plus its reconciled report.
+- Made run folders content-addressed so repeated identical content is detected without overwriting or duplicating history.
+- Verified every stored workflow/report byte hash and the canonical run identity before listing or comparison.
+- Added a historical workflow cutoff that keeps the 2.9-to-3.0 CPI revision and ALP 100-to-90 restatement explicit.
+- Added base/target comparison for cutoff direction, company, status, budget use, missing roles, conflicts, facts, citations, reconciled claims, and artifact identities.
+- Added integrity-failure, idempotency, distinct-content, ordering, cutoff-direction, company-change, and missing-identity tests.
+- Focused D8.3 suite: 7/7 passed locally.
+- Existing typed-workflow and report regression suite: 12/12 passed locally.
+- Deterministic non-UI D0–D8.3 suite: 149/149 passed locally using a repository-scoped temporary directory.
+- Both historical workflow cutoffs generated reconciled reports in a direct execution smoke check.
+- Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
+- D8.3 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -297,6 +312,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - A point-in-time non-causal evidence graph with a frozen graph-versus-table value comparison.
 - A searchable, session-persistent analyst watchlist with indexed performance, comparable point-in-time fundamentals, and reproducible snapshot identity.
 - Bounded deterministic company stress scenarios with explicit formulas, assumptions, and no probability claim.
+- Append-only verified local workflow/report history with cutoff-aware base/target comparison.
 
 ## Known limitations and blockers
 
@@ -307,12 +323,13 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Official-provider availability is external and must remain visible when it fails.
 - Live providers, scheduled processing, authentication, multi-worker hosting, and deployment remain owner/infrastructure decisions.
 - D8.1 uses the same tiny fictional three-company fixture; it demonstrates workflow and calculation integrity, not market coverage or external validity.
+- D8.3 history is local single-writer filesystem persistence; it is not shared storage, remote backup, retention automation, or an approval ledger.
 
 ## Next priorities
 
 1. Obtain owner review of draft pull requests #15–#19 before any merge decision.
-2. Validate D8.1–D8.2 in exact-head CI, then review their stacked pull requests before any merge decision.
-3. Implement D8.3 research-run comparison as a separate stacked milestone.
+2. Validate D8.1–D8.3 in exact-head CI, then review their stacked pull requests before any merge decision.
+3. Perform rendered browser acceptance for the new watchlist, scenario, and research-history journeys.
 4. Merge only in stack order if each diff remains approved and green.
 5. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 

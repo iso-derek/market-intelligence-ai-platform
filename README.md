@@ -38,6 +38,7 @@ The current release answers those questions for a bounded set of financial headl
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
 - Searchable three-company analyst watchlists with session-persistent selection, indexed adjusted-price comparison, comparable fundamentals, and a hash-identified point-in-time snapshot.
 - Bounded deterministic stress scenarios for revenue, net margin, liquidity, and leverage with explicit assumptions, formulas, and artifact identity.
+- Append-only local typed-workflow history with content-addressed artifacts, integrity verification, historical-cutoff comparison, and explicit single-writer boundaries.
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 - Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
 - Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
@@ -60,7 +61,7 @@ The dashboard has six workspaces:
 - **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
 - **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
 - **Filings corpus:** inspect verified reports, search eligible passages, compare frozen retrieval metrics, and receive extractive passage-cited answers or explicit abstentions.
-- **Research workflow:** inspect Company, Macro, News, Risk, and Synthesis roles with tool allowlists, budgets, missing-source states, and a hash-identified trace.
+- **Research workflow:** inspect Company, Macro, News, Risk, and Synthesis roles with tool allowlists, budgets, missing-source states, and a hash-identified trace; save and compare verified local runs at two historical cutoffs.
 - **Evidence graph & operations:** inspect point-in-time provenance links, bounded paths, graph identity, required-file health, and the verified-local-demo boundary.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
@@ -122,6 +123,10 @@ The analyst watchlist reuses those tested calculations. Search is token-based ac
 
 Scenario analysis applies independent bounded shocks to revenue, net margin, current assets/liabilities, debt, and equity. Stressed net income is recalculated from stressed revenue and margin; liquidity and leverage ratios scale their tested base ratios by the relevant numerator/denominator shocks. No probability is assigned to a scenario. See [SCENARIO_STRESS_TESTING.md](docs/SCENARIO_STRESS_TESTING.md) for formulas, bounds, and interpretation limits.
 
+### Research-run history
+
+The Research workflow can persist its typed workflow and reconciled report as one content-addressed local run under `runs/`. Identical content is not duplicated, stored artifact hashes are verified before display or comparison, and the selected research cutoff remains a first-class comparison field. This is append-only single-writer local evidence, not multi-user storage or remote backup. See [RESEARCH_RUN_HISTORY.md](docs/RESEARCH_RUN_HISTORY.md).
+
 ### Keyword sentiment baseline
 
 For headline tokens, the baseline counts predefined positive and negative terms:
@@ -180,6 +185,8 @@ The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and
 The extractive answer contract, citation schema, defensive text boundary, frozen QA diagnostic, and abstention limits are documented in [GROUNDED_FILINGS_QA.md](docs/GROUNDED_FILINGS_QA.md).
 
 The role/tool contract, budgets, trace schema, conflict handling, and workflow limitations are documented in [TYPED_WORKFLOWS.md](docs/TYPED_WORKFLOWS.md).
+
+The local run schema, atomic write path, integrity checks, cutoff-aware comparison, and storage boundaries are documented in [RESEARCH_RUN_HISTORY.md](docs/RESEARCH_RUN_HISTORY.md).
 
 Release-to-session alignment, abnormal-return formulas, cutoff safeguards, and inference limits are documented in [EVENT_STUDIES.md](docs/EVENT_STUDIES.md).
 

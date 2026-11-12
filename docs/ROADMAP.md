@@ -100,6 +100,8 @@ D8 advances the reviewed local product without implying live coverage or deploym
 
 Live providers, scheduled processing, licensed news coverage, authentication, and hosting remain separate owner/infrastructure decisions rather than hidden dependencies of D8.
 
+All three D8 units are implemented on stacked review branches as of 12 November 2026. They remain subject to exact-head CI, owner review, stack-order merge, and deployment gates.
+
 ## Definition of done
 
 A milestone is complete only when the bounded feature works end to end, calculations/evidence are validated, meaningful tests pass, the README describes only implemented behavior, user journeys are demonstrated, limitations are visible, status is updated with exact evidence, and the owner has reviewed the pull request.
