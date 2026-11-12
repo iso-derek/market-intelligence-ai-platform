@@ -3,7 +3,7 @@
 **Updated:** 12 November 2026
 
 **Phase:** D8 analyst productivity and scenario depth
-**Status:** D1–D8.2 are implemented as stacked review branches; D8.3 research-run history is implemented on `codex/d8-3-research-run-history`
+**Status:** D1–D8.3 are implemented and validated as stacked draft pull requests; owner review and stack-order merge remain open
 
 ## Baseline
 
@@ -244,7 +244,8 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Focused D8.1 suite: 8/8 passed locally.
 - Deterministic non-UI D0–D8.1 suite: 135/135 passed locally using a repository-scoped temporary directory.
 - Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
-- D8.1 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+- D8.1 reviewed feature head `29a309f6f47ecdd62324aa630da47dadf566d3fb` passed both compatibility runs (`43164957605`, `43164982077`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #20.
+- D8.1 remains subject to owner review and stack-order merge gates.
 
 ## Completed D8.2 work on the current branch
 
@@ -256,7 +257,8 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Focused D8.2 suite: 7/7 passed locally.
 - Deterministic non-UI D0–D8.2 suite: 142/142 passed locally using a repository-scoped temporary directory.
 - Static compilation, accessibility audit, and `git diff --check` passed locally.
-- D8.2 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+- D8.2 reviewed feature head `dbe4ca88955a34e5147eee30f21d54b514f412d4` passed both compatibility runs (`43165434162`, `43165460074`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #21.
+- D8.2 remains subject to owner review and stack-order merge gates.
 
 ## Completed D8.3 work on the current branch
 
@@ -273,7 +275,8 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
 - Rendered browser acceptance passed for the watchlist search/indexed chart, Downside scenario calculations and warning, earlier/later workflow reconciliation, two-run comparison, and duplicate-run no-overwrite behavior.
 - Browser acceptance found stale reconciliation rows after a cutoff change; context-specific dataframe keys fixed the issue and the corrected `100` ALP net income and `2.9` CPI values were visibly reverified.
-- D8.3 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+- D8.3 reviewed feature head `726339291b0c2a83107e770aeaf49af5ad017cd3` passed both compatibility runs (`43167162037`, `43167169533`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #22.
+- D8.3 remains subject to owner review and stack-order merge gates.
 
 ## Verification status
 
@@ -329,10 +332,10 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 
 ## Next priorities
 
-1. Obtain owner review of draft pull requests #15–#19 before any merge decision.
-2. Validate D8.1–D8.3 in exact-head CI, then review their stacked pull requests before any merge decision.
-3. Perform rendered browser acceptance for the new watchlist, scenario, and research-history journeys.
-4. Merge only in stack order if each diff remains approved and green.
+1. Obtain owner review of draft pull requests #15–#22 before any merge decision.
+2. Review and merge only in stack order if each diff remains approved and green.
+3. Re-run the full suite and browser acceptance on the integrated branch after the stack is merged.
+4. Define and approve a D9 product milestone before adding another feature family.
 5. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release

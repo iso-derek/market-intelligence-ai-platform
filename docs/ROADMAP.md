@@ -100,7 +100,7 @@ D8 advances the reviewed local product without implying live coverage or deploym
 
 Live providers, scheduled processing, licensed news coverage, authentication, and hosting remain separate owner/infrastructure decisions rather than hidden dependencies of D8.
 
-All three D8 units are implemented on stacked review branches as of 12 November 2026. They remain subject to exact-head CI, owner review, stack-order merge, and deployment gates.
+All three D8 units are implemented on stacked review branches as of 12 November 2026. Their reviewed feature heads passed the Windows/Ubuntu and Python 3.12/3.13 compatibility matrix and rendered browser acceptance. They remain subject to owner review, stack-order merge, and deployment gates.
 
 ## Definition of done
 
