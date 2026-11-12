@@ -1,6 +1,6 @@
 # Market Intelligence AI Platform
 
-A point-in-time finance and source-grounded news research application. It demonstrates adjusted-price analytics, macro vintages, company restatements and ratios, dated evidence, linked extractive briefs, and independently labelled NLP evaluation.
+A point-in-time finance and source-grounded news research application. It demonstrates analyst watchlists, adjusted-price analytics, macro vintages, company restatements and ratios, dated evidence, linked extractive briefs, and independently labelled NLP evaluation.
 
 This repository is an educational research product. It does not provide investment advice, predict returns, or claim that a cited headline independently verifies a financial conclusion.
 
@@ -36,17 +36,19 @@ The current release answers those questions for a bounded set of financial headl
 - Raw and split-adjusted closes, adjusted-price returns, and sample volatility annualized with a 252-session convention.
 - Revision-aware macro history and complete-report restatement handling at historical cutoffs.
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
+- Searchable three-company analyst watchlists with session-persistent selection, indexed adjusted-price comparison, comparable fundamentals, and a hash-identified point-in-time snapshot.
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 - Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
 - Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
 - Hash-verified bounded filings corpus with safe local paths, exact document and passage hashes, explicit page/section/period metadata, and point-in-time availability.
 
-Live market/macro/filings providers, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release. D2 finance records are fictional educational fixtures, not live coverage.
+Live market/macro/filings providers, general-purpose generative agents, multi-worker hosting, and production deployment are not implemented. The current retrieval, workflow, event-study, fixed-income/FX, graph, and watchlist capabilities are bounded deterministic demonstrations. D2/D8 finance records are fictional educational fixtures, not live coverage.
 
 ## Current interface
 
-The dashboard has five workspaces:
+The dashboard has six workspaces:
 
+- **Analyst watchlist:** search the bounded company registry, maintain a browser-session watchlist, compare normalized adjusted prices and point-in-time fundamentals, and audit a snapshot hash.
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
 - **Rates & FX tab:** inspect tenor-labelled yields, benchmark-matched credit spreads in basis points, and BASE/QUOTE performance with explicit direction.
@@ -112,6 +114,8 @@ annualized volatility = sample_std(daily simple returns) × sqrt(252)
 ```
 
 The peer view calculates net margin, current ratio, and debt to equity from the latest eligible fiscal period. See [MARKET_DATA_METHODOLOGY.md](docs/MARKET_DATA_METHODOLOGY.md) for schemas, formula definitions, hand-checked revision/restatement examples, and limitations.
+
+The analyst watchlist reuses those tested calculations. Search is token-based across registered tickers, names, sectors, and aliases; it does not guess fuzzy matches. Every displayed row obeys the selected historical cutoff, and the snapshot SHA-256 covers the sorted values, sources, and cutoff. See [ANALYST_WATCHLIST.md](docs/ANALYST_WATCHLIST.md).
 
 ### Keyword sentiment baseline
 

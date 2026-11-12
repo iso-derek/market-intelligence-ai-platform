@@ -1,9 +1,9 @@
 # Development status — Market Intelligence AI Platform
 
-**Updated:** 7 November 2026
+**Updated:** 12 November 2026
 
-**Phase:** D7 product finish
-**Status:** D1–D7.5 are implemented as stacked review branches; D7.6 release-candidate validation is implemented on `codex/d7-6-release-candidate-validation`
+**Phase:** D8 analyst productivity and scenario depth
+**Status:** D1–D7.6 are implemented as stacked review branches; D8.1 analyst watchlist work is implemented on `codex/d8-1-analyst-watchlist`
 
 ## Baseline
 
@@ -234,6 +234,18 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - D7.5 `bb77de965bf262fad6ac7f348ad8afca2f3a64d6`: run `42386811879` passed.
 - D7.6 feature/test head `da26c2dcdb77a0898aa91e328921aba70f759e69`: run `42386810957` passed.
 
+## Completed D8.1 work on the current branch
+
+- Added registry search across complete ticker, company-name, sector, and alias tokens without fuzzy guesses.
+- Added a browser-session watchlist for the bounded ALP/BET/GAM universe.
+- Reused point-in-time return, volatility, restatement, and ratio functions in one comparable snapshot.
+- Added indexed adjusted-price performance, market/fundamental comparison tables, source/availability evidence, and a stable SHA-256 snapshot identity.
+- Added explicit empty-search, empty-selection, unknown-ticker, historical-cutoff, hand-calculation, normalization, and hash tests.
+- Focused D8.1 suite: 8/8 passed locally.
+- Deterministic non-UI D0–D8.1 suite: 135/135 passed locally using a repository-scoped temporary directory.
+- Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
+- D8.1 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -271,6 +283,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Typed, budgeted research workflows with visible missing/conflict states.
 - Release-aware event studies, yield curves, credit spreads, and quote-direction-aware FX analytics.
 - A point-in-time non-causal evidence graph with a frozen graph-versus-table value comparison.
+- A searchable, session-persistent analyst watchlist with indexed performance, comparable point-in-time fundamentals, and reproducible snapshot identity.
 
 ## Known limitations and blockers
 
@@ -279,13 +292,16 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - The implemented filings QA and research workflows are bounded deterministic baselines, not general-purpose generative RAG or autonomous agents.
 - Repository-authored diagnostic sets are too small for external model-validity claims.
 - Official-provider availability is external and must remain visible when it fails.
-- D7.3–D7.6 report reconciliation, accessibility evidence, verified recovery, and release-candidate review remain open.
+- Live providers, scheduled processing, authentication, multi-worker hosting, and deployment remain owner/infrastructure decisions.
+- D8.1 uses the same tiny fictional three-company fixture; it demonstrates workflow and calculation integrity, not market coverage or external validity.
 
 ## Next priorities
 
 1. Obtain owner review of draft pull requests #15–#19 before any merge decision.
-2. Merge only in stack order if each diff remains approved and green.
-3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
+2. Validate D8.1 locally and in exact-head CI, then review its stacked pull request before any merge decision.
+3. Implement D8.2 deterministic stress scenarios and D8.3 research-run comparison as separate stacked milestones.
+4. Merge only in stack order if each diff remains approved and green.
+5. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release
 

@@ -34,7 +34,14 @@ class AccessibilityAuditTests(unittest.TestCase):
 
     def test_walkthrough_names_every_workspace(self):
         text = (ROOT / "docs/USER_WALKTHROUGH.md").read_text(encoding="utf-8")
-        for workspace in ("News evidence", "Market, macro & fundamentals", "Filings corpus", "Research workflow", "Evidence graph & operations"):
+        for workspace in (
+            "News evidence",
+            "Analyst watchlist",
+            "Market, macro & fundamentals",
+            "Filings corpus",
+            "Research workflow",
+            "Evidence graph & operations",
+        ):
             self.assertIn(workspace, text)
 
 

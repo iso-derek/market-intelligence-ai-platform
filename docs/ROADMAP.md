@@ -90,6 +90,16 @@ The remaining D7 acceptance criteria are split into five independently reviewabl
 
 All five product-finish units are implemented on stacked review branches as of 7 November 2026. Their implementation does not satisfy the remaining owner-review, exact-head CI, merge, or deployment gates.
 
+## D8 — Analyst productivity and scenario depth
+
+D8 advances the reviewed local product without implying live coverage or deployment. Each unit remains a separate stacked review branch.
+
+1. **D8.1 — Analyst watchlist and search:** bounded registry search, session-persistent company selection, normalized adjusted-price comparison, point-in-time fundamental comparison, and a reproducible snapshot identity.
+2. **D8.2 — Deterministic stress scenarios:** explicit revenue, margin, liquidity, and leverage shocks with hand-checked arithmetic, assumptions, bounds, and no probability or forecast claim.
+3. **D8.3 — Research-run history:** append-only local run artifacts, immutable identities, cutoff-aware comparison, and visible single-process persistence boundaries.
+
+Live providers, scheduled processing, licensed news coverage, authentication, and hosting remain separate owner/infrastructure decisions rather than hidden dependencies of D8.
+
 ## Definition of done
 
 A milestone is complete only when the bounded feature works end to end, calculations/evidence are validated, meaningful tests pass, the README describes only implemented behavior, user journeys are demonstrated, limitations are visible, status is updated with exact evidence, and the owner has reviewed the pull request.

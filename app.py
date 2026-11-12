@@ -19,11 +19,15 @@ from events import classify_news_events,link_events_to_entities,evaluate_event_c
 from filings_dashboard import render_filings_dashboard
 from workflow_dashboard import render_workflow_dashboard
 from graph_dashboard import render_graph_dashboard
+from watchlist_dashboard import render_watchlist_dashboard
 
 st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI Platform')
 st.caption('Point-in-time finance analytics and source-grounded market research in one auditable workspace.')
-workspace=st.sidebar.radio('Workspace',['News evidence','Market, macro & fundamentals','Filings corpus','Research workflow','Evidence graph & operations'])
+workspace=st.sidebar.radio('Workspace',['News evidence','Analyst watchlist','Market, macro & fundamentals','Filings corpus','Research workflow','Evidence graph & operations'])
+if workspace=='Analyst watchlist':
+    render_watchlist_dashboard()
+    st.stop()
 if workspace=='Market, macro & fundamentals':
     render_market_dashboard()
     st.stop()

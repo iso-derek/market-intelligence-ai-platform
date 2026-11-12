@@ -11,7 +11,17 @@ This walkthrough exercises the verified local demonstration. Start the app with 
 
 Do not fetch official feeds during an offline acceptance run. A separate network-enabled run must keep failures visible and must never substitute synthetic evidence silently.
 
-## 2. Market, macro & fundamentals
+## 2. Analyst watchlist
+
+1. Select **Analyst watchlist** and confirm ALP, BET, and GAM are selected by default.
+2. Search for `Technology`, then `GAM`, and confirm each returns Gamma Software. Search for `LP` and confirm the conservative complete-token search returns no match.
+3. Filter by sector and change the selected companies; confirm the market and fundamental tables follow the sidebar watchlist.
+4. Compare the two historical cutoffs and confirm ALP net income changes from 100 to the restated 90 only at the later cutoff.
+5. Inspect the indexed adjusted-price chart, source/availability evidence, and SHA-256 snapshot identity.
+
+The selection persists only in the current browser session. The three-company universe is fictional and does not establish live coverage or investment suitability.
+
+## 3. Market, macro & fundamentals
 
 1. Select **Market, macro & fundamentals**.
 2. Compare the 31 January and 1 March cutoffs. Confirm later records disappear at the earlier cutoff.
@@ -20,7 +30,7 @@ Do not fetch official feeds during an offline acceptance run. A separate network
 5. In **Company peers**, confirm ALP report version 2 is selected as a complete report rather than mixed with version 1.
 6. Inspect **Event study** and **Rates & FX**; verify the timing, units, quote direction, and non-causal warnings.
 
-## 3. Filings corpus
+## 4. Filings corpus
 
 1. Select **Filings corpus** and use the later cutoff.
 2. Confirm three reports, their SHA-256 identities, pages, sections, periods, and availability timestamps.
@@ -28,14 +38,14 @@ Do not fetch official feeds during an offline acceptance run. A separate network
 4. Ask the default warranty question and verify the exact answer sentence has page/section/hash citation evidence.
 5. Ask a missing-dividend question and confirm the system abstains without inventing a citation.
 
-## 4. Research workflow
+## 5. Research workflow
 
 1. Select **Research workflow**, choose ALP, and keep a five-second budget.
 2. Confirm five role traces, the deliberately missing offline News role, explicit budgets, and no silent conflict.
 3. Inspect the reconciled report table. Every numeric claim must match its cited value and unit.
 4. Download the report bundle and inspect `report.json`, `report.md`, `reconciliation.csv`, and `manifest.json`.
 
-## 5. Evidence graph & operations
+## 6. Evidence graph & operations
 
 1. Select **Evidence graph & operations** and compare the two cutoffs.
 2. Confirm the earlier cutoff excludes the later filing chain.
