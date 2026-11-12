@@ -1,0 +1,4 @@
+document_id,file_name,company,ticker,form,period_end,filed_at,available_at,source_uri,sha256
+filing-alp-2025,alpha_2025_annual.txt,Alpha Industries,ALP,Annual report,2025-12-31T23:59:59Z,2026-02-20T20:00:00Z,2026-02-20T20:05:00Z,repo://data/filings/alpha_2025_annual.txt,7cdf24e983d4201a4f134d65fb79a73dc6bbe740099a41a6ac6cb374f539df29
+filing-bet-2025,beta_2025_annual.txt,Beta Retail,BET,Annual report,2025-12-31T23:59:59Z,2026-01-22T20:00:00Z,2026-01-22T20:05:00Z,repo://data/filings/beta_2025_annual.txt,44c013dc95935fc93faa1cceb3a06af43cd53b570e6beb1af1db4cb91a23296c
+filing-gam-2025,gamma_2025_annual.txt,Gamma Software,GAM,Annual report,2025-12-31T23:59:59Z,2026-01-25T20:00:00Z,2026-01-25T20:05:00Z,repo://data/filings/gamma_2025_annual.txt,0db392c7df8b04898f302805f3365822bea024d51f6e981011b57911635de200

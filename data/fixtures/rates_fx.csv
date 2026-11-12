@@ -1,0 +1,11 @@
+observation_id,kind,instrument,date,value,unit,tenor,benchmark,base_currency,quote_currency,available_at,source
+ust2-0102,government_yield,UST 2Y,2026-01-02T21:00:00Z,4.20,percent,2Y,,,,2026-01-02T21:10:00Z,Educational rates fixture
+ust10-0102,government_yield,UST 10Y,2026-01-02T21:00:00Z,4.50,percent,10Y,,,,2026-01-02T21:10:00Z,Educational rates fixture
+corp10-0102,corporate_yield,Alpha 10Y,2026-01-02T21:00:00Z,5.80,percent,10Y,UST 10Y,,,2026-01-02T21:10:00Z,Educational rates fixture
+eurusd-0102,fx_spot,EUR/USD,2026-01-02T21:00:00Z,1.0400,USD per EUR,,,EUR,USD,2026-01-02T21:10:00Z,Educational FX fixture
+usdngn-0102,fx_spot,USD/NGN,2026-01-02T21:00:00Z,1550.00,NGN per USD,,,USD,NGN,2026-01-02T21:10:00Z,Educational FX fixture
+ust2-0108,government_yield,UST 2Y,2026-01-08T21:00:00Z,4.10,percent,2Y,,,,2026-01-08T21:10:00Z,Educational rates fixture
+ust10-0108,government_yield,UST 10Y,2026-01-08T21:00:00Z,4.55,percent,10Y,,,,2026-01-08T21:10:00Z,Educational rates fixture
+corp10-0108,corporate_yield,Alpha 10Y,2026-01-08T21:00:00Z,5.95,percent,10Y,UST 10Y,,,2026-01-08T21:10:00Z,Educational rates fixture
+eurusd-0108,fx_spot,EUR/USD,2026-01-08T21:00:00Z,1.0608,USD per EUR,,,EUR,USD,2026-01-08T21:10:00Z,Educational FX fixture
+usdngn-0108,fx_spot,USD/NGN,2026-01-08T21:00:00Z,1581.00,NGN per USD,,,USD,NGN,2026-01-08T21:10:00Z,Educational FX fixture

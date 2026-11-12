@@ -32,9 +32,20 @@ python launch.py tests
 
 The default tests are offline. They mock optional model behavior and parse local RSS/Atom fixtures. Live provider availability and downloaded FinBERT weights require separate checks.
 
-## Three core user journeys
+## Four core user journeys
 
-### 1. Synthetic demonstration and abstention
+### 1. Point-in-time market lab
+
+1. In **Workspace**, choose **Market, macro & fundamentals**.
+2. Keep the 1 March historical view and select ALP, BET, or GAM.
+3. Compare raw and adjusted closes. ALP demonstrates why split-aware returns use adjusted close.
+4. Open **Macro vintages**, then switch the historical view to 31 January. Confirm December CPI changes from the later revised value 3.0 to the initial value 2.9.
+5. Open **Company peers**. Confirm ALP's complete report version changes between cutoffs and that units, filing time, availability time, and report version remain visible.
+6. Read **Methodology** before interpreting the ratios or volatility.
+
+All three companies and all values are fictional educational fixtures. This journey is offline and does not claim live market coverage.
+
+### 2. Synthetic demonstration and abstention
 
 1. Keep **Synthetic demonstration** selected.
 2. Confirm the synthetic-data warning is visible.
@@ -42,18 +53,24 @@ The default tests are offline. They mock optional model behavior and parse local
 4. Confirm the app abstains because synthetic items are excluded from sourced evidence.
 5. Inspect sentiment and risk flags in **News explorer** as demonstration outputs only.
 
-### 2. Official evidence
+### 3. Official evidence
 
 1. Select **Official feeds**.
-2. Press **Fetch official feeds**.
-3. Inspect each source's status, parsed count, skipped count, feed URL, and content hash.
-4. Enter a query and UTC cutoff.
-5. Open each linked source and download the research ZIP.
-6. Inspect `articles.csv`, `brief.json`, `citation_audit.csv`, and `settings.json`.
+2. Review the enabled sources and latest status in the persistent registry.
+3. Select one or more enabled sources and press **Fetch selected sources**.
+4. Inspect each source's status, parsed count, skipped count, feed URL, and immutable snapshot hash.
+5. Enter a query and UTC cutoff.
+6. Open each linked source and download the research ZIP.
+7. Inspect `articles.csv`, `brief.json`, `citation_audit.csv`, and `settings.json`.
+8. Reopen the app to verify persisted evidence remains available without another fetch.
+
+Open **Manage registered sources** to enable or disable a source, add a public HTTPS RSS/Atom URL, or export an exact stored snapshot. Each snapshot ZIP contains the original XML bytes, a manifest, and the exact normalised article records.
 
 If every feed fails, the app stops with diagnostics. It does not replace official evidence with synthetic headlines.
 
-### 3. Dated CSV evidence
+The default database is `data/runtime/evidence.db`. Set `MARKET_INTELLIGENCE_DB` to use another location. Runtime databases are excluded from Git; back them up separately if the evidence history matters.
+
+### 4. Dated CSV evidence
 
 Upload a UTF-8 CSV containing:
 
@@ -99,10 +116,14 @@ Each run gets a unique `runs/<timestamp>-<id>/` folder with `execution.log`, `ma
 
 Failed runs are recorded. A zero exit code establishes execution only; inspect the data source, methodology, and limitations before using results.
 
+The Streamlit **Research workflow** also stores typed workflow/report pairs under `runs/workflow-<content hash>/`. These folders use a separate schema, are content-addressed, and are verified before comparison. Re-saving identical content does not overwrite or duplicate it. Both run types are local single-writer evidence and require an external backup/retention policy for durable operations.
+
 ## Troubleshooting
 
 - **Dependency installation fails:** check network/proxy access to PyPI, then rerun. The launcher does not write its requirements marker until installation succeeds.
 - **Official feeds fail:** inspect the diagnostics. Provider/network failure remains visible.
+- **Registry rejects a URL:** registered sources must use public HTTPS endpoints; local, private, and reserved IP targets are rejected.
+- **Database is locked:** run one local application process against each SQLite file, then retry.
 - **FinBERT cannot run:** install the optional file and verify model-weight access. The app stops rather than using the keyword method silently.
 - **Port 8503 is busy:** run `python launch.py --port 8513`.
 - **Invalid CSV:** verify UTF-8 encoding, required columns, ISO timestamps, and public HTTP(S) URLs without embedded credentials.

@@ -1,0 +1,16 @@
+instrument,instrument_name,date,raw_close,adjusted_close,currency,calendar,available_at,source,source_version
+ALP,Alpha Industries,2026-01-02T21:00:00Z,100,50,USD,XNYS,2026-01-02T21:10:00Z,Educational fixture exchange,1
+ALP,Alpha Industries,2026-01-05T21:00:00Z,102,51,USD,XNYS,2026-01-05T21:10:00Z,Educational fixture exchange,1
+ALP,Alpha Industries,2026-01-06T21:00:00Z,104,52,USD,XNYS,2026-01-06T21:10:00Z,Educational fixture exchange,1
+ALP,Alpha Industries,2026-01-07T21:00:00Z,53,53,USD,XNYS,2026-01-07T21:10:00Z,Educational fixture exchange,1
+ALP,Alpha Industries,2026-01-08T21:00:00Z,54,54,USD,XNYS,2026-01-08T21:10:00Z,Educational fixture exchange,1
+BET,Beta Retail,2026-01-02T21:00:00Z,80,80,USD,XNYS,2026-01-02T21:10:00Z,Educational fixture exchange,1
+BET,Beta Retail,2026-01-05T21:00:00Z,79,79,USD,XNYS,2026-01-05T21:10:00Z,Educational fixture exchange,1
+BET,Beta Retail,2026-01-06T21:00:00Z,81,81,USD,XNYS,2026-01-06T21:10:00Z,Educational fixture exchange,1
+BET,Beta Retail,2026-01-07T21:00:00Z,82,82,USD,XNYS,2026-01-07T21:10:00Z,Educational fixture exchange,1
+BET,Beta Retail,2026-01-08T21:00:00Z,84,84,USD,XNYS,2026-01-08T21:10:00Z,Educational fixture exchange,1
+GAM,Gamma Software,2026-01-02T21:00:00Z,120,120,USD,XNAS,2026-01-02T21:10:00Z,Educational fixture exchange,1
+GAM,Gamma Software,2026-01-05T21:00:00Z,123,123,USD,XNAS,2026-01-05T21:10:00Z,Educational fixture exchange,1
+GAM,Gamma Software,2026-01-06T21:00:00Z,121,121,USD,XNAS,2026-01-06T21:10:00Z,Educational fixture exchange,1
+GAM,Gamma Software,2026-01-07T21:00:00Z,125,125,USD,XNAS,2026-01-07T21:10:00Z,Educational fixture exchange,1
+GAM,Gamma Software,2026-01-08T21:00:00Z,126,126,USD,XNAS,2026-01-08T21:10:00Z,Educational fixture exchange,1

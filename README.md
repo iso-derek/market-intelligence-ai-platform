@@ -1,6 +1,6 @@
 # Market Intelligence AI Platform
 
-A source-grounded financial-news research application for collecting dated evidence, scoring headline sentiment, producing linked extractive briefs, and evaluating NLP methods against independently supplied labels.
+A point-in-time finance and source-grounded news research application. It demonstrates analyst watchlists, adjusted-price analytics, macro vintages, company restatements and ratios, dated evidence, linked extractive briefs, and independently labelled NLP evaluation.
 
 This repository is an educational research product. It does not provide investment advice, predict returns, or claim that a cited headline independently verifies a financial conclusion.
 
@@ -12,12 +12,15 @@ Market analysts need to separate three questions that are often blurred together
 2. Which items are relevant to a research question?
 3. How well does a sentiment method perform against labels assigned independently of the model?
 
-The current release answers those questions for a bounded set of financial headlines. It preserves source links and availability times, abstains when it cannot find eligible evidence, and exports the exact inputs and settings behind a brief.
+The current release answers those questions for a bounded set of financial headlines and adds a deterministic three-company finance lab. It preserves source links and availability times, abstains when it cannot find eligible evidence, and makes price adjustments, data revisions, report versions, units, and cutoff times visible.
 
 ## Implemented features
 
 - Deterministic synthetic demonstration data, visibly labelled as synthetic.
 - On-demand ingestion from Federal Reserve and European Central Bank RSS/Atom feeds.
+- Persistent SQLite source registry with enable/disable controls and public-HTTPS validation.
+- Immutable raw-feed snapshots, append-only fetch attempts, visible source health, and replayable snapshot exports.
+- Idempotent imports that preserve revised article versions and historical evidence cutoffs.
 - Upload of dated CSV news with schema and timestamp validation.
 - Publication, retrieval, and first-available timestamps stored separately.
 - URL canonicalisation, tracking-parameter removal, article hashing, and duplicate removal.
@@ -29,15 +32,37 @@ The current release answers those questions for a bounded set of financial headl
 - Sentiment evaluation using independently supplied labels, accuracy, macro F1, and a confusion matrix.
 - Downloadable ZIP bundles containing articles, claims, citation checks, settings, and a dataset hash.
 - Streamlit dashboard, offline unit tests, compatibility CI, and recorded research-run support.
+- Provider-isolated educational price, macro, and fundamental fixtures for ALP, BET, and GAM.
+- Raw and split-adjusted closes, adjusted-price returns, and sample volatility annualized with a 252-session convention.
+- Revision-aware macro history and complete-report restatement handling at historical cutoffs.
+- Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
+- Searchable three-company analyst watchlists with session-persistent selection, indexed adjusted-price comparison, comparable fundamentals, and a hash-identified point-in-time snapshot.
+- Bounded deterministic stress scenarios for revenue, net margin, liquidity, and leverage with explicit assumptions, formulas, and artifact identity.
+- Append-only local typed-workflow history with content-addressed artifacts, integrity verification, historical-cutoff comparison, and explicit single-writer boundaries.
+- Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
+- Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
+- Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
+- Hash-verified bounded filings corpus with safe local paths, exact document and passage hashes, explicit page/section/period metadata, and point-in-time availability.
 
-Market prices, macroeconomic series, company fundamentals, filings RAG, generative research agents, event studies, fixed-income analytics, and a knowledge graph are planned work. They are not implemented in this release.
+Live market/macro/filings providers, general-purpose generative agents, multi-worker hosting, and production deployment are not implemented. The current retrieval, workflow, event-study, fixed-income/FX, graph, and watchlist capabilities are bounded deterministic demonstrations. D2/D8 finance records are fictional educational fixtures, not live coverage.
 
 ## Current interface
 
-The dashboard has three research areas:
+The dashboard has six workspaces:
+
+- **Analyst watchlist:** search the bounded company registry, maintain a browser-session watchlist, compare normalized adjusted prices and point-in-time fundamentals, run deterministic stress scenarios, and audit snapshot/scenario hashes.
+- **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
+- **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
+- **Rates & FX tab:** inspect tenor-labelled yields, benchmark-matched credit spreads in basis points, and BASE/QUOTE performance with explicit direction.
+- **News evidence:** use the three research areas below.
 
 - **Evidence brief:** retrieve eligible source-linked headlines for a query and cutoff.
 - **News explorer:** inspect timestamps, sources, sentiment, risk flags, and URLs.
+- **Entity resolution:** audit exact company/ticker links, shared-alias ambiguity, unknown mentions, and resolver version without inferring return impact.
+- **Event taxonomy:** inspect classified, ambiguous, and unknown event language plus conservative company/sector links.
+- **Filings corpus:** inspect verified reports, search eligible passages, compare frozen retrieval metrics, and receive extractive passage-cited answers or explicit abstentions.
+- **Research workflow:** inspect Company, Macro, News, Risk, and Synthesis roles with tool allowlists, budgets, missing-source states, and a hash-identified trace; save and compare verified local runs at two historical cutoffs.
+- **Evidence graph & operations:** inspect point-in-time provenance links, bounded paths, graph identity, required-file health, and the verified-local-demo boundary.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
 Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
@@ -46,10 +71,15 @@ Real screenshots will be added after a verified local browser acceptance session
 
 ```mermaid
 flowchart LR
-    A[Synthetic data, official feeds, or dated CSV] --> B[Validation and normalisation]
-    B --> C[Provenance, timestamps, hashes, deduplication]
+    M[Fixture provider: prices, macro, fundamentals] --> N[Schema and time validation]
+    N --> O[Point-in-time vintage/report selection]
+    O --> P[Returns, volatility, and peer ratios]
+    P --> J[Streamlit research interface]
+    A[Synthetic data, registered feeds, or dated CSV] --> B[Validation and normalisation]
+    B --> C[SQLite registry, raw snapshots, attempts, article versions]
+    C --> D0[Point-in-time evidence reconstruction]
     C --> D[Keyword or optional FinBERT sentiment]
-    C --> E[TF-IDF evidence retrieval]
+    D0 --> E[TF-IDF evidence retrieval]
     E --> F[Cutoff and source eligibility]
     F --> G[Extractive brief or abstention]
     D --> H[Independent-label evaluation]
@@ -66,12 +96,36 @@ The complete target architecture and its sequencing are documented in [PRODUCT_V
 |---|---|---|
 | Interface | Streamlit | Fast, testable Python interface for a bounded research workflow. |
 | Data handling | pandas, NumPy | Explicit tabular transformations and portable exports. |
-| Retrieval | scikit-learn TF-IDF and cosine similarity | Transparent lexical baseline before introducing embeddings. |
+| Retrieval | scikit-learn TF-IDF and seeded truncated SVD | Comparable lexical and transparent dense-vector baselines without a remote model dependency. |
 | HTTP and XML | requests and standard-library XML parsing | Small, inspectable ingestion surface with size/entity checks. |
+| Persistence | SQLite | Transactional local storage, versioned schema, immutable payloads, and portable operation without a service dependency. |
 | Optional NLP | ProsusAI FinBERT | Finance-specific sentiment comparator, isolated from the default install. |
-| Charts | Plotly | Available for later analytical views; current interface is evidence-first. |
+| Charts | Native Streamlit/Vega charts | Accessible, dependency-light views for the bounded analytical lab. |
 
 ## Methodology
+
+### Point-in-time finance analytics
+
+Every finance record must have `available_at <= cutoff`. Macro history selects the latest eligible vintage for each observation. Company history selects one complete eligible report version so a restated fact cannot leak into an earlier cutoff or be mixed with an older report.
+
+Returns use adjusted close:
+
+```text
+simple return_t = adjusted_close_t / adjusted_close_(t-1) - 1
+annualized volatility = sample_std(daily simple returns) × sqrt(252)
+```
+
+The peer view calculates net margin, current ratio, and debt to equity from the latest eligible fiscal period. See [MARKET_DATA_METHODOLOGY.md](docs/MARKET_DATA_METHODOLOGY.md) for schemas, formula definitions, hand-checked revision/restatement examples, and limitations.
+
+The analyst watchlist reuses those tested calculations. Search is token-based across registered tickers, names, sectors, and aliases; it does not guess fuzzy matches. Every displayed row obeys the selected historical cutoff, and the snapshot SHA-256 covers the sorted values, sources, and cutoff. See [ANALYST_WATCHLIST.md](docs/ANALYST_WATCHLIST.md).
+
+### Deterministic stress scenarios
+
+Scenario analysis applies independent bounded shocks to revenue, net margin, current assets/liabilities, debt, and equity. Stressed net income is recalculated from stressed revenue and margin; liquidity and leverage ratios scale their tested base ratios by the relevant numerator/denominator shocks. No probability is assigned to a scenario. See [SCENARIO_STRESS_TESTING.md](docs/SCENARIO_STRESS_TESTING.md) for formulas, bounds, and interpretation limits.
+
+### Research-run history
+
+The Research workflow can persist its typed workflow and reconciled report as one content-addressed local run under `runs/`. Identical content is not duplicated, stored artifact hashes are verified before display or comparison, and the selected research cutoff remains a first-class comparison field. This is append-only single-writer local evidence, not multi-user storage or remote backup. See [RESEARCH_RUN_HISTORY.md](docs/RESEARCH_RUN_HISTORY.md).
 
 ### Keyword sentiment baseline
 
@@ -101,6 +155,8 @@ cosine(q, d) = (q · d) / (||q|| ||d||)
 
 Only positive-similarity results are returned. When none qualify, the system abstains instead of fabricating a summary.
 
+Filing retrieval uses a shared point-in-time interface for unigram/bigram TF-IDF and a deterministic dense LSA vector baseline. The latter projects the TF-IDF matrix with seeded truncated SVD; it is not a pretrained language-model embedding. The eight frozen authored relevance cases report recall@3, mean reciprocal rank, and nDCG@3. These diagnostic metrics are regression evidence, not external model validation.
+
 ### Evaluation
 
 Accuracy measures the share of correct predictions. Macro F1 calculates F1 independently for Negative, Neutral, and Positive labels and averages the three values, so a frequent class cannot dominate the result. The included 18-item diagnostic fixture is small, synthetic, and author-labelled; it verifies mechanics rather than external validity.
@@ -114,8 +170,41 @@ Accuracy measures the share of correct predictions. Macro F1 calculates F1 indep
 | User CSV | User-provided dated headlines | Validated locally; source rights and confidentiality remain the user's responsibility. |
 | Synthetic generator | Offline interface demonstration | Clearly labelled and excluded from sourced briefs. |
 | ProsusAI/finbert revision `f210365...` | Optional sentiment comparator | Separate dependencies; model revision exported with evaluation results. |
+| Repository-authored finance fixtures | Offline prices, macro vintages, and company reports | Fictional values with explicit units and availability; never represented as live observations. |
 
-See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints.
+See [DATA_AND_MODEL_SOURCES.md](docs/DATA_AND_MODEL_SOURCES.md) for URLs, provenance fields, licensing notes, and operating constraints. The SQLite schema, time semantics, migrations, replay rules, and backup boundary are documented in [PERSISTENCE.md](docs/PERSISTENCE.md).
+
+The event categories, uncertainty rules, linkage semantics, labelled diagnostic, and limitations are documented in [EVENT_TAXONOMY.md](docs/EVENT_TAXONOMY.md).
+
+The frozen sentiment split, per-class metrics, bootstrap method, vocabulary-overlap review, and responsible interpretation are documented in [SENTIMENT_EVALUATION.md](docs/SENTIMENT_EVALUATION.md).
+
+The bounded report manifest, parser grammar, integrity checks, time semantics, and corpus limitations are documented in [FILINGS_CORPUS.md](docs/FILINGS_CORPUS.md).
+
+The filing retrieval contract, frozen relevance diagnostic, ranking metrics, and interpretation limits are documented in [RETRIEVAL_EVALUATION.md](docs/RETRIEVAL_EVALUATION.md).
+
+The extractive answer contract, citation schema, defensive text boundary, frozen QA diagnostic, and abstention limits are documented in [GROUNDED_FILINGS_QA.md](docs/GROUNDED_FILINGS_QA.md).
+
+The role/tool contract, budgets, trace schema, conflict handling, and workflow limitations are documented in [TYPED_WORKFLOWS.md](docs/TYPED_WORKFLOWS.md).
+
+The local run schema, atomic write path, integrity checks, cutoff-aware comparison, and storage boundaries are documented in [RESEARCH_RUN_HISTORY.md](docs/RESEARCH_RUN_HISTORY.md).
+
+Release-to-session alignment, abnormal-return formulas, cutoff safeguards, and inference limits are documented in [EVENT_STUDIES.md](docs/EVENT_STUDIES.md).
+
+Yield, spread, currency-pair, quote-direction, and point-in-time conventions are documented in [RATES_AND_FX.md](docs/RATES_AND_FX.md).
+
+Graph validation, relationship semantics, bounded traversal, artifact identity, and local-operations boundaries are documented in [EVIDENCE_GRAPH_AND_OPERATIONS.md](docs/EVIDENCE_GRAPH_AND_OPERATIONS.md).
+
+The frozen graph-versus-table comparison, exactness definition, operation counts, and negative-result interpretation are documented in [GRAPH_VALUE_EVALUATION.md](docs/GRAPH_VALUE_EVALUATION.md).
+
+The claim-level citation contract, numeric reconciliation checks, and immutable report bundle are documented in [RECONCILED_RESEARCH_REPORTS.md](docs/RECONCILED_RESEARCH_REPORTS.md).
+
+The keyboard guidance and end-to-end acceptance journeys for all five workspaces are in [USER_WALKTHROUGH.md](docs/USER_WALKTHROUGH.md).
+
+The latest genuine local browser observations and their boundaries are recorded in [BROWSER_ACCEPTANCE.md](docs/BROWSER_ACCEPTANCE.md).
+
+SQLite health checks, non-overwriting verified backups, restore drills, and retention boundaries are documented in [BACKUP_AND_RECOVERY.md](docs/BACKUP_AND_RECOVERY.md).
+
+The owner-gated hosting design and current no-deployment decision are in [DEPLOYMENT_PLAN.md](docs/DEPLOYMENT_PLAN.md); reproducible release gates are in [RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
 
 ## Installation
 
@@ -149,11 +238,13 @@ Model weights may be downloaded on first use. Review the model terms before enab
 
 ## How to use the application
 
-1. Start with **Synthetic demonstration** to inspect the interface without external data. The Evidence brief correctly abstains because synthetic headlines are ineligible as sources.
-2. Choose **Official feeds**, press **Fetch official feeds**, and inspect the diagnostics before interpreting results.
-3. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
-4. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
-5. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
+1. Choose **Market, macro & fundamentals** and compare the 31 January and 1 March historical views. Inspect ALP's split, CPI revision, and complete report restatement.
+2. Switch to **News evidence** and start with **Synthetic demonstration**. The Evidence brief correctly abstains because synthetic headlines are ineligible as sources.
+3. Choose **Official feeds**, review the persistent registry, select enabled sources, press **Fetch selected sources**, and inspect source health before interpreting results.
+4. Reopen the app to confirm persisted evidence remains available, or download an immutable snapshot from **Manage registered sources**.
+5. Enter search terms and a UTC cutoff in **Evidence brief**. Open the returned source links and download the evidence bundle.
+6. Use **Upload dated CSV** for your own sources. Required fields are `headline` and `published_at`; `url`, `source`, and a recorded `available_at` are strongly recommended.
+7. In **Research evaluation**, upload a distinct `headline,label` dataset or run the small diagnostic fixture. Treat its result as a functional check.
 
 Detailed commands and troubleshooting are in [QUICKSTART.md](docs/QUICKSTART.md).
 
@@ -181,15 +272,16 @@ These are historical recorded checks, not results rerun by every clone. Eighteen
 
 ```bash
 python -m unittest discover -s tests -v
+python scripts/release_check.py
 ```
 
-The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, the Streamlit demo path, and launcher run recording.
+The suite checks timestamp availability, irrelevant-query abstention, exclusion of synthetic evidence, URL cleaning, duplicate removal, RSS/Atom parsing, citation semantics, the FinBERT output contract, independent-label requirements, export contents, SQLite migration, idempotent snapshots, revision preservation, cutoff invariance, visible outages, replay exports, split-adjusted return and volatility calculations, macro vintage selection, complete-report restatements, ratios, provider isolation, conservative entity/ticker resolution, the Streamlit demo/registry paths, and launcher run recording.
 
 GitHub Actions runs the default suite on Windows and Ubuntu with Python 3.12 and 3.13. Optional network access and actual FinBERT weights are outside the default CI path and must be reported separately.
 
 ## Deployment
 
-No hosted deployment is claimed. The verified target for this milestone is a local Streamlit demonstration. A public deployment must add operating limits, privacy guidance for uploads, secrets management, persistent-source design, and a review of third-party data/model terms. Deployment requires separate approval.
+No hosted deployment is claimed. The verified target is a local Streamlit demonstration. SQLite persistence is implemented for a single local process; a public deployment still requires operating limits, concurrency and backup design, privacy guidance for uploads, secrets management, and a review of third-party data/model terms. Deployment requires separate approval.
 
 ## Limitations and responsible use
 
@@ -200,6 +292,8 @@ No hosted deployment is claimed. The verified target for this milestone is a loc
 - TF-IDF retrieves lexical overlap and can miss synonyms or context.
 - The default label fixture is not representative of financial news.
 - Official feeds cover only a narrow part of the complete market-intelligence vision.
+- SQLite is a local single-instance store. Verified on-demand backup/restore is implemented, but multi-worker hosting, scheduled backups, retention, encryption, and off-device recovery are not.
+- Finance analytics use a tiny fictional fixture. They do not establish live-provider accuracy, production coverage, or a statistically stable volatility estimate.
 - Uploaded data may be confidential; do not expose it through a public instance.
 - This project is independently developed and is not endorsed by Bloomberg, Imperial College London, UCL, the Federal Reserve, the ECB, or ProsusAI.
 

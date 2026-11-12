@@ -2,6 +2,67 @@
 
 This document records the sources used by the current application and the constraints that must remain visible in research and deployment.
 
+## D2 educational finance fixtures
+
+- Files: `data/fixtures/prices.csv`, `macro_vintages.csv`, and `fundamentals.csv`.
+- Use: deterministic validation of adjusted/raw prices, returns, volatility, macro vintages, accounting restatements, ratios, and point-in-time joins.
+- Scope: three fictional USD companies, two fictionalized macro series, and one fiscal period.
+- Access: local files only; the fixture provider performs no network requests.
+- Rights: repository-authored educational test data. It must not be described as observed, vendor-sourced, or suitable for investment decisions.
+- Time controls: every table carries availability; macro records also carry release/vintage time, and fundamentals carry filing time and report version.
+
+The provider protocol is an engineering boundary, not evidence that a live provider is integrated. See `MARKET_DATA_METHODOLOGY.md` for schemas, formulas, and limitations.
+
+## D3.1 entity registry
+
+- File: `data/fixtures/entity_registry.csv`.
+- Use: deterministic company, ticker, sector, and alias resolution for the bounded research interface.
+- Origin: repository-authored educational metadata; it is not an exchange security master or licensed identifier feed.
+- Resolution: exact, case-insensitive, word-boundary aliases with longest-span precedence.
+- Uncertainty: shared aliases remain `ambiguous`; unmatched text remains `unknown`; neither state is silently coerced.
+- Limitation: the registry does not handle corporate actions, historical ticker changes, subsidiaries, people, places, fuzzy spelling, or multilingual names.
+
+## D3.2 event taxonomy diagnostic
+
+- File: `data/evaluation/event_taxonomy_cases.csv`.
+- Use: separately labelled functional evaluation of the fixed event taxonomy, including ambiguous and unknown outcomes.
+- Origin: repository-authored educational diagnostics, not an external or representative market-news corpus.
+- Exported identity: evaluation reports include the dataset SHA-256 and `keyword-event-v1` rule version.
+- Limitation: 24 examples are insufficient for model-validity claims and share some vocabulary with the transparent rule list.
+
+## D3.3 frozen sentiment holdout
+
+- File: `data/evaluation/sentiment_holdout.csv`.
+- Use: balanced frozen-split comparison for the keyword baseline and optional pinned FinBERT backend.
+- Origin: 30 repository-authored, author-reviewed educational headlines; not an external benchmark.
+- Identity: every report exports the exact dataframe SHA-256, backend, and model revision.
+- Review: the lexicon report exports case-level overlap with its fixed positive/negative vocabulary.
+- Limitation: balanced author labels, small sample size, and unknown upstream pretrained-corpus overlap constrain interpretation.
+
+## D4.1 fictional filings corpus
+
+- Files: `data/filings/*.txt` with `manifest.csv`.
+- Use: page/section provenance, point-in-time availability, retrieval, citation, and numerical-consistency testing.
+- Origin: repository-authored fictional annual reports; not issuer or regulator filings.
+- Integrity: exact UTF-8 bytes are verified against manifest SHA-256 values; every normalized section receives a separate content hash.
+- Limitation: no remote acquisition, arbitrary PDF parsing, OCR, tables, exhibits, or redistribution claim.
+
+## D4.2 filing relevance diagnostic
+
+- File: `data/evaluation/filings_relevance_cases.csv`.
+- Use: frozen recall@3, mean reciprocal rank, and nDCG@3 comparison for lexical TF-IDF and dense LSA vectors.
+- Origin: eight repository-authored query-to-passage judgements written from the fictional corpus.
+- Identity: the dashboard displays the exact CSV SHA-256 and case-level retrieved passage IDs.
+- Limitation: fixture-author review is not independent assessment; the small, source-close diagnostic cannot establish external retrieval quality.
+
+## D4.3 grounded filings QA diagnostic
+
+- File: `data/evaluation/filings_qa_cases.csv`.
+- Use: answer/abstention status, expected citation, numerical token preservation, and unanswerable-case regression checks.
+- Origin: ten repository-authored cases over the fictional filing passages.
+- Integrity: answer text is copied verbatim from a cited hash-identified passage; abstentions contain no citation.
+- Limitation: exact authored cases do not measure semantic entailment, generative faithfulness, or performance on real filings.
+
 ## Federal Reserve monetary-policy feed
 
 - URL: `https://www.federalreserve.gov/feeds/press_monetary.xml`

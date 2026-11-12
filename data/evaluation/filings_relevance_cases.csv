@@ -1,0 +1,9 @@
+case_id,query,relevant_passage_ids,cutoff,review_status,split
+ret-001,What warranty provision correction changed Alpha Industries net income?,filing-alp-2025:p3:s1,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-002,Which company warns about concentrated component suppliers and delivery disruption?,filing-alp-2025:p2:s2,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-003,What are Alpha Industries current assets and current liabilities?,filing-alp-2025:p2:s1,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-004,How many small-format stores did Beta Retail open and how many locations close?,filing-bet-2025:p3:s1,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-005,Which Beta Retail risks mention inventory markdowns lease commitments and payment outages?,filing-bet-2025:p2:s2,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-006,How does Gamma Software recognise subscription revenue and implementation services?,filing-gam-2025:p3:s1,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-007,What does Gamma Software say about cyber incidents and platform outages?,filing-gam-2025:p2:s2,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic
+ret-008,Why did Gamma Software research and development spending increase?,filing-gam-2025:p1:s2,2026-03-01T23:59:59Z,fixture_author_reviewed,frozen_diagnostic

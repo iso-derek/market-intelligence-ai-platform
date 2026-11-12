@@ -1,0 +1,6 @@
+edge_id,source_id,target_id,relationship,evidence_id,available_at
+edge-001,company:ALP,filing:alp-2025,filed,filing:alp-2025,2026-02-20T20:05:00Z
+edge-002,filing:alp-2025,passage:alp-warranty,contains,passage:alp-warranty,2026-02-20T20:05:00Z
+edge-003,passage:alp-warranty,fact:alp-net-income,supports,fact:alp-net-income,2026-02-20T20:05:00Z
+edge-004,passage:alp-warranty,event:alp-warranty,describes,event:alp-warranty,2026-02-20T20:05:00Z
+edge-005,event:alp-warranty,instrument:ALP,linked_to,instrument:ALP,2026-02-20T20:05:00Z
