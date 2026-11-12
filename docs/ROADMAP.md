@@ -100,7 +100,17 @@ D8 advances the reviewed local product without implying live coverage or deploym
 
 Live providers, scheduled processing, licensed news coverage, authentication, and hosting remain separate owner/infrastructure decisions rather than hidden dependencies of D8.
 
-All three D8 units are implemented on stacked review branches as of 12 November 2026. Their reviewed feature heads passed the Windows/Ubuntu and Python 3.12/3.13 compatibility matrix and rendered browser acceptance. They remain subject to owner review, stack-order merge, and deployment gates.
+All three D8 units were integrated into `main` through pull request #23 on 12 November 2026. The aggregate integration head and resulting `main` commit passed the Windows/Ubuntu and Python 3.12/3.13 compatibility matrix. Deployment remains a separate owner-controlled gate.
+
+## D9 — Integrated baseline and CI lifecycle hardening
+
+D9 begins from the first integrated D1–D8.3 baseline rather than another stacked feature branch.
+
+1. **D9.1 — Integrated baseline and CI lifecycle:** record the exact merged commit and post-merge evidence, update GitHub Actions to supported Node.js 24 action runtimes, repeat the full compatibility matrix, and keep the release and deployment boundaries explicit.
+2. **D9.2 — Portfolio release evidence:** perform a fresh-user installation, archive genuine screenshots from the merged application, and publish a concise capability-and-limitations walkthrough.
+3. **D9.3 — Provider and deployment decision record:** evaluate live-data, authentication, hosting, concurrency, retention, and licensing choices before authorising any external service integration.
+
+D9.1 is approved as maintenance of the existing product. D9.2 and D9.3 may document and validate the product, but they do not authorise hosting, credentials, paid providers, or licensed data.
 
 ## Definition of done
 

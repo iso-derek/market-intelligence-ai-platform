@@ -2,8 +2,8 @@
 
 **Updated:** 12 November 2026
 
-**Phase:** D8 analyst productivity and scenario depth
-**Status:** D1–D8.3 are implemented and validated as stacked draft pull requests; owner review and stack-order merge remain open
+**Phase:** D9 integrated baseline and CI lifecycle hardening
+**Status:** D1–D8.3 are integrated into `main`; D9.1 is in progress on `codex/d9-1-integrated-ci-hardening`
 
 ## Baseline
 
@@ -245,7 +245,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Deterministic non-UI D0–D8.1 suite: 135/135 passed locally using a repository-scoped temporary directory.
 - Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
 - D8.1 reviewed feature head `29a309f6f47ecdd62324aa630da47dadf566d3fb` passed both compatibility runs (`43164957605`, `43164982077`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #20.
-- D8.1 remains subject to owner review and stack-order merge gates.
+- D8.1 was integrated into `main` through aggregate pull request #23.
 
 ## Completed D8.2 work on the current branch
 
@@ -258,7 +258,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Deterministic non-UI D0–D8.2 suite: 142/142 passed locally using a repository-scoped temporary directory.
 - Static compilation, accessibility audit, and `git diff --check` passed locally.
 - D8.2 reviewed feature head `dbe4ca88955a34e5147eee30f21d54b514f412d4` passed both compatibility runs (`43165434162`, `43165460074`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #21.
-- D8.2 remains subject to owner review and stack-order merge gates.
+- D8.2 was integrated into `main` through aggregate pull request #23.
 
 ## Completed D8.3 work on the current branch
 
@@ -276,7 +276,21 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Rendered browser acceptance passed for the watchlist search/indexed chart, Downside scenario calculations and warning, earlier/later workflow reconciliation, two-run comparison, and duplicate-run no-overwrite behavior.
 - Browser acceptance found stale reconciliation rows after a cutoff change; context-specific dataframe keys fixed the issue and the corrected `100` ALP net income and `2.9` CPI values were visibly reverified.
 - D8.3 reviewed feature head `726339291b0c2a83107e770aeaf49af5ad017cd3` passed both compatibility runs (`43167162037`, `43167169533`) across Windows/Ubuntu and Python 3.12/3.13 on draft pull request #22.
-- D8.3 remains subject to owner review and stack-order merge gates.
+- D8.3 was integrated into `main` through aggregate pull request #23.
+
+## D8 integration evidence
+
+- Aggregate pull request #23 presented the complete D1–D8.3 diff against `main` and passed both push and pull-request compatibility runs.
+- Pull request #23 was squash-merged as `6312a9646f2be21663b34af2f74790053f64d3aa` on 12 November 2026.
+- Post-merge compatibility run `43235834449` passed on Windows and Ubuntu with Python 3.12 and 3.13.
+- Superseded stacked pull requests #3–#22 were closed with their branches and review history preserved.
+- No deployment, hosting, authentication, scheduled processing, live provider, or licensed-data decision was made by the integration.
+
+## D9.1 work in progress
+
+- Updated `actions/checkout` and `actions/setup-python` to their Node.js 24-based v7 major releases after the merged-main workflow reported Node.js 20 deprecation annotations.
+- Kept the existing operating-system and Python-version matrix, dependency check, and complete `unittest` discovery command unchanged.
+- Updated the roadmap and durable status record to reflect the actual merged baseline and the bounded D9 sequence.
 
 ## Verification status
 
@@ -332,11 +346,10 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 
 ## Next priorities
 
-1. Obtain owner review of draft pull requests #15–#22 before any merge decision.
-2. Review and merge only in stack order if each diff remains approved and green.
-3. Re-run the full suite and browser acceptance on the integrated branch after the stack is merged.
-4. Define and approve a D9 product milestone before adding another feature family.
-5. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
+1. Validate D9.1 on the complete Windows/Ubuntu and Python 3.12/3.13 matrix.
+2. Perform D9.2 from a fresh-user environment and archive genuine merged-main screenshots.
+3. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
+4. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release
 
