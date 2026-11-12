@@ -2,8 +2,8 @@
 
 **Updated:** 12 November 2026
 
-**Phase:** D9 integrated baseline and CI lifecycle hardening
-**Status:** D1–D8.3 are integrated into `main`; D9.1 is in progress on `codex/d9-1-integrated-ci-hardening`
+**Phase:** D9 portfolio release evidence
+**Status:** D1–D9.1 are integrated into `main`; D9.2 is in progress on `codex/d9-2-portfolio-release-evidence`
 
 ## Baseline
 
@@ -286,11 +286,24 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Superseded stacked pull requests #3–#22 were closed with their branches and review history preserved.
 - No deployment, hosting, authentication, scheduled processing, live provider, or licensed-data decision was made by the integration.
 
-## D9.1 work in progress
+## Completed D9.1 work
 
 - Updated `actions/checkout` and `actions/setup-python` to their Node.js 24-based v7 major releases after the merged-main workflow reported Node.js 20 deprecation annotations.
 - Kept the existing operating-system and Python-version matrix, dependency check, and complete `unittest` discovery command unchanged.
 - Updated the roadmap and durable status record to reflect the actual merged baseline and the bounded D9 sequence.
+- D9.1 pull request #24 was squash-merged as `ae73c645ec9b68c1a4ea899d10e56da9f0d94efb`.
+- Post-merge compatibility run `43237148377` passed on Windows and Ubuntu with Python 3.12 and 3.13 using the v7 actions.
+- The previous Node.js 20 deprecation annotation is gone; GitHub now reports only its informational `ubuntu-latest` runner-image migration notice.
+
+## D9.2 work in progress
+
+- Created a tracked-file-only checkout at merged D9.1 commit `ae73c645ec9b68c1a4ea899d10e56da9f0d94efb`.
+- Created a new Python 3.12.14 virtual environment, installed `requirements-tested.txt`, and passed `pip check` with no broken requirements.
+- Passed 150/150 deterministic non-UI tests in the isolated checkout; the two local Streamlit `AppTest` cases reproduced the documented sandbox stall and remain covered by GitHub Actions.
+- Added native query-parameter binding to the workspace control so review URLs and screenshots are reproducible.
+- Captured and visually verified three genuine 1280×720 screenshots for the analyst watchlist, research workflow, and evidence graph/operations workspaces.
+- Added a portfolio evidence record with the fresh-install procedure, visible screenshot evidence, and explicit non-hosting boundaries.
+- D9.2 feature and screenshot source commit: `c28e18226d912bd655d27f2e38308b7d213cd325`.
 
 ## Verification status
 
@@ -346,10 +359,9 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 
 ## Next priorities
 
-1. Validate D9.1 on the complete Windows/Ubuntu and Python 3.12/3.13 matrix.
-2. Perform D9.2 from a fresh-user environment and archive genuine merged-main screenshots.
-3. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
-4. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
+1. Validate D9.2 on the complete Windows/Ubuntu and Python 3.12/3.13 matrix and merge only when green.
+2. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
+3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 
 ## Remaining before a stable release
 
