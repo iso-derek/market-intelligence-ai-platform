@@ -44,6 +44,11 @@ class AccessibilityAuditTests(unittest.TestCase):
         ):
             self.assertIn(workspace, text)
 
+    def test_workspace_navigation_is_shareable(self):
+        source = (ROOT / "app.py").read_text(encoding="utf-8")
+        self.assertIn("key='workspace'", source)
+        self.assertIn("bind='query-params'", source)
+
 
 if __name__ == "__main__":
     unittest.main()

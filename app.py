@@ -24,7 +24,12 @@ from watchlist_dashboard import render_watchlist_dashboard
 st.set_page_config(page_title='Market Intelligence AI Platform',page_icon='📈',layout='wide',initial_sidebar_state='expanded')
 st.title('Market Intelligence AI Platform')
 st.caption('Point-in-time finance analytics and source-grounded market research in one auditable workspace.')
-workspace=st.sidebar.radio('Workspace',['News evidence','Analyst watchlist','Market, macro & fundamentals','Filings corpus','Research workflow','Evidence graph & operations'])
+workspace=st.sidebar.radio(
+    'Workspace',
+    ['News evidence','Analyst watchlist','Market, macro & fundamentals','Filings corpus','Research workflow','Evidence graph & operations'],
+    key='workspace',
+    bind='query-params',
+)
 if workspace=='Analyst watchlist':
     render_watchlist_dashboard()
     st.stop()

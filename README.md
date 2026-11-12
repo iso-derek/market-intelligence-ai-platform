@@ -65,7 +65,23 @@ The dashboard has six workspaces:
 - **Evidence graph & operations:** inspect point-in-time provenance links, bounded paths, graph identity, required-file health, and the verified-local-demo boundary.
 - **Research evaluation:** compare a selected sentiment method with independent labels and audit the current brief's citations.
 
-Real screenshots will be added after a verified local browser acceptance session. Placeholder images are deliberately not used.
+## Verified release screenshots
+
+These are genuine 1280×720 captures from the running D9.2 release-evidence candidate. They are not mockups and do not imply hosted deployment.
+
+### Analyst watchlist
+
+![Analyst watchlist with bounded company search, selected companies, and point-in-time comparison metrics](docs/screenshots/analyst-watchlist.png)
+
+### Bounded research workflow
+
+![Research workflow with typed role trace, explicit missing News evidence, budgets, and reconciliation status](docs/screenshots/research-workflow.png)
+
+### Evidence graph and operations
+
+![Evidence graph and operations workspace with provenance counts, graph hash, and visible non-causal boundary](docs/screenshots/evidence-operations.png)
+
+The fresh-install procedure, capture metadata, reproducible workspace links, and limitations are recorded in [PORTFOLIO_RELEASE_EVIDENCE.md](docs/PORTFOLIO_RELEASE_EVIDENCE.md).
 
 ## Architecture
 
@@ -201,6 +217,8 @@ The claim-level citation contract, numeric reconciliation checks, and immutable 
 The keyboard guidance and end-to-end acceptance journeys for all five workspaces are in [USER_WALKTHROUGH.md](docs/USER_WALKTHROUGH.md).
 
 The latest genuine local browser observations and their boundaries are recorded in [BROWSER_ACCEPTANCE.md](docs/BROWSER_ACCEPTANCE.md).
+
+The isolated Python 3.12 installation evidence and genuine release screenshots are recorded in [PORTFOLIO_RELEASE_EVIDENCE.md](docs/PORTFOLIO_RELEASE_EVIDENCE.md).
 
 SQLite health checks, non-overwriting verified backups, restore drills, and retention boundaries are documented in [BACKUP_AND_RECOVERY.md](docs/BACKUP_AND_RECOVERY.md).
 
