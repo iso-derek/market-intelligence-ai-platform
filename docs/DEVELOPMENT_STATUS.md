@@ -303,6 +303,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Added native query-parameter binding to the workspace control so review URLs and screenshots are reproducible.
 - Captured and visually verified three genuine 1280×720 screenshots for the analyst watchlist, research workflow, and evidence graph/operations workspaces.
 - Added a portfolio evidence record with the fresh-install procedure, visible screenshot evidence, and explicit non-hosting boundaries.
+- D9.2 feature and screenshot source commit: `c28e18226d912bd655d27f2e38308b7d213cd325`.
 
 ## Verification status
 

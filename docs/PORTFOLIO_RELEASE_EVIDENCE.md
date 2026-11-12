@@ -31,7 +31,7 @@ Release screenshots in `docs/screenshots/` were captured from the running D9.2 c
 | `research-workflow.png` | Research workflow | 1280×720 | URL-selected workspace, five-step typed trace, explicit missing News role, zero conflicts, and offline boundary |
 | `evidence-operations.png` | Evidence graph & operations | 1280×720 | URL-selected workspace, six nodes, five edges, zero dangling links, graph identity, and non-causal language |
 
-The images were captured only after the browser accessibility state confirmed the requested workspace and its visible acceptance values. The exact D9.2 source commit is recorded in the development status after the artifact commit is created.
+The images were captured from the source tree committed as `c28e18226d912bd655d27f2e38308b7d213cd325`, only after the browser accessibility state confirmed the requested workspace and its visible acceptance values.
 
 ## Boundaries
 
