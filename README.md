@@ -266,6 +266,26 @@ Model weights may be downloaded on first use. Review the model terms before enab
 
 Detailed commands and troubleshooting are in [QUICKSTART.md](docs/QUICKSTART.md).
 
+### Market Signal web app (preview)
+
+A React web app with a FastAPI backend (`api/`) that reuses the same tested
+modules in `src/`. It has six sections: News, Watchlist, Markets & macro,
+Filings, Research desk, and Evidence & operations. Every field is labelled in
+plain English. FinBERT is not offered in the web app; it uses the keyword
+baseline. Requires Python 3.12+ and Node.js 20+.
+
+```bash
+pip install -r requirements.txt
+cd web && npm install && npm run build && cd ..
+python -m uvicorn api.main:app --port 8000
+```
+
+Open http://localhost:8000. Evidence is stored in `MARKET_INTELLIGENCE_DB`
+(default `data/runtime/evidence.db`). Saved research runs go to
+`MARKET_INTELLIGENCE_RUNS` (default `runs/`). For development, run the API with
+`--reload` and `npm run dev` in `web/`, then open http://localhost:5173.
+The Streamlit app still works unchanged.
+
 ## Reproducible research commands
 
 ```bash
