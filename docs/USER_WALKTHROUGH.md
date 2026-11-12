@@ -18,8 +18,11 @@ Do not fetch official feeds during an offline acceptance run. A separate network
 3. Filter by sector and change the selected companies; confirm the market and fundamental tables follow the sidebar watchlist.
 4. Compare the two historical cutoffs and confirm ALP net income changes from 100 to the restated 90 only at the later cutoff.
 5. Inspect the indexed adjusted-price chart, source/availability evidence, and SHA-256 snapshot identity.
+6. Open **Stress scenarios**, compare the Neutral and Downside starting assumptions, and verify the displayed revenue, margin, current-ratio, and debt-to-equity changes follow the visible sliders.
+7. Confirm the scenario warning states that the deterministic sensitivity has no assigned probability and is not a forecast.
 
 The selection persists only in the current browser session. The three-company universe is fictional and does not establish live coverage or investment suitability.
+
 
 ## 3. Market, macro & fundamentals
 

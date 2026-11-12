@@ -37,6 +37,7 @@ The current release answers those questions for a bounded set of financial headl
 - Revision-aware macro history and complete-report restatement handling at historical cutoffs.
 - Point-in-time net margin, current ratio, and debt-to-equity peer comparisons with visible currency, units, calendars, source, and availability.
 - Searchable three-company analyst watchlists with session-persistent selection, indexed adjusted-price comparison, comparable fundamentals, and a hash-identified point-in-time snapshot.
+- Bounded deterministic stress scenarios for revenue, net margin, liquidity, and leverage with explicit assumptions, formulas, and artifact identity.
 - Versioned deterministic company/ticker registry with boundary-aware aliases and explicit resolved, ambiguous, and unknown outcomes.
 - Transparent seven-class event taxonomy with tied-category ambiguity, company/sector linkage, and a hashed independently labelled diagnostic report.
 - Frozen balanced 30-item sentiment holdout with per-class metrics, deterministic bootstrap intervals, rule-vocabulary overlap review, and exported model/data identities.
@@ -48,7 +49,7 @@ Live market/macro/filings providers, general-purpose generative agents, multi-wo
 
 The dashboard has six workspaces:
 
-- **Analyst watchlist:** search the bounded company registry, maintain a browser-session watchlist, compare normalized adjusted prices and point-in-time fundamentals, and audit a snapshot hash.
+- **Analyst watchlist:** search the bounded company registry, maintain a browser-session watchlist, compare normalized adjusted prices and point-in-time fundamentals, run deterministic stress scenarios, and audit snapshot/scenario hashes.
 - **Market, macro & fundamentals:** inspect adjusted/raw prices, returns, volatility, macro vintages, complete report versions, and company peers at two historical cutoffs.
 - **Event study tab:** align before/after-close releases to trading sessions and inspect market-adjusted abnormal returns without causal claims.
 - **Rates & FX tab:** inspect tenor-labelled yields, benchmark-matched credit spreads in basis points, and BASE/QUOTE performance with explicit direction.
@@ -116,6 +117,10 @@ annualized volatility = sample_std(daily simple returns) × sqrt(252)
 The peer view calculates net margin, current ratio, and debt to equity from the latest eligible fiscal period. See [MARKET_DATA_METHODOLOGY.md](docs/MARKET_DATA_METHODOLOGY.md) for schemas, formula definitions, hand-checked revision/restatement examples, and limitations.
 
 The analyst watchlist reuses those tested calculations. Search is token-based across registered tickers, names, sectors, and aliases; it does not guess fuzzy matches. Every displayed row obeys the selected historical cutoff, and the snapshot SHA-256 covers the sorted values, sources, and cutoff. See [ANALYST_WATCHLIST.md](docs/ANALYST_WATCHLIST.md).
+
+### Deterministic stress scenarios
+
+Scenario analysis applies independent bounded shocks to revenue, net margin, current assets/liabilities, debt, and equity. Stressed net income is recalculated from stressed revenue and margin; liquidity and leverage ratios scale their tested base ratios by the relevant numerator/denominator shocks. No probability is assigned to a scenario. See [SCENARIO_STRESS_TESTING.md](docs/SCENARIO_STRESS_TESTING.md) for formulas, bounds, and interpretation limits.
 
 ### Keyword sentiment baseline
 

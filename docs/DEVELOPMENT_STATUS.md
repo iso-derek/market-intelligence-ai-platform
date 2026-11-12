@@ -3,7 +3,7 @@
 **Updated:** 12 November 2026
 
 **Phase:** D8 analyst productivity and scenario depth
-**Status:** D1–D7.6 are implemented as stacked review branches; D8.1 analyst watchlist work is implemented on `codex/d8-1-analyst-watchlist`
+**Status:** D1–D8.1 are implemented as stacked review branches; D8.2 deterministic stress scenarios are implemented on `codex/d8-2-deterministic-stress-scenarios`
 
 ## Baseline
 
@@ -246,6 +246,18 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
 - D8.1 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
 
+## Completed D8.2 work on the current branch
+
+- Added bounded revenue, margin, current-assets, current-liabilities, debt, and equity shocks.
+- Recalculated stressed revenue, net income, current ratio, and debt-to-equity from explicit formulas while retaining filing dimensions and the historical cutoff.
+- Added Neutral, Downside, and Recovery starting assumptions plus fully adjustable native controls.
+- Added base-versus-stressed charts, result tables, aggregate risk cards, and a deterministic scenario SHA-256.
+- Kept the interface explicit that scenarios have no assigned probability and are not forecasts, valuations, or recommendations.
+- Focused D8.2 suite: 7/7 passed locally.
+- Deterministic non-UI D0–D8.2 suite: 142/142 passed locally using a repository-scoped temporary directory.
+- Static compilation, accessibility audit, and `git diff --check` passed locally.
+- D8.2 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
+
 ## Verification status
 
 - Static Python compilation: passed with bundled Python 3.12.
@@ -284,6 +296,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Release-aware event studies, yield curves, credit spreads, and quote-direction-aware FX analytics.
 - A point-in-time non-causal evidence graph with a frozen graph-versus-table value comparison.
 - A searchable, session-persistent analyst watchlist with indexed performance, comparable point-in-time fundamentals, and reproducible snapshot identity.
+- Bounded deterministic company stress scenarios with explicit formulas, assumptions, and no probability claim.
 
 ## Known limitations and blockers
 
@@ -298,8 +311,8 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 ## Next priorities
 
 1. Obtain owner review of draft pull requests #15–#19 before any merge decision.
-2. Validate D8.1 locally and in exact-head CI, then review its stacked pull request before any merge decision.
-3. Implement D8.2 deterministic stress scenarios and D8.3 research-run comparison as separate stacked milestones.
+2. Validate D8.1–D8.2 in exact-head CI, then review their stacked pull requests before any merge decision.
+3. Implement D8.3 research-run comparison as a separate stacked milestone.
 4. Merge only in stack order if each diff remains approved and green.
 5. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 

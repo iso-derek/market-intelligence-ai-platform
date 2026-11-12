@@ -6,6 +6,7 @@ import streamlit as st
 
 from entities import load_entity_registry
 from market_dashboard import CUTOFFS, FIXTURE_ROOT, load_market_bundle
+from scenario_analysis import SCENARIO_PRESETS, ScenarioAssumptions, scenario_hash, stress_watchlist
 from watchlist import (
     company_universe,
     normalized_performance,
@@ -105,8 +106,8 @@ def render_watchlist_dashboard() -> None:
         border=True,
     )
 
-    performance_tab, fundamentals_tab, evidence_tab = st.tabs(
-        ["Indexed performance", "Comparable fundamentals", "Snapshot evidence"]
+    performance_tab, fundamentals_tab, scenario_tab, evidence_tab = st.tabs(
+        ["Indexed performance", "Comparable fundamentals", "Stress scenarios", "Snapshot evidence"]
     )
     with performance_tab:
         indexed = normalized_performance(prices, selected, cutoff)
@@ -159,6 +160,132 @@ def render_watchlist_dashboard() -> None:
             alt="Point-in-time fundamental comparison for the selected watchlist companies",
         )
         st.caption("Revenue and net income use the displayed filing currency and unit; ratios are dimensionless.")
+    with scenario_tab:
+        preset_name = st.segmented_control(
+            "Starting assumptions",
+            list(SCENARIO_PRESETS),
+            default="Downside",
+            key="scenario_preset",
+        )
+        preset = SCENARIO_PRESETS[preset_name or "Downside"]
+        with st.container(horizontal=True):
+            revenue_shock = st.slider(
+                "Revenue shock (%)",
+                -50,
+                50,
+                int(preset.revenue_shock * 100),
+                key=f"scenario_revenue_{preset_name}",
+            )
+            margin_shock_bps = st.slider(
+                "Net-margin shock (bps)",
+                -2_000,
+                2_000,
+                preset.margin_shock_bps,
+                step=25,
+                key=f"scenario_margin_{preset_name}",
+            )
+        with st.container(horizontal=True):
+            assets_shock = st.slider(
+                "Current-assets shock (%)",
+                -50,
+                50,
+                int(preset.current_assets_shock * 100),
+                key=f"scenario_assets_{preset_name}",
+            )
+            liabilities_shock = st.slider(
+                "Current-liabilities shock (%)",
+                -50,
+                50,
+                int(preset.current_liabilities_shock * 100),
+                key=f"scenario_liabilities_{preset_name}",
+            )
+        with st.container(horizontal=True):
+            debt_shock = st.slider(
+                "Debt shock (%)",
+                -50,
+                100,
+                int(preset.debt_shock * 100),
+                key=f"scenario_debt_{preset_name}",
+            )
+            equity_shock = st.slider(
+                "Equity shock (%)",
+                -50,
+                50,
+                int(preset.equity_shock * 100),
+                key=f"scenario_equity_{preset_name}",
+            )
+        assumptions = ScenarioAssumptions(
+            revenue_shock=revenue_shock / 100,
+            margin_shock_bps=margin_shock_bps,
+            current_assets_shock=assets_shock / 100,
+            current_liabilities_shock=liabilities_shock / 100,
+            debt_shock=debt_shock / 100,
+            equity_shock=equity_shock / 100,
+        )
+        stressed = stress_watchlist(snapshot, assumptions)
+        scenario_identity = scenario_hash(stressed, assumptions)
+        scenario_cards = st.columns(4)
+        unit = f"{stressed.filing_currency.iloc[0]} {stressed.filing_unit.iloc[0]}"
+        scenario_cards[0].metric(
+            "Stressed net income",
+            f"{stressed.stressed_net_income.sum():,.1f} {unit}",
+            border=True,
+        )
+        scenario_cards[1].metric(
+            "Net income change",
+            f"{stressed.net_income_change.sum():+,.1f} {unit}",
+            border=True,
+        )
+        scenario_cards[2].metric(
+            "Lowest current ratio",
+            f"{stressed.stressed_current_ratio.min():.2f}",
+            border=True,
+        )
+        scenario_cards[3].metric(
+            "Highest debt / equity",
+            f"{stressed.stressed_debt_to_equity.max():.2f}",
+            border=True,
+        )
+        st.bar_chart(
+            stressed,
+            x="ticker",
+            y=["net_income", "stressed_net_income"],
+            x_label="Company",
+            y_label=f"Net income ({unit})",
+            stack=False,
+            alt="Base and stressed net income for the selected watchlist companies",
+        )
+        st.dataframe(
+            stressed[
+                [
+                    "ticker",
+                    "revenue",
+                    "stressed_revenue",
+                    "net_margin",
+                    "stressed_net_margin",
+                    "net_income",
+                    "stressed_net_income",
+                    "current_ratio",
+                    "stressed_current_ratio",
+                    "debt_to_equity",
+                    "stressed_debt_to_equity",
+                ]
+            ],
+            hide_index=True,
+            column_config={
+                "net_margin": st.column_config.NumberColumn("Base net margin", format="percent"),
+                "stressed_net_margin": st.column_config.NumberColumn("Stressed net margin", format="percent"),
+                "current_ratio": st.column_config.NumberColumn("Base current ratio", format="%.2f"),
+                "stressed_current_ratio": st.column_config.NumberColumn("Stressed current ratio", format="%.2f"),
+                "debt_to_equity": st.column_config.NumberColumn("Base debt / equity", format="%.2f"),
+                "stressed_debt_to_equity": st.column_config.NumberColumn("Stressed debt / equity", format="%.2f"),
+            },
+            alt="Base and stressed profitability liquidity and leverage for each selected company",
+        )
+        st.code(scenario_identity, language=None)
+        st.warning(
+            "This is deterministic sensitivity analysis. The shocks have no assigned probability and the output is not a forecast, valuation, or investment recommendation."
+        )
     with evidence_tab:
         evidence = snapshot[
             [
