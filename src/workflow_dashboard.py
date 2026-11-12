@@ -115,7 +115,12 @@ def render_workflow_dashboard() -> None:
         "Step": row["step"], "Role": row["role"], "Tool": row["tool"], "Status": row["status"],
         "Facts": len(row.get("facts", [])), "Citations": len(row.get("citations", [])), "Message": row.get("message", ""),
     } for row in artifact["trace"]]
-    st.dataframe(pd.DataFrame(trace_rows), hide_index=True, alt="Typed research workflow trace with role tool status facts and citations")
+    st.dataframe(
+        pd.DataFrame(trace_rows),
+        hide_index=True,
+        key=f"workflow_trace_{company}_{cutoff_label}",
+        alt="Typed research workflow trace with role tool status facts and citations",
+    )
     st.caption(f"Artifact SHA-256: {artifact['artifact_sha256']}")
     with st.expander("Facts, interpretations, scenarios, and citations"):
         st.json(artifact["trace"])
@@ -128,6 +133,7 @@ def render_workflow_dashboard() -> None:
     report_cards[2].metric("Report hash", report["report_sha256"][:12], border=True)
     st.dataframe(
         pd.DataFrame(report["reconciliation"]), hide_index=True,
+        key=f"workflow_reconciliation_{company}_{cutoff_label}",
         alt="Report claims reconciled against cited point-in-time source values and units",
     )
     st.download_button(
@@ -172,6 +178,7 @@ def render_workflow_dashboard() -> None:
                 ]
             ],
             hide_index=True,
+            key="workflow_history_table",
             alt="Verified append-only typed workflow research-run history",
         )
         if len(history) < 2:
@@ -185,6 +192,7 @@ def render_workflow_dashboard() -> None:
             st.dataframe(
                 comparison["metrics"],
                 hide_index=True,
+                key=f"workflow_comparison_{base_id}_{target_id}",
                 alt="Base and target research-run metrics with explicit changes",
             )
             st.caption(

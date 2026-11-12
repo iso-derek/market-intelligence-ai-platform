@@ -110,6 +110,11 @@ class ResearchHistoryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "64-character"):
             save_workflow_run(self.root, artifact, report)
 
+    def test_historical_workflow_grids_have_context_specific_keys(self):
+        source = (ROOT / "src" / "workflow_dashboard.py").read_text(encoding="utf-8")
+        self.assertIn('key=f"workflow_trace_{company}_{cutoff_label}"', source)
+        self.assertIn('key=f"workflow_reconciliation_{company}_{cutoff_label}"', source)
+
 
 if __name__ == "__main__":
     unittest.main()

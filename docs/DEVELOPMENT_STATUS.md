@@ -266,11 +266,13 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Added a historical workflow cutoff that keeps the 2.9-to-3.0 CPI revision and ALP 100-to-90 restatement explicit.
 - Added base/target comparison for cutoff direction, company, status, budget use, missing roles, conflicts, facts, citations, reconciled claims, and artifact identities.
 - Added integrity-failure, idempotency, distinct-content, ordering, cutoff-direction, company-change, and missing-identity tests.
-- Focused D8.3 suite: 7/7 passed locally.
+- Focused D8.3 suite: 8/8 passed locally, including the rendered-cutoff grid regression guard.
 - Existing typed-workflow and report regression suite: 12/12 passed locally.
-- Deterministic non-UI D0–D8.3 suite: 149/149 passed locally using a repository-scoped temporary directory.
+- Deterministic non-UI D0–D8.3 suite: 150/150 passed locally using a repository-scoped temporary directory.
 - Both historical workflow cutoffs generated reconciled reports in a direct execution smoke check.
 - Static compilation, accessibility audit, `git diff --check`, and the release-readiness check passed locally.
+- Rendered browser acceptance passed for the watchlist search/indexed chart, Downside scenario calculations and warning, earlier/later workflow reconciliation, two-run comparison, and duplicate-run no-overwrite behavior.
+- Browser acceptance found stale reconciliation rows after a cutoff change; context-specific dataframe keys fixed the issue and the corrected `100` ALP net income and `2.9` CPI values were visibly reverified.
 - D8.3 remains a local review branch until exact-head CI, owner review, and stack-order merge gates are recorded.
 
 ## Verification status
