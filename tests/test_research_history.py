@@ -4,11 +4,15 @@ import sys
 import tempfile
 import unittest
 
+import pandas as pd
+import pyarrow as pa
+
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ROOT / "data" / "runtime"
 sys.path.insert(0, str(ROOT / "src"))
 
 from research_history import (  # noqa: E402
+    comparison_display_frame,
     compare_workflow_runs,
     load_workflow_run,
     save_workflow_run,
@@ -88,6 +92,19 @@ class ResearchHistoryTests(unittest.TestCase):
         self.assertTrue(comparison["same_company"])
         self.assertEqual(metrics.loc["missing_roles", "change"], -1)
         self.assertEqual(metrics.loc["status", "change"], "changed")
+
+    def test_comparison_display_frame_is_arrow_safe_and_iso_dated(self):
+        metrics = pd.DataFrame(
+            [
+                {"metric": "research_as_of", "base": pd.Timestamp("2026-01-31T23:59:59Z"), "target": pd.Timestamp("2026-03-01T23:59:59Z"), "change": "changed"},
+                {"metric": "steps_used", "base": 5, "target": 5, "change": 0},
+            ]
+        )
+        display = comparison_display_frame(metrics)
+        self.assertTrue(all(str(dtype) == "string" for dtype in display.dtypes))
+        self.assertEqual(display.loc[0, "base"], "2026-01-31T23:59:59+00:00")
+        self.assertEqual(display.loc[1, "change"], "0")
+        self.assertEqual(pa.Table.from_pandas(display).num_rows, 2)
 
     def test_comparison_keeps_company_changes_explicit(self):
         base = save_workflow_run(self.root, *fixture_run("a", company="ALP"))[0]
