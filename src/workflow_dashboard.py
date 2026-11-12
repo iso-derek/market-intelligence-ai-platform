@@ -7,7 +7,7 @@ import streamlit as st
 
 from workflows import WorkflowRequest, make_demo_tools, run_workflow
 from research_report import build_reconciled_report, export_report_bundle
-from research_history import compare_workflow_runs, save_workflow_run, workflow_run_history
+from research_history import comparison_display_frame, compare_workflow_runs, save_workflow_run, workflow_run_history
 
 
 COMPANY_FACTS = {
@@ -190,7 +190,7 @@ def render_workflow_dashboard() -> None:
                 target_id = st.selectbox("Target run", list(folders), index=0, key="history_target")
             comparison = compare_workflow_runs(folders[base_id], folders[target_id])
             st.dataframe(
-                comparison["metrics"],
+                comparison_display_frame(comparison["metrics"]),
                 hide_index=True,
                 key=f"workflow_comparison_{base_id}_{target_id}",
                 alt="Base and target research-run metrics with explicit changes",

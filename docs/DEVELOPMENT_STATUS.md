@@ -3,7 +3,7 @@
 **Updated:** 12 November 2026
 
 **Phase:** D9 portfolio release evidence
-**Status:** D1–D9.1 are integrated into `main`; D9.2 is in progress on `codex/d9-2-portfolio-release-evidence`
+**Status:** D1–D9.2 are integrated into `main`; the D9.2.1 comparison-display hardening fix is in progress
 
 ## Baseline
 
@@ -295,7 +295,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Post-merge compatibility run `43237148377` passed on Windows and Ubuntu with Python 3.12 and 3.13 using the v7 actions.
 - The previous Node.js 20 deprecation annotation is gone; GitHub now reports only its informational `ubuntu-latest` runner-image migration notice.
 
-## D9.2 work in progress
+## Completed D9.2 work
 
 - Created a tracked-file-only checkout at merged D9.1 commit `ae73c645ec9b68c1a4ea899d10e56da9f0d94efb`.
 - Created a new Python 3.12.14 virtual environment, installed `requirements-tested.txt`, and passed `pip check` with no broken requirements.
@@ -304,6 +304,14 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 - Captured and visually verified three genuine 1280×720 screenshots for the analyst watchlist, research workflow, and evidence graph/operations workspaces.
 - Added a portfolio evidence record with the fresh-install procedure, visible screenshot evidence, and explicit non-hosting boundaries.
 - D9.2 feature and screenshot source commit: `c28e18226d912bd655d27f2e38308b7d213cd325`.
+- D9.2 pull request #25 was squash-merged as `a89913ec13895f0a8be453b3ff6c98a083db557a`.
+- Post-merge compatibility run `43246056999` passed on Windows and Ubuntu with Python 3.12 and 3.13.
+
+## D9.2.1 work in progress
+
+- Normalized research-run comparison values to an Arrow-safe string display frame while preserving the typed comparison result used for calculations and tests.
+- Preserved timestamps as ISO 8601 strings in the rendered table instead of relying on Streamlit's automatic mixed-type repair.
+- Added a direct PyArrow conversion regression test; focused research-history suite: 9/9 passed locally.
 
 ## Verification status
 
@@ -359,7 +367,7 @@ The exact stacked heads passed the four-job Windows/Ubuntu × Python 3.12/3.13 G
 
 ## Next priorities
 
-1. Validate D9.2 on the complete Windows/Ubuntu and Python 3.12/3.13 matrix and merge only when green.
+1. Validate and merge the D9.2.1 display hardening fix only when the compatibility matrix is green.
 2. Prepare the D9.3 provider and deployment decision record without adding credentials or external dependencies.
 3. Keep deployment unapproved until the separate operating-policy gates in `docs/DEPLOYMENT_PLAN.md` are satisfied.
 

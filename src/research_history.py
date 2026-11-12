@@ -214,6 +214,21 @@ def _run_metrics(loaded: dict[str, object]) -> dict[str, object]:
     }
 
 
+def comparison_display_frame(metrics: pd.DataFrame) -> pd.DataFrame:
+    """Return an Arrow-safe string view without changing typed comparison data."""
+    required = {"metric", "base", "target", "change"}
+    if not required.issubset(metrics.columns):
+        raise ValueError(f"Comparison metrics require columns: {sorted(required)}")
+    display = metrics.loc[:, ["metric", "base", "target", "change"]].copy()
+
+    def format_value(value: object) -> str:
+        return value.isoformat() if isinstance(value, pd.Timestamp) else str(value)
+
+    for column in display.columns:
+        display[column] = display[column].map(format_value).astype("string")
+    return display
+
+
 def compare_workflow_runs(base_folder: str | Path, target_folder: str | Path) -> dict[str, object]:
     """Compare verified run outputs while keeping historical cutoffs explicit."""
     base = _run_metrics(load_workflow_run(base_folder))
