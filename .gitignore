@@ -18,3 +18,4 @@ outputs/*.txt
 /runs/
 web/node_modules/
 web/dist/
+data/cache/

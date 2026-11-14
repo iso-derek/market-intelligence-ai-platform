@@ -266,6 +266,27 @@ Model weights may be downloaded on first use. Review the model terms before enab
 
 Detailed commands and troubleshooting are in [QUICKSTART.md](docs/QUICKSTART.md).
 
+### Real company accounts (SEC EDGAR)
+
+The **Company accounts** section shows real annual figures (revenue, net income, current assets and liabilities,
+long-term debt, equity, and the ratios built from them) taken directly from companies' 10-K filings, using the SEC's
+public-domain [EDGAR XBRL API](https://www.sec.gov/edgar/search/). Each figure carries its filing date. For any
+"as known on" date, the app uses the latest value filed by then, so later restatements never leak into earlier
+views. That's the same point-in-time rule the teaching fixtures use.
+
+The SEC's [fair-access policy](https://www.sec.gov/os/accessing-edgar-data) asks automated tools to identify
+themselves, so this section needs your name and email in an environment variable before it requests anything:
+
+```powershell
+$env:SEC_USER_AGENT = "Your Name you@example.com"   # Windows PowerShell
+```
+
+```bash
+export SEC_USER_AGENT="Your Name you@example.com"  # macOS / Linux
+```
+
+Responses are cached for 7 days in `data/cache/sec/` (git-ignored), and requests stay under SEC's rate limit.
+
 ### Market Signal web app (preview)
 
 A React web app with a FastAPI backend (`api/`) that reuses the same tested

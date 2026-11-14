@@ -47,6 +47,7 @@ from rates_fx import credit_spreads, fx_performance, load_rates_fx, yield_curve 
 from research_history import comparison_display_frame, compare_workflow_runs, save_workflow_run, workflow_run_history  # noqa: E402
 from research_report import build_reconciled_report, export_report_bundle  # noqa: E402
 from retrieval import evaluate_retriever, load_relevance_cases, rank_passages  # noqa: E402
+import sec_edgar  # noqa: E402
 from scenario_analysis import SCENARIO_PRESETS, ScenarioAssumptions, scenario_hash, stress_watchlist  # noqa: E402
 from watchlist import company_universe, normalized_performance, search_companies, snapshot_hash, watchlist_snapshot  # noqa: E402
 from workflow_dashboard import COMPANY_FACTS, RISK_IDS, _company_facts, _evidence_catalog, _macro_fact  # noqa: E402
@@ -584,6 +585,30 @@ def operations():
     nodes, edges, graph_hash = load_evidence_graph(FIXTURES / "evidence_graph_nodes.csv", FIXTURES / "evidence_graph_edges.csv")
     health = operational_health(DB_PATH)
     return json.loads(json.dumps({"health": health, "report": operations_report(ROOT, graph_hash)}, default=str))
+
+
+# ---------------------------------------------------------------- real company accounts (SEC EDGAR)
+@app.get("/api/sec/companies")
+def sec_companies(tickers: str = ",".join(sec_edgar.DEFAULT_TICKERS), cutoff: str = ""):
+    when = cutoff or pd.Timestamp.now(tz="UTC").strftime("%Y-%m-%d")
+    try:
+        pd.Timestamp(when)
+    except ValueError as exc:
+        raise HTTPException(400, "Use a date like 2025-06-30.") from exc
+    symbols = [t.strip().upper() for t in tickers.split(",") if t.strip()][:12]
+    try:
+        rows, problems = [], []
+        for symbol in symbols:
+            try:
+                rows.append(sec_edgar.company(symbol, when))
+            except ValueError as exc:
+                problems.append(str(exc))
+    except sec_edgar.NotConfigured as exc:
+        return {"configured": False, "message": str(exc), "source": sec_edgar.CITATION, "source_url": sec_edgar.SOURCE_URL}
+    except OSError as exc:
+        raise HTTPException(503, f"SEC EDGAR couldn't be reached: {exc}") from exc
+    return {"configured": True, "cutoff": when, "companies": rows, "problems": problems,
+            "source": sec_edgar.CITATION, "source_url": sec_edgar.SOURCE_URL}
 
 
 @app.get("/api/health")

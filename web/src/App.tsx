@@ -5,12 +5,14 @@ import Markets from "./pages/Markets";
 import Filings from "./pages/Filings";
 import Research from "./pages/Research";
 import Evidence from "./pages/Evidence";
+import Companies from "./pages/Companies";
 
 const SECTIONS = [
   { to: "/", label: "News" },
   { to: "/watchlist", label: "Watchlist" },
   { to: "/markets", label: "Markets & macro" },
   { to: "/filings", label: "Filings" },
+  { to: "/companies", label: "Company accounts" },
   { to: "/research", label: "Research desk" },
   { to: "/evidence", label: "Evidence & operations" },
 ];
@@ -34,6 +36,7 @@ export default function App() {
           <Route path="watchlist" element={<Watchlist />} />
           <Route path="markets" element={<Markets />} />
           <Route path="filings" element={<Filings />} />
+          <Route path="companies" element={<Companies />} />
           <Route path="research" element={<Research />} />
           <Route path="evidence" element={<Evidence />} />
         </Routes>
