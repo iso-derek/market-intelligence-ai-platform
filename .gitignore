@@ -16,3 +16,6 @@ outputs/*.json
 outputs/*.txt
 /.venv/
 /runs/
+web/node_modules/
+web/dist/
+data/cache/
